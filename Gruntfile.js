@@ -65,49 +65,24 @@ module.exports = function(grunt) {
       defaultTasks = ['jshint', 'concat'],
       deployTasks = ['jshint', 'concat', 'uglify'];
 
-  switch ( pkg.css_preprocessor ) {
+  configOptions.sass = {
+      dev: {
+      src: 'dev/sass/style.scss',
+      dest: 'build/css/style.css',
+      options: {
+        style: 'expand',
+        compass : true
+      }
+    },
+    deploy: {
+      src: 'dev/scss/style.scss',
+      dest: 'build/css/style.css'
+    }
+  };
 
-    case "less" :
-      configOptions.less = {
-          dev: {
-          src: 'dev/less/style.less',
-          dest: 'build/css/style.css'
-        },
-        deploy: {
-          src: 'dev/less/style.less',
-          dest: 'build/css/style.css',
-          options: {
-            compress: true
-          }
-        }
-      };
-
-      filesToWatch.push('dev/less/*.less');
-      defaultTasks.unshift('less:dev');
-      deployTasks.unshift('less:deploy');
-      break;
-
-    case "sass" : 
-      configOptions.sass = {
-          dev: {
-          src: 'dev/sass/style.scss',
-          dest: 'build/css/style.css',
-          options: {
-            style: 'expand',
-            compass : true
-          }
-        },
-        deploy: {
-          src: 'dev/scss/style.scss',
-          dest: 'build/css/style.css'
-        }
-      };
-
-      filesToWatch.push('dev/sass/*.scss');
-      defaultTasks.unshift('sass:dev');
-      deployTasks.unshift('sass:deploy');
-      break;
-  }
+  filesToWatch.push('dev/sass/*.scss');
+  defaultTasks.unshift('sass:dev');
+  deployTasks.unshift('sass:deploy');
 
   configOptions.watch = {
     gruntfile: {
@@ -123,12 +98,11 @@ module.exports = function(grunt) {
   grunt.initConfig(configOptions);
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task.
   grunt.registerTask('default', defaultTasks);

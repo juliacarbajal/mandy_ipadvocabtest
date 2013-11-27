@@ -23,14 +23,14 @@ caption, th, td {
 
 q, blockquote {
   quotes: none; }
-  q:before, q:after, blockquote:before, blockquote:after {
-    content: "";
-    content: none; }
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
 
 a img {
   border: none; }
 
-elements-of-type(html5-block) {
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block; }
 
 body {

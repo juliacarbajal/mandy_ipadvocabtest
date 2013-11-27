@@ -1,0 +1,33 @@
+{
+  "name": "lscp-app",
+  "title": "LSCP App",
+  "description": "The best project ever.",
+  "version": "0.1.0",
+  "homepage": "",
+  "author": {
+    "name": "Hans Lemuet",
+    "email": "hans@etaminstudio.com",
+    "url": "http://etaminstudio.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://git.etaminstudio.com/lscp/app.git"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "keywords": [],
+  "namespace": "lscp",
+  "css_preprocessor": "sass",
+  "jquery_version": "1.9.1",
+  "devDependencies": {
+    "grunt": "x",
+    "grunt-contrib-watch": "x",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "x",
+    "grunt-contrib-jshint": "x",
+    "underscore": "~1.5.2",
+    "backbone": "~1.1.0",
+    "grunt-contrib-sass": "~0.5.1"
+  }
+}

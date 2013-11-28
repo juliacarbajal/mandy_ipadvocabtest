@@ -3,6 +3,45 @@
 	"compass/css3",
 	"constants";
 
+.full {
+  height: 100%;
+  width: 100%;
+}
+
+html {@extend .full;}
+
 body {
-	background-color: $blue;
+  @extend .full;
+  background-color: $light-gray;
+}
+
+#app {
+  @extend .full;
+
+  footer {
+    bottom: 25px;
+    position: absolute;
+    right: 25px;
+  }
+}
+
+.btn {
+  font-size: 18px;
+  padding: 5px;
+  text-align: center;
+
+  strong {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+#start-btn {
+  display: block;
+  left: 50%;
+  margin-left: -110px;
+  position: absolute;
+  top: 45%;
+  width: 220px;
 }

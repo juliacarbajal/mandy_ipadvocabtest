@@ -33,5 +33,31 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block; }
 
+.full, html, body, #app {
+  height: 100%;
+  width: 100%; }
+
 body {
-  background-color: #3bbfce; }
+  background-color: #efefef; }
+
+#app footer {
+  bottom: 25px;
+  position: absolute;
+  right: 25px; }
+
+.btn {
+  font-size: 18px;
+  padding: 5px;
+  text-align: center; }
+.btn strong {
+  display: block;
+  font-size: 24px;
+  font-weight: bold; }
+
+#start-btn {
+  display: block;
+  left: 50%;
+  margin-left: -110px;
+  position: absolute;
+  top: 45%;
+  width: 220px; }

@@ -2,9 +2,6 @@
 // Create Namespace
 var LSCP = window.LSCP || {};
 
-/* EVENT MANAGER */
-LSCP.EventManager = LSCP.EventManager || $({});
-
 /* COLLECTIONS */
 LSCP.Collection = LSCP.Collection || {};
 
@@ -26,320 +23,392 @@ LSCP.Locations.JSON = '/data/';
  * EVENTS
  */
 LSCP.Events = {
-	APP_LOADING : "APP_LOADING",
-    SHOW_HOME : "SHOW_HOME"
+	APP_LOADING : "APP_LOADING"
 };
 
 $(window).ready(function(){
-	
-	LSCP.AppRouter = new LSCP.Router();
-	Backbone.history.start({ pushState : true });
+
+    LSCP.App = new LSCP.View.Base();
+//	LSCP.AppRouter = new LSCP.Router();
 
 });
+LSCP.SessionController = LSCP.SessionController || {
 
-LSCP.Controller = function() {
+    current_session: null,
+    current_game: null,
+    current_game_view: null,
 
-	var
-		eventHandlers = [],
+    init: function(){
+        log('LSCP.SessionController initialized!');
+    },
 
-		currentView = null,
+    startSession: function(){
 
-		loadingView = null,
-		homeView = null,
-		
-		/*
-		 * init
-		 * @private
-		 */
-		init = function() {
+        this.current_session = new LSCP.Model.Session({
+            duration: 15 * 60
+        });
 
-			_initEventHandlers();
-			_initNav();
-		},
+        log('startSession', this.current_session.attributes);
 
-		/*
-		 * init event handler
-		 * @private
-		 */
-		_initEventHandlers = function() {
+        this.current_game = this.current_session.games.shift();
 
-			_.each( LSCP.Events, function(customEvent) {
-				eventHandlers[customEvent] = _show;
-			});
-			
-			LSCP.EventManager.bind(eventHandlers);
-		},
-		
-		/*
-		 * init navigation links
-		 * @private
-		 */
-		_initNav = function() {
+        switch (this.current_game.get('type')) {
 
-			$("body").delegate('a[rel=nav], nav a:not(.external)', "click", function(e){
-				e.preventDefault();
-				LSCP.AppRouter.navigate($(this).attr("href"), true);
-			});
-		},
-		
-		/*
-		 * display Page
-		 * @private
-		 */
-		displayPage = function ( callbackEvent, slug, hideFirst ) {
+            case 'WordComprehensionGame':
+                this.current_game_view = new LSCP.View.WordComprehensionGame({
+                    model: this.current_game
+                });
 
-			if ( currentView && hideFirst ) {
-				
-				currentView.hide( function() {
-					displayPage(callbackEvent, slug, false);
-				});
-
-			} else {
-
-				LSCP.EventManager.trigger( LSCP.Events.APP_LOADING );
-				LSCP.DataManager.check( callbackEvent, slug );
-			}
-		},
-
-		/*
-		 * show the page
-		 * @private
-		 */
-		_show = function ( e /*, slug*/ ) {
-
-			var view;
-			
-			switch ( e.type ) {
-				
-				case LSCP.Events.APP_LOADING :
-					if ( !loadingView ) loadingView = new LSCP.View.Loading();
-					view = loadingView;
-				break;
-				
-				case LSCP.Events.SHOW_HOME :
-					if ( !homeView ) {
-						homeView = new LSCP.View.Home({
-							items : LSCP.Data.Item
-						});
-					}
-					view = homeView;
-				break;
-
-			}
-			
-			view.render();
-			currentView = view;
-
-		};
-
-	init();
-	return {
-		displayPage : displayPage
-	};
-};
-
-
-LSCP.DataManager = LSCP.DataManager || {
-
-	currentEvent : null,
-	currentSlug : null,
-
-	itemsLoaded : false,
-
-	check : function ( e, slug ) {
-
-		var self = this;
-		self.currentEvent = e;
-		self.currentSlug = slug;
-
-		switch ( self.currentEvent ) {
-			
-			case LSCP.Events.SHOW_HOME :
-
-				if ( !self.itemsLoaded ) {
-					self.getItems();
-				} else {
-					LSCP.EventManager.trigger( self.currentEvent, self.currentSlug );
-				}
-			break;
-
-		}
-	},
-
-	getItems : function ( ) {
-
-		var self = this;
-		LSCP.Data.Item = new LSCP.Collection.ItemCollection();
-		LSCP.Data.Item.fetch({
-			success : function() {
-				self.itemsLoaded = true;
-				self.check( self.currentEvent, self.currentSlug );
-			}
-		});
-	}
-};
-
-
-// From http://jsondata.tumblr.com/post/30043887057/backbone-5
-
-LSCP.TemplateManager = LSCP.TemplateManager || {
-
-    templates : {},
-    get : function (id, path, callback) {
-
-        if (this.templates[id]) {
-            return callback(this.templates[id]);
         }
 
-        var 
-            url = LSCP.Locations.Templates + path,
-            promise = $.trafficCop(url),
-            that = this;
+        $(this.current_game_view);
 
-        promise.done(function (template) {
-            
-            var tmp = _.template(template);
-            that.templates[id] = tmp;
-            callback(tmp);
-        });
     }
 };
 
-LSCP.Router = Backbone.Router.extend({
-	
-	/*
-	 * controller
-	 * @private
-	 */
-	controller : null,
-
-	/*
-	 * initialize
-	 * @private
-	 */
-	initialize : function() {
-
-		this.controller = new LSCP.Controller();
-	},
-
-	/*
-	 * routes
-	 */
-	routes : {
-		"*actions" : "_defaultAction"
-	},
-	
-	/*
-	 * defaultAction
-	 * @private
-	 */
-	_defaultAction : function () {
-		this.controller.displayPage( LSCP.Events.SHOW_HOME, true );
-	}
-
-});
-
-
-LSCP.Model.Item = Backbone.Model.extend({
+LSCP.Model.Config = Backbone.Model.extend({
 	
 	defaults: {
 		id : 0,
 		title : "",
-		slug : ""
+		version : ""
 	},
 	
 	initialize: function(){
-
 	},
 
 	parse : function(data){
-		
 		this.id = data.id;
 		this.title = data.title;
-		this.slug = data.slug;
+		this.version = data.version;
 
 		return this;
 	}
 	
 });
 
-LSCP.Collection.ItemCollection = Backbone.Collection.extend({
+LSCP.Model.Device = Backbone.Model.extend({
 	
-	model : LSCP.Model.Item,
-	url : "/data/items.json",
-	
-	initialize : function() {
-		
+	defaults: {
+        name: "Device",
+        uuid: "unavailable",
+        os_version: "unavailable",
+        device_name: "Device name"
 	},
-
-	parse : function(data){
-		return data.items;
-	}
 	
+	initialize: function(){
+        this.name = 'My Device';
+        this.uuid = '0123456789';
+        this.os_version = 'v7.0';
+        this.device_name = 'iPad de Etamin Studio';
+
+        log('LSCP.Model.Device initialized!', JSON.stringify(this));
+
+        this.on('change', function(){
+            console.log('LSCP.Model.Device changed');
+        });
+
+        // TODO: send it to server if online
+        // TODO: retrieve assigned config if online and available
+	}
+
+});
+LSCP.Model.Game = Backbone.Model.extend({
+	
+	initialize: function(){
+        this.set({
+            name: 'Word and sentence comprehension',
+            type: 'WordComprehensionGame',
+            difficulty: {
+                stages: 10,
+                trunks: 4
+            },
+            settings: {
+                timeout_no_answer: 5, // seconds
+                timeout_end_on_idle: 20 // seconds
+            }
+        });
+
+        log('LSCP.Model.Game initialized!', JSON.stringify(this));
+	}
+
+});
+LSCP.Model.Session = Backbone.Model.extend({
+	
+	initialize: function(){
+        this.set({
+            started_at: new Date()
+        });
+
+        // TODO: logic to determine which games to play
+        var game = new LSCP.Model.Game();
+        this.games = new LSCP.Collection.GameCollection([game]);
+    }
+
+});
+LSCP.Collection.GameCollection = Backbone.Collection.extend({
+
+    model : LSCP.Model.Game,
+
+    initialize : function() {
+    }
+
 });
 
 LSCP.View.Base = Backbone.View.extend({
 
-	id : "",
-	path : "",
-	el : ".main-content",
-	tpl : null,
-	collection : null,
-	slug : "",
-	params : {},
+	el: "#app",
 
-	hide : function ( callback ) {
+    initialize: function() {
+        log('LSCP.View.Base initialized!');
+//        LSCP.View.Session.init();
+    },
 
-		var $el = $(this.el);
-		$el.hide();
+    events: {
+        "click #start-btn": "start"
+    },
 
-		if (callback) {
-			callback();
-		}
-	},
-	
+    start: function(){
+//        LSCP.SessionController.render();
+        new LSCP.View.Session();
+    },
+
 	render : function() {
-
-		this.params.models = this.collection ? this.collection.models : null;
-		this.params.slug = this.slug;
-		
-		var self = this;
-		LSCP.TemplateManager.get( self.id, self.path, function(tpl) {
-			self.tpl = tpl;
-			self._display();
-		});
-	},
-	
-	_display : function() {
-
-		var self = this;
-		
-		$("body").attr("class", "").addClass(self.id);
-		$(this.el).html( this.tpl(this.params) ).show({
-			complete : self._displayComplete
-		});
-	},
-
-	_displayComplete : function () {
-		// TODO Overwrite
 	}
+
 });
 
+LSCP.View.Dashboard = Backbone.View.extend({
 
-LSCP.View.Home = LSCP.View.Base.extend({
+	id: "dashboard",
+	path: "dashboard.html",
+
+//    template: _.template($('#treesListTemplate').html()),
+
+    initialize: function() {
+        this.params.config = this.model;
+    },
+
+    render: function(){
+//        var that = this;
+//        LSCP.TemplateManager.get(this.template, function (tmp) {
+//            var html = tmp(that.model.toJSON());
+//            that.$el.html(html);
+//        });
+        return this;
+    },
+
+    close: function() {
+        this.remove();
+        this.unbind();
+    }
+	
+});
+LSCP.View.Game = Backbone.View.extend({
+
+    id : "game",
+	
+	initialize: function(){
+        log('LSCP.View.Game initialized!');
+	},
+
+    render: function(){
+
+    },
+
+
+    // Game cycle
+
+    start: function(){
+        log('LSCP.View.Game starts!');
+    },
+
+    end: function(){
+        log('LSCP.View.Game ends!');
+    },
+
+
+    // Game iteration management
+
+    onIteration: function(){
+    },
+
+    onCorrectAnswer: function(){
+    },
+
+    onWrongAnswer: function(){
+    },
+
+    onNoAnswer: function(){
+    },
+
+    onIdle: function(){
+    },
+
+
+    // Game interaction
+
+    onTouch: function(){
+    }
+
+
+});
+LSCP.View.Home = Backbone.View.extend({
 
 	id : "home",
 	path : "home.html",
 	
-	initialize : function(data) {
-		this.params.items = data.items.models;
-	}
+	initialize : function() {
+	},
+
+    events: {
+        'click #dashboard-btn': 'dashboardClicked'
+    },
+
+    dashboardClicked: function () {
+        log('Open Dashboard');
+        return false;
+    }
 	
 });
-
-LSCP.View.Loading = LSCP.View.Base.extend({
+LSCP.View.Loading = Backbone.View.extend({
 
 	id : "loading",
 	path : "loading.html"
 	
+});
+LSCP.View.Session = Backbone.View.extend({
+
+    el: "#session",
+
+    current_session: null,
+    current_game: null,
+    current_game_view: null,
+
+    initialize: function(){
+        log('LSCP.View.Session initialized!');
+        this.render();
+    },
+
+    render: function(){
+        this.$el.html('SESSION');
+        return this;
+    },
+
+    startSession: function(){
+
+        this.current_session = new LSCP.Model.Session({
+            duration: 15 * 60
+        });
+
+        log('startSession', this.current_session.attributes);
+
+        this.current_game = this.current_session.games.shift();
+
+        switch (this.current_game.get('type')) {
+
+            case 'WordComprehensionGame':
+                this.current_game_view = new LSCP.View.WordComprehensionGame({
+                    model: this.current_game
+                });
+
+        }
+
+        $(this.current_game_view);
+
+    }
+});
+LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
+
+	initialize: function(){
+        LSCP.View.Game.prototype.initialize.apply(this, arguments);
+        /*
+         TODO
+         - set the game data
+         - create new game session
+         - start
+         */
+	},
+
+
+    // Game cycle
+
+    start: function(){
+        LSCP.View.Game.prototype.start.apply(this, arguments);
+        /*
+        TODO
+        - black screen
+        - go to first iteration
+        */
+    },
+
+    end: function(){
+        LSCP.View.Game.prototype.end.apply(this, arguments);
+        /* TODO
+        - save game session
+        - send GAME_END to controller
+        */
+    },
+
+
+    // Game iteration management
+
+    onIteration: function(){
+        LSCP.View.Game.prototype.onIteration.apply(this, arguments);
+        /* TODO
+        - the character arrives and asks for an object
+        - display the background and the objects
+        */
+    },
+
+    onCorrectAnswer: function(){
+        LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
+        /* TODO
+        - animate object and character
+        - success sound
+        - character leaves
+        - fade to black
+        - next iteration
+        */
+    },
+
+    onWrongAnswer: function(){
+        LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
+        /* TODO
+         - animate object and character
+         - failure sound
+         - character leaves
+         - fade to black
+         - next iteration
+         */
+    },
+
+    onNoAnswer: function(){
+        LSCP.View.Game.prototype.onNoAnswer.apply(this, arguments);
+        /* TODO
+         - wait 5 seconds
+         - character leaves
+         - fade to black
+         - next iteration
+         */
+    },
+
+    onIdle: function(){
+        LSCP.View.Game.prototype.onIdle.apply(this, arguments);
+        /* TODO
+         - character talks
+         - idle sound
+         - after 3 times, end session
+         */
+    },
+
+
+    // Game interaction
+
+    onTouch: function(){
+        LSCP.View.Game.prototype.onTouch.apply(this, arguments);
+        /* TODO */
+    }
+
+
 });

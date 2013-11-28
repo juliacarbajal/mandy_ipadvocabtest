@@ -1,47 +1,23 @@
 
 LSCP.View.Base = Backbone.View.extend({
 
-	id : "",
-	path : "",
-	el : ".main-content",
-	tpl : null,
-	collection : null,
-	slug : "",
-	params : {},
+	el: "#app",
 
-	hide : function ( callback ) {
+    initialize: function() {
+        log('LSCP.View.Base initialized!');
+//        LSCP.View.Session.init();
+    },
 
-		var $el = $(this.el);
-		$el.hide();
+    events: {
+        "click #start-btn": "start"
+    },
 
-		if (callback) {
-			callback();
-		}
-	},
-	
+    start: function(){
+//        LSCP.SessionController.render();
+        new LSCP.View.Session();
+    },
+
 	render : function() {
-
-		this.params.models = this.collection ? this.collection.models : null;
-		this.params.slug = this.slug;
-		
-		var self = this;
-		LSCP.TemplateManager.get( self.id, self.path, function(tpl) {
-			self.tpl = tpl;
-			self._display();
-		});
-	},
-	
-	_display : function() {
-
-		var self = this;
-		
-		$("body").attr("class", "").addClass(self.id);
-		$(this.el).html( this.tpl(this.params) ).show({
-			complete : self._displayComplete
-		});
-	},
-
-	_displayComplete : function () {
-		// TODO Overwrite
 	}
+
 });

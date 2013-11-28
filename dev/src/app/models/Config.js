@@ -1,21 +1,19 @@
 
-LSCP.Model.Item = Backbone.Model.extend({
+LSCP.Model.Config = Backbone.Model.extend({
 	
 	defaults: {
 		id : 0,
 		title : "",
-		slug : ""
+		version : ""
 	},
 	
 	initialize: function(){
-
 	},
 
 	parse : function(data){
-		
 		this.id = data.id;
 		this.title = data.title;
-		this.slug = data.slug;
+		this.version = data.version;
 
 		return this;
 	}

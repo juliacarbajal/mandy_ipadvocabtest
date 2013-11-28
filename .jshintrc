@@ -17,6 +17,8 @@
     "$": false,
     "_": false,
     "Backbone": false,
-    "LSCP": true
+    "Handlebars": false,
+    "LSCP": true,
+    "log": true
   }
 }

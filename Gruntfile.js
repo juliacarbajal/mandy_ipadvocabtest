@@ -12,10 +12,10 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: [
-          'dev/src/App.js', 
-          'dev/src/app/controllers/*.js', 
-          'dev/src/app/Router.js', 
-          'dev/src/app/models/*.js', 
+          'dev/src/App.js',
+          'dev/src/app/controllers/*.js',
+//          'dev/src/app/Router.js',
+          'dev/src/app/models/*.js',
           'dev/src/app/collections/*.js', 
           'dev/src/app/views/Base.js',
           'dev/src/app/views/**/*.js',
@@ -25,8 +25,8 @@ module.exports = function(grunt) {
       },
       libs : {
         src : [
-          'node_modules/underscore/underscore-min.js',
-          'node_modules/backbone/backbone-min.js',
+          'node_modules/underscore/underscore.js',
+          'node_modules/backbone/backbone.js',
           'dev/src/libs/*.js'
         ],
         dest: 'build/js/libs/libs.js'
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  // Default task.
+  // Tasks
   grunt.registerTask('default', defaultTasks);
   grunt.registerTask('deploy', deployTasks);
 

@@ -1,5 +1,4 @@
-
-LSCP.View.Loading = LSCP.View.Base.extend({
+LSCP.View.Loading = Backbone.View.extend({
 
 	id : "loading",
 	path : "loading.html"

@@ -1,11 +1,18 @@
-
-LSCP.View.Home = LSCP.View.Base.extend({
+LSCP.View.Home = Backbone.View.extend({
 
 	id : "home",
 	path : "home.html",
 	
-	initialize : function(data) {
-		this.params.items = data.items.models;
-	}
+	initialize : function() {
+	},
+
+    events: {
+        'click #dashboard-btn': 'dashboardClicked'
+    },
+
+    dashboardClicked: function () {
+        log('Open Dashboard');
+        return false;
+    }
 	
 });

@@ -33,12 +33,50 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block; }
 
-.full, html, body, #app {
+#character {
+  background-color: #5890AD;
+  height: 400px;
+  line-height: 400px;
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  /* hidden by default */
+  left: 50%;
+  margin-left: -100px;
+  top: 100%; }
+#character.shown {
+  margin-top: -200px;
+  top: 50%; }
+
+.full, html, body, #app, #session, #game {
   height: 100%;
+  overflow: hidden;
   width: 100%; }
 
 body {
+  -webkit-transition-property: background;
+  -moz-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+  -webkit-transition-duration: 3s;
+  -moz-transition-duration: 3s;
+  -o-transition-duration: 3s;
+  transition-duration: 3s;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
   background-color: #efefef; }
+body.ingame {
+  background-color: #222; }
 
 #app footer {
   bottom: 25px;

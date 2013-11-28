@@ -1,10 +1,12 @@
 @import 
 	"compass/reset", 
 	"compass/css3",
-	"constants";
+    "constants",
+    "games/WordComprehensionGame.scss";
 
 .full {
   height: 100%;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -12,7 +14,15 @@ html {@extend .full;}
 
 body {
   @extend .full;
+  @include transition-property(background);
+  @include transition-duration(3s);
+  @include transition-timing-function(ease-in);
+
   background-color: $light-gray;
+
+  &.ingame {
+    background-color: #222;
+  }
 }
 
 #app {
@@ -23,6 +33,14 @@ body {
     position: absolute;
     right: 25px;
   }
+}
+
+#session {
+  @extend .full;
+}
+
+#game {
+  @extend .full;
 }
 
 .btn {

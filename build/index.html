@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>LSCP App</title>
+        <meta name="viewport" content="width=1024, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
 
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
@@ -10,23 +12,23 @@
 
 		<div id="app">
 
-            <button id="start-btn" class="btn">
-                <strong>Commencer</strong>
-                Session de 15 minutes
-            </button>
+		    <div id="home">
 
-            <footer>
-                <button id="parent-btn" class="btn">
-                    Mode parent
+                <button id="start-btn" class="btn">
+                    <strong>Commencer</strong>
+                    Session de 15 minutes
                 </button>
-                <button id="dashboard-btn" class="btn">
-                    Configuration
-                </button>
-            </footer>
+
+                <footer>
+                    <button id="parent-btn" class="btn">Mode parent</button>
+                    <button id="dashboard-btn" class="btn">Configuration</button>
+                </footer>
+
+            </div>
+
+            <div id="session"></div>
 
 		</div>
-
-        <div id="session"></div>
 
 		<!-- LIBS -->
 		<script type="text/javascript" src="js/libs/jquery-1.9.1.min.js"></script>

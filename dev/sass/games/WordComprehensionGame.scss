@@ -1,0 +1,21 @@
+
+#character {
+  background-color: #5890AD;
+  height: 400px;
+  line-height: 400px;
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  @include transition-property(all);
+  @include transition-duration(1s);
+
+  /* hidden by default */
+  left: 50%;
+  margin-left: -100px;
+  top: 100%;
+
+  &.shown {
+    margin-top: -200px;
+    top: 50%;
+  }
+}

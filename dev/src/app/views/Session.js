@@ -8,11 +8,9 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
-        this.render();
     },
 
     render: function(){
-        this.$el.html('SESSION');
         return this;
     },
 
@@ -35,7 +33,9 @@ LSCP.View.Session = Backbone.View.extend({
 
         }
 
-        $(this.current_game_view);
+        this.$el.append(this.current_game_view.render().el);
+
+        this.current_game_view.start();
 
     }
 });

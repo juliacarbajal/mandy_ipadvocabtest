@@ -1,13 +1,24 @@
 LSCP.View.Game = Backbone.View.extend({
 
     id : "game",
-	
+    speed: 1,
+    layersSize: {},
+
 	initialize: function(){
         log('LSCP.View.Game initialized!');
+
+        this.speed = 3;
+
+        this.layersSize = {
+            width: 1024,
+            height: 768
+        };
 	},
 
     render: function(){
-
+        log('LSCP.View.Game.render');
+        this.$el.html('GAME');
+        return this;
     },
 
 
@@ -15,10 +26,12 @@ LSCP.View.Game = Backbone.View.extend({
 
     start: function(){
         log('LSCP.View.Game starts!');
+        $('body').addClass('ingame');
     },
 
     end: function(){
         log('LSCP.View.Game ends!');
+        $('body').removeClass('ingame');
     },
 
 
@@ -43,6 +56,13 @@ LSCP.View.Game = Backbone.View.extend({
     // Game interaction
 
     onTouch: function(){
+    },
+
+
+    // Game assets
+
+    setImages: function(images){
+        collie.ImageManager.add(images);
     }
 
 

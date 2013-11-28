@@ -80,7 +80,7 @@ module.exports = function(grunt) {
     }
   };
 
-  filesToWatch.push('dev/sass/*.scss');
+  filesToWatch.push('dev/sass/**/*.scss');
   defaultTasks.unshift('sass:dev');
   deployTasks.unshift('sass:deploy');
 

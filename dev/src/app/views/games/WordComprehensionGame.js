@@ -126,6 +126,16 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 set: "y",
                 effect: collie.Effect.easeOutQuint
             });
+            this.objects.character_text = new collie.Text({
+                x: "center",
+                y: 180,
+                fontColor: "#FFF",
+                fontSize: 16,
+                fontWeight: "bold",
+                textAlign: 'center',
+                width: 250,
+                height: 100
+            }).text("BRAINS! BRAAAINS!!!").addTo(this.layers.character);
         }.bind(this), 3000 / this.speed);
         collie.Timer.delay(function() {
             collie.Timer.transition(this.objects.background, 1000, {

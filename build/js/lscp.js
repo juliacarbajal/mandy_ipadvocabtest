@@ -45,24 +45,24 @@ LSCP.SessionController = LSCP.SessionController || {
 
     startSession: function(){
 
-        this.current_session = new LSCP.Model.Session({
-            duration: 15 * 60
-        });
-
-        log('startSession', this.current_session.attributes);
-
-        this.current_game = this.current_session.games.shift();
-
-        switch (this.current_game.get('type')) {
-
-            case 'WordComprehensionGame':
-                this.current_game_view = new LSCP.View.WordComprehensionGame({
-                    model: this.current_game
-                });
-
-        }
-
-        $(this.current_game_view);
+//        this.current_session = new LSCP.Model.Session({
+//            duration: 15 * 60
+//        });
+//
+//        log('startSession', this.current_session.attributes);
+//
+//        this.current_game = this.current_session.games.shift();
+//
+//        switch (this.current_game.get('type')) {
+//
+//            case 'WordComprehensionGame':
+//                this.current_game_view = new LSCP.View.WordComprehensionGame({
+//                    model: this.current_game
+//                });
+//
+//        }
+//
+//        $(this.current_game_view);
 
     }
 };
@@ -134,6 +134,24 @@ LSCP.Model.Game = Backbone.Model.extend({
 	}
 
 });
+LSCP.Model.GameSession = Backbone.Model.extend({
+	
+	initialize: function(){
+        this.set({
+            started_at: new Date()
+        });
+
+        this.levels = new LSCP.Collection.LevelCollection([]);
+    }
+
+});
+LSCP.Model.Level = Backbone.Model.extend({
+	
+	initialize: function(){
+        this.stages = new LSCP.Collection.StageCollection([]);
+    }
+
+});
 LSCP.Model.Session = Backbone.Model.extend({
 	
 	initialize: function(){
@@ -147,9 +165,31 @@ LSCP.Model.Session = Backbone.Model.extend({
     }
 
 });
+LSCP.Model.Stage = Backbone.Model.extend({
+	
+	initialize: function(){
+    }
+
+});
 LSCP.Collection.GameCollection = Backbone.Collection.extend({
 
     model : LSCP.Model.Game,
+
+    initialize : function() {
+    }
+
+});
+LSCP.Collection.LevelCollection = Backbone.Collection.extend({
+
+    model : LSCP.Model.Level,
+
+    initialize : function() {
+    }
+
+});
+LSCP.Collection.StageCollection = Backbone.Collection.extend({
+
+    model : LSCP.Model.Stage,
 
     initialize : function() {
     }
@@ -172,8 +212,7 @@ LSCP.View.Base = Backbone.View.extend({
     start: function(){
 //        LSCP.SessionController.render();
         $('#home').hide();
-        var session = new LSCP.View.Session();
-        session.startSession();
+        new LSCP.View.Session();
     },
 
 	render : function() {
@@ -310,19 +349,20 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
+
+        $.getJSON('data/config.json', this.onConfigLoaded.bind(this));
     },
 
     render: function(){
         return this;
     },
 
+    onConfigLoaded: function(data){
+        this.current_session = new LSCP.Model.Session(data);
+        this.startSession();
+    },
+
     startSession: function(){
-
-        this.current_session = new LSCP.Model.Session({
-            duration: 15 * 60
-        });
-
-        log('startSession', this.current_session.attributes);
 
         this.current_game = this.current_session.games.shift();
 

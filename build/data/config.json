@@ -1,5 +1,103 @@
 {
-    "id" : 1,
-    "title" : "Configuration",
-    "version" : "v1"
+    "name": "Standard test session",
+    "session": {
+        "time_limit": 900,
+        "levels":
+            [
+                {
+                    "name": "train the baby on the fact that there are hidden objects to touch",
+                    "background_image": "/img/background.jpg",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "fruits",
+                                "objects_order": "NATURAL",
+                                "objects": [
+                                    "apple"
+                                ],
+                                "time_idle": 15,
+                                "ask_for": "apple"
+                            },
+                            {
+                                "objects_family": "fruits",
+                                "objects_order": "NATURAL",
+                                "objects": [
+                                    "banana"
+                                ],
+                                "time_idle": 15,
+                                "ask_for": "apple"
+                            }
+                        ]
+                },
+                {
+                    "name": "train the baby on the fact that there is a forced choice",
+                    "background_image": "/img/background.jpg",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "fruits",
+                                "objects_order": "NATURAL",
+                                "objects": [
+                                    "apple",
+                                    "banana"
+                                ],
+                                "time_idle": 15,
+                                "ask_for": "apple"
+                            },
+                            {
+                                "objects_family": "fruits",
+                                "objects_order": "NATURAL",
+                                "objects": [
+                                    "apple",
+                                    "banana"
+                                ],
+                                "time_idle": 15,
+                                "ask_for": "banana"
+                            }
+                        ]
+                },
+                {
+                    "name": "train the baby on the fact that there is a forced choice & he needs to remember where's what in this trial, cause it might change",
+                    "background_image": "/img/background.jpg",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "fruits",
+                                "objects_order": "NATURAL",
+                                "objects": [
+                                    "apple",
+                                    "banana"
+                                ],
+                                "time_idle": 15,
+                                "ask_for": "banana"
+                            },
+                            {
+                                "objects_family": "fruits",
+                                "objects_order": "NATURAL",
+                                "objects": [
+                                    "banana",
+                                    "apple"
+                                ],
+                                "time_idle": 15,
+                                "ask_for": "apple"
+                            }
+                        ]
+                }
+            ]
+    }
 }

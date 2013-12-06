@@ -8,19 +8,20 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
+
+        $.getJSON('data/config.json', this.onConfigLoaded.bind(this));
     },
 
     render: function(){
         return this;
     },
 
+    onConfigLoaded: function(data){
+        this.current_session = new LSCP.Model.Session(data);
+        this.startSession();
+    },
+
     startSession: function(){
-
-        this.current_session = new LSCP.Model.Session({
-            duration: 15 * 60
-        });
-
-        log('startSession', this.current_session.attributes);
 
         this.current_game = this.current_session.games.shift();
 

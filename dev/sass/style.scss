@@ -15,7 +15,7 @@ html {@extend .full;}
 body {
   @extend .full;
   @include transition-property(background);
-  @include transition-duration(3s);
+  @include transition-duration(1s);
   @include transition-timing-function(ease-in);
 
   background-color: $light-gray;

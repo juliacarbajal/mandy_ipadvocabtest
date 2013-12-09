@@ -51,7 +51,7 @@ LSCP.View.Game = Backbone.View.extend({
 
     // Game assets
 
-    setImages: function(images){
+    preloadImages: function(images){
         collie.ImageManager.add(images);
     }
 

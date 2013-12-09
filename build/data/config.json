@@ -2,6 +2,11 @@
     "name": "Standard test session",
     "session": {
         "time_limit": 900,
+        "assets": {
+            "objects": {
+                "fruits": ["apple","banana","cherry","pear"]
+            }
+        },
         "levels":
             [
                 {
@@ -30,7 +35,7 @@
                                     "banana"
                                 ],
                                 "time_idle": 15,
-                                "ask_for": "apple"
+                                "ask_for": "banana"
                             }
                         ]
                 },

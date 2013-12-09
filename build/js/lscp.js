@@ -66,6 +66,16 @@ LSCP.SessionController = LSCP.SessionController || {
 
     }
 };
+LSCP.Model.Action = Backbone.Model.extend({
+	
+	initialize: function(){
+        this.set({
+            at: new Date()
+        });
+
+    }
+
+});
 
 LSCP.Model.Config = Backbone.Model.extend({
 	
@@ -119,15 +129,7 @@ LSCP.Model.Game = Backbone.Model.extend({
 	initialize: function(){
         this.set({
             name: 'Word and sentence comprehension',
-            type: 'WordComprehensionGame',
-            difficulty: {
-                stages: 10,
-                trunks: 4
-            },
-            settings: {
-                timeout_no_answer: 5, // seconds
-                timeout_end_on_idle: 20 // seconds
-            }
+            type: 'WordComprehensionGame'
         });
 
         log('LSCP.Model.Game initialized!', JSON.stringify(this));
@@ -142,7 +144,29 @@ LSCP.Model.GameSession = Backbone.Model.extend({
         });
 
         this.levels = new LSCP.Collection.LevelCollection([]);
+        this.actions = new LSCP.Collection.ActionCollection([]);
+    },
+
+    saveAction: function(action, value){
+
+        log('saveAction');
+
+        this.actions.add(new LSCP.Model.Action({
+            action: action,
+            value: value
+        }));
+
+        log('actions:', this.actions);
+
     }
+
+    /*
+    TODO:
+    - handle game session data (config + results)
+    - enforce time limit
+    - give access to levels and stages
+    - give final reward
+     */
 
 });
 LSCP.Model.Level = Backbone.Model.extend({
@@ -168,6 +192,14 @@ LSCP.Model.Session = Backbone.Model.extend({
 LSCP.Model.Stage = Backbone.Model.extend({
 	
 	initialize: function(){
+    }
+
+});
+LSCP.Collection.ActionCollection = Backbone.Collection.extend({
+
+    model : LSCP.Model.Action,
+
+    initialize : function() {
     }
 
 });
@@ -285,26 +317,16 @@ LSCP.View.Game = Backbone.View.extend({
 
     // Game iteration management
 
-    onIteration: function(){
-    },
-
-    onCorrectAnswer: function(){
-    },
-
-    onWrongAnswer: function(){
-    },
-
-    onNoAnswer: function(){
-    },
-
-    onIdle: function(){
-    },
+    onIteration: function(){},
+    onCorrectAnswer: function(){},
+    onWrongAnswer: function(){},
+    onNoAnswer: function(){},
+    onIdle: function(){},
 
 
     // Game interaction
 
-    onTouch: function(){
-    },
+    onTouch: function(){},
 
 
     // Game assets
@@ -343,8 +365,9 @@ LSCP.View.Session = Backbone.View.extend({
 
     el: "#session",
 
-    current_session: null,
+    config: null,
     current_game: null,
+    current_game_session: null,
     current_game_view: null,
 
     initialize: function(){
@@ -358,13 +381,20 @@ LSCP.View.Session = Backbone.View.extend({
     },
 
     onConfigLoaded: function(data){
-        this.current_session = new LSCP.Model.Session(data);
+        this.config = new LSCP.Model.Session(data);
         this.startSession();
     },
 
     startSession: function(){
 
-        this.current_game = this.current_session.games.shift();
+        this.current_game_session = new LSCP.Model.GameSession(this.config.session);
+
+        this.current_game = this.config.games.shift();
+        this.current_game.game_session = this.current_game_session;
+
+        this.current_game_session.set({
+            game: this.current_game
+        });
 
         switch (this.current_game.get('type')) {
 
@@ -404,10 +434,12 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
          */
 	},
 
-    template: '{{difficulty.trunks}} TRUNKS + CHARACTER',
+    template: 'TRUNKS + CHARACTER',
 
     render: function(){
         log('LSCP.View.WordComprehensionGame.render');
+//        log(this.model.session.current_session.attributes);
+
 //        var template = Handlebars.compile(this.template);
 //        this.$el.html(template(this.model.attributes));
 
@@ -440,7 +472,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         this.layers.trunks = new collie.Layer(this.layersSize);
         this.objects.trunks = [];
-        _.times(this.model.attributes.difficulty.trunks, function(){
+        _.times(4, function(){
             this.objects.trunks.push(new collie.DisplayObject({
                 backgroundImage: "trunk",
                 height: 239,
@@ -459,13 +491,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             trunk.attach({
                 mousedown: function () {
                     log('You touched trunk #'+i);
+                    this.model.game_session.saveAction('touch', 'trunk#'+i);
                     var currentY = trunk.get('y');
                     collie.Timer.transition(trunk, 400, {
                         to: currentY - 100,
                         set: "y",
                         effect: collie.Effect.wave(2, 0.25)
                     });
-                }
+                }.bind(this)
             });
         }, this);
 

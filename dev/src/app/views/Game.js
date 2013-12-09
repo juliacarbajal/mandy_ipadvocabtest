@@ -37,26 +37,16 @@ LSCP.View.Game = Backbone.View.extend({
 
     // Game iteration management
 
-    onIteration: function(){
-    },
-
-    onCorrectAnswer: function(){
-    },
-
-    onWrongAnswer: function(){
-    },
-
-    onNoAnswer: function(){
-    },
-
-    onIdle: function(){
-    },
+    onIteration: function(){},
+    onCorrectAnswer: function(){},
+    onWrongAnswer: function(){},
+    onNoAnswer: function(){},
+    onIdle: function(){},
 
 
     // Game interaction
 
-    onTouch: function(){
-    },
+    onTouch: function(){},
 
 
     // Game assets

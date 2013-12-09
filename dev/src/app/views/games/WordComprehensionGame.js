@@ -21,10 +21,12 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
          */
 	},
 
-    template: '{{difficulty.trunks}} TRUNKS + CHARACTER',
+    template: 'TRUNKS + CHARACTER',
 
     render: function(){
         log('LSCP.View.WordComprehensionGame.render');
+//        log(this.model.session.current_session.attributes);
+
 //        var template = Handlebars.compile(this.template);
 //        this.$el.html(template(this.model.attributes));
 
@@ -57,7 +59,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         this.layers.trunks = new collie.Layer(this.layersSize);
         this.objects.trunks = [];
-        _.times(this.model.attributes.difficulty.trunks, function(){
+        _.times(4, function(){
             this.objects.trunks.push(new collie.DisplayObject({
                 backgroundImage: "trunk",
                 height: 239,
@@ -76,13 +78,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             trunk.attach({
                 mousedown: function () {
                     log('You touched trunk #'+i);
+                    this.model.game_session.saveAction('touch', 'trunk#'+i);
                     var currentY = trunk.get('y');
                     collie.Timer.transition(trunk, 400, {
                         to: currentY - 100,
                         set: "y",
                         effect: collie.Effect.wave(2, 0.25)
                     });
-                }
+                }.bind(this)
             });
         }, this);
 

@@ -18,11 +18,12 @@ body {
   @include transition-duration(1s);
   @include transition-timing-function(ease-in);
 
-  background-color: $light-gray;
+  background-color: #222;
 
-  &.ingame {
-    background-color: #222;
-  }
+//  background-color: $light-gray;
+
+//  &.ingame {
+//  }
 }
 
 #app {

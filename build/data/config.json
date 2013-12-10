@@ -21,18 +21,22 @@
                         [
                             {
                                 "objects_family": "fruits",
-                                "objects_order": "NATURAL",
                                 "objects": [
                                     "apple"
+                                ],
+                                "objects_positions": [
+                                    "CENTER_LEFT"
                                 ],
                                 "time_idle": 15,
                                 "ask_for": "apple"
                             },
                             {
                                 "objects_family": "fruits",
-                                "objects_order": "NATURAL",
                                 "objects": [
                                     "banana"
+                                ],
+                                "objects_positions": [
+                                    "CENTER_RIGHT"
                                 ],
                                 "time_idle": 15,
                                 "ask_for": "banana"
@@ -51,7 +55,6 @@
                         [
                             {
                                 "objects_family": "fruits",
-                                "objects_order": "NATURAL",
                                 "objects": [
                                     "apple",
                                     "banana"
@@ -61,7 +64,6 @@
                             },
                             {
                                 "objects_family": "fruits",
-                                "objects_order": "NATURAL",
                                 "objects": [
                                     "apple",
                                     "banana"
@@ -83,7 +85,6 @@
                         [
                             {
                                 "objects_family": "fruits",
-                                "objects_order": "NATURAL",
                                 "objects": [
                                     "apple",
                                     "banana"
@@ -93,7 +94,6 @@
                             },
                             {
                                 "objects_family": "fruits",
-                                "objects_order": "NATURAL",
                                 "objects": [
                                     "banana",
                                     "apple"

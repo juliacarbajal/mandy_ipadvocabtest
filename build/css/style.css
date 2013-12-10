@@ -74,8 +74,6 @@ body {
   -moz-transition-timing-function: ease-in;
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
-  background-color: #efefef; }
-body.ingame {
   background-color: #222; }
 
 #app footer {

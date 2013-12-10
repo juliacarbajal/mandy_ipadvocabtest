@@ -7,12 +7,27 @@ LSCP.View.Game = Backbone.View.extend({
 	initialize: function(){
         log('LSCP.View.Game initialized!');
 
-        this.speed = 3;
+        this.speed = 1;
 
         this.layersSize = {
             width: 1024,
             height: 768
         };
+
+        this.pos = {
+            CENTER_CENTER: {x: 'center', y: 'center'},
+            CENTER_LEFT:   {x: 0,        y: 'center'},
+            CENTER_RIGHT:  {x: 'right',  y: 'center'},
+            TOP_LEFT:      {x: 0,        y: 0},
+            TOP_RIGHT:     {x: 'right',  y: 0},
+            BOTTOM_RIGHT:  {x: 'right',  y: 'bottom'},
+            BOTTOM_LEFT:   {x: 0,        y: 'bottom'}
+        };
+        this.pos = _.extend({
+            FOR_1: [this.pos.CENTER_CENTER],
+            FOR_2: [this.pos.CENTER_LEFT, this.pos.CENTER_RIGHT],
+            FOR_4: [this.pos.TOP_LEFT, this.pos.TOP_RIGHT, this.pos.BOTTOM_RIGHT, this.pos.BOTTOM_LEFT]
+        }, this.pos);
 	},
 
     render: function(){
@@ -26,12 +41,10 @@ LSCP.View.Game = Backbone.View.extend({
 
     start: function(){
         log('LSCP.View.Game starts!');
-        $('body').addClass('ingame');
     },
 
     end: function(){
         log('LSCP.View.Game ends!');
-        $('body').removeClass('ingame');
     },
 
 
@@ -52,7 +65,8 @@ LSCP.View.Game = Backbone.View.extend({
     // Game assets
 
     preloadImages: function(images){
-        collie.ImageManager.add(images);
+        log('LSCP.View.Game is preloading images...');
+        collie.ImageManager.add(images, this.start.bind(this));
     }
 
 

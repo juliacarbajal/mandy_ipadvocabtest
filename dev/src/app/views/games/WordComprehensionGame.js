@@ -15,15 +15,12 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.game_session = this.model.get("session");
 
         // Preload assets
-        this.preloadImages({
-            background: LSCP.Locations.Images + "background.jpg",
-            character: LSCP.Locations.Images + "character.png",
-            slot: LSCP.Locations.Images + "trunk.png"
-        });
+        var objects_to_preload = [
+            ['background', LSCP.Locations.Images + "background.jpg"],
+            ['character', LSCP.Locations.Images + "character.png"],
+            ['slot', LSCP.Locations.Images + "trunk.png"]
+        ];
 
-        log(this.game_session.get('assets').objects);
-
-        var objects_to_preload = [];
         _.each(this.game_session.get('assets').objects, function(objects, objects_family){
             _.each(objects, function(object){
                 objects_to_preload.push([objects_family + "_" + object, LSCP.Locations.Images + "objects/" + objects_family + "/" + object + ".png"]);
@@ -43,10 +40,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     render: function(){
         log('LSCP.View.WordComprehensionGame.render');
-        log('We start with the following level:', this.game_session.get('levels[0].name'));
 
-//        var template = Handlebars.compile(this.template);
-//        this.$el.html(template(this.model.attributes));
 
         // Background
 
@@ -75,7 +69,12 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Object slots
 
-        this.layers.slots = new collie.Layer(this.layersSize);
+        this.layers.slots = new collie.Layer({
+            x: 20,
+            y: 20,
+            width: this.layersSize.width - 40,
+            height: this.layersSize.height - 40
+        });
 
 
         // HUD
@@ -88,7 +87,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             fontSize: 12,
             textAlign: 'center',
             width: this.layersSize.width,
-            height: 100
+            height: 100,
+            visible: false
         }).addTo(this.layers.hud);
         this.objects.subtitles = new collie.Text({
             x: "center",
@@ -118,6 +118,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     start: function(){
         LSCP.View.Game.prototype.start.apply(this, arguments);
+        log('LSCP.View.WordComprehensionGame starts!');
 
         this.current_level = 0;
         this.current_stage = 0;
@@ -138,6 +139,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         if (this.current_level > this.game_session.get('levels').length - 1) {
             this.end();
+            return;
         }
 
         log("NEXT STAGE: level ", this.current_level, "stage", this.current_stage);
@@ -171,57 +173,35 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         var level = this.game_session.get('levels').at(this.current_level);
         var stage = level.get('stages').at(this.current_stage);
 
-        var show_character = true;
-        var prefix_ask_for = "";
+//        var show_character = true;
+        var prefix_ask_for = "Where is the ";
+        var suffix_ask_for = "?";
 
         // Object slots
 
         this.objects.slots = [];
+        var objects_positions = this.pos['FOR_' + stage.get("objects").length];
 
-        _.times(stage.get("objects").length, function(n){
-            this.objects.slots.push(new collie.DisplayObject({
-                backgroundImage: stage.get("objects_family")+"_"+stage.get("objects")[n],
-                height: 250,
-                width: 250,
-                opacity: 0
-            }));
-        }, this);
+        // "Tutorial" mode when only one object
+//        if (stage.get("objects").length == 1) {
+//            show_character = false;
+//            prefix_ask_for = "This is: ";
+//        }
 
-        switch (stage.get("objects").length) {
-            case 1:
-                this.objects.slots[0].set({x: "center", y: "center"});
-                show_character = false;
-                prefix_ask_for = "This is: ";
-                break;
-
-            case 2:
-                this.objects.slots[0].set({x: 20, y: "center"});
-                this.objects.slots[1].set({x: this.layersSize.width - 270, y: "center"});
-                prefix_ask_for = "I want: ";
-                break;
-
-            case 4:
-                this.objects.slots[0].set({x: 20, y: 20});
-                this.objects.slots[1].set({x: this.layersSize.width - 270, y: 20});
-                this.objects.slots[2].set({x: this.layersSize.width - 270, y: this.layersSize.height - 270});
-                this.objects.slots[3].set({x: 20, y: this.layersSize.height - 270});
-                prefix_ask_for = "I want: ";
-                break;
+        // Override objects positions
+        if (stage.has("objects_positions")) {
+            objects_positions = _.map(stage.get("objects_positions"), function(pos) {
+                return this.pos[pos];
+            }, this);
         }
 
-        _.each(this.objects.slots, function(slot, i){
-            slot.addTo(this.layers.slots);
-            slot.attach({
-                mousedown: function () {
-                    log("You touched: "+stage.get("objects")[i]);
-                    this.game_session.saveAction('touch', 'slot#'+i);
-
-                    if (stage.get("objects")[i] == stage.get("ask_for"))
-                        this.onCorrectAnswer(slot);
-                    else
-                        this.onWrongAnswer();
-                }.bind(this)
-            });
+        _.each(stage.get("objects"), function(object, i){
+            var slot = new collie.DisplayObject({
+                backgroundColor: 'rgba(255,255,255,0)',
+                backgroundImage: stage.get("objects_family") + "_" + object,
+                opacity: 0
+            }).set(objects_positions[i]).addTo(this.layers.slots);
+            this.objects.slots.push(slot);
         }, this);
 
 
@@ -229,55 +209,116 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         this.objects.hud_text.text('LEVEL: ' + level.get('name'));
 
-        collie.Timer.delay(function() {
-            if (show_character) collie.Timer.transition(this.objects.character, 1000, {
-                to: 200,
-                set: "y",
-                effect: collie.Effect.easeOutQuint
-            });
-            this.objects.subtitles.text("♫ " + prefix_ask_for + stage.get('ask_for'));
-        }.bind(this), 3000 / this.speed);
 
-        collie.Timer.delay(function() {
-            collie.Timer.transition(this.objects.background, 1000, {
-                to: 0.5,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            });
-            collie.Timer.transition(this.objects.slots, 1000, {
+        // Display queue
+
+        collie.Timer.queue().
+
+            delay(function(){
+                this.objects.hud_text.set({visible: true});
+            }.bind(this), 1000 / this.speed).
+
+            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
                 from: 0,
                 to: 1,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
-            });
-        }.bind(this), 6000 / this.speed);
+            }).
 
-        /* TODO
-        - the character arrives and asks for an object
-        - display the background and the objects
-        */
+            delay(function(){}, 3000 / this.speed).
+
+            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
+                from: 1,
+                to: 0.1,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            transition(this.objects.character, 1000 / this.speed, {
+                to: 200,
+                set: "y",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            delay(function(){
+                this.objects.subtitles.set({visible: true}).text("♫ " + prefix_ask_for + stage.get('ask_for') + suffix_ask_for);
+            }.bind(this), 500 / this.speed).
+
+            delay(function(){}, 3000 / this.speed).
+
+            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
+                from: 0,
+                to: 1,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            delay(function(){
+                _.each(this.objects.slots, function(slot, i){
+                    slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
+                        .attach({
+                            mousedown: function () {
+                                this.game_session.saveAction('touch', 'slot#'+i);
+
+                                _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
+                                _.invoke(this.objects.slots, 'detachAll');
+
+                                if (stage.get("objects")[i] == stage.get("ask_for"))
+                                    this.onCorrectAnswer(slot);
+                                else
+                                    this.onWrongAnswer();
+                        }.bind(this)
+                    });
+                }, this);
+            }.bind(this), 50 / this.speed)
+
+        ;
+
     },
 
     onCorrectAnswer: function(slot){
         LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
 
         // Success sound
-        this.objects.subtitles.text("♫ BRAVO!");
+        this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
 
-        // Animate object
+
+        // Display queue
+
         var currentY = slot.get('y');
-        collie.Timer.transition(slot, 400, {
-            to: currentY - 100,
-            set: "y",
-            effect: collie.Effect.wave(2, 0.25)
-        });
+        collie.Timer.queue().
 
-        collie.Timer.delay(function() {
-            if (!_.isUndefined(this.objects.slots)) this.layers.slots.removeChildren(this.objects.slots);
-            this.nextStage();
-        }.bind(this), 6000 / this.speed);
+            transition(slot, 400 / this.speed, {
+                to: currentY - 100,
+                set: "y",
+                effect: collie.Effect.wave(2, 0.25)
+            }).
 
-//        $('body').removeClass('ingame');
+            delay(function(){}, 2000 / this.speed).
+
+            delay(function(){
+                this.objects.subtitles.set({visible: false});
+            }.bind(this), 50 / this.speed).
+
+            transition(this.objects.character, 1000 / this.speed, {
+                to: 800,
+                set: "y",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
+                from: 1,
+                to: 0,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            delay(function(){
+                this.layers.slots.removeChildren(this.objects.slots);
+                this.nextStage();
+            }.bind(this), 2000 / this.speed)
+
+        ;
 
         /* TODO
         - animate object and character
@@ -292,12 +333,38 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
         // Failure sound
-        this.objects.subtitles.text("♫ NO, YOU'RE WRONG");
+        this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
-        collie.Timer.delay(function() {
-            if (!_.isUndefined(this.objects.slots)) this.layers.slots.removeChildren(this.objects.slots);
-            this.retryStage();
-        }.bind(this), 6000 / this.speed);
+
+        // Display queue
+
+        collie.Timer.queue().
+
+            delay(function(){}, 2000 / this.speed).
+
+            delay(function(){
+                this.objects.subtitles.set({visible: false});
+            }.bind(this), 0).
+
+            transition(this.objects.character, 1000 / this.speed, {
+                to: 800,
+                set: "y",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
+                from: 1,
+                to: 0,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            delay(function(){
+                this.layers.slots.removeChildren(this.objects.slots);
+                this.retryStage();
+            }.bind(this), 2000 / this.speed)
+
+        ;
 
         /* TODO
          - animate object and character

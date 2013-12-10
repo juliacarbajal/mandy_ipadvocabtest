@@ -47,7 +47,7 @@ LSCP.View.Session = Backbone.View.extend({
 
         this.$el.append(this.current_game_view.render().el);
 
-        this.current_game_view.start();
+//        this.current_game_view.start();
 
     }
 });

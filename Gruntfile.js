@@ -30,6 +30,13 @@ module.exports = function(grunt) {
           'dev/src/libs/*.js'
         ],
         dest: 'build/js/libs/libs.js'
+      },
+      css : {
+        src : [
+            'build/css/style.css',
+            'dev/css/**/*.css'
+        ],
+        dest: 'build/css/style.css'
       }
     },
     
@@ -66,7 +73,7 @@ module.exports = function(grunt) {
       deployTasks = ['jshint', 'concat', 'uglify'];
 
   configOptions.sass = {
-      dev: {
+    dev: {
       src: 'dev/sass/style.scss',
       dest: 'build/css/style.css',
       options: {
@@ -80,6 +87,7 @@ module.exports = function(grunt) {
     }
   };
 
+  filesToWatch.push('dev/css/**/*.css');
   filesToWatch.push('dev/sass/**/*.scss');
   defaultTasks.unshift('sass:dev');
   deployTasks.unshift('sass:deploy');

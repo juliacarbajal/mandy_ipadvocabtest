@@ -5,6 +5,7 @@
 		<title>LSCP App</title>
         <meta name="viewport" content="width=1024, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" href="img/touchicon.png">
 
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
@@ -16,7 +17,6 @@
 
                 <button id="start-btn" class="btn">
                     <strong>Commencer</strong>
-                    Session de 15 minutes
                 </button>
 
                 <footer>
@@ -29,6 +29,13 @@
             <div id="session"></div>
 
 		</div>
+
+        <script type="text/javascript">
+            var addToHomeConfig = {
+                expire: 0,
+                startDelay: 500
+            };
+        </script>
 
 		<!-- LIBS -->
 		<script type="text/javascript" src="js/libs/jquery-1.9.1.min.js"></script>

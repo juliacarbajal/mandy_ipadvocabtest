@@ -5,7 +5,8 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
         time_limit: null,
         game: null,
         levels: [],
-        actions: []
+        actions: [],
+        progress: 0
     },
 
     relations: [
@@ -26,12 +27,26 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
         }
     ],
 
+    validate: function(attributes){
+        if(attributes.progress < 0 || attributes.progress > 100){
+            return "Invalid progress (should be between 0 and 100)";
+        }
+    },
+
     initialize: function(){
         log('LSCP.Model.GameSession.initialize');
+
+        this.on("invalid", function(model, error){
+            log('GameSession validation error:', error);
+        });
+        this.on('change:progress', function(){
+            log('New progress:', this.get('progress'));
+        });
 
         this.set({
             started_at: new Date()
         });
+
     },
 
     saveAction: function(action, value){

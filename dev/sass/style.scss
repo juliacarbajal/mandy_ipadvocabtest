@@ -44,6 +44,25 @@ body {
   @extend .full;
 }
 
+#progressbar {
+  height: 21px;
+  left: 50%;
+  line-height: 25px;
+  margin-left: -150px;
+  overflow: hidden;
+  padding: 2px;
+  position: absolute;
+  text-align: center;
+  top: 50px;
+  width: 300px;
+  z-index: 10;
+
+  .bar {
+    height: 21px;
+    width: 0;
+  }
+}
+
 .btn {
   font-size: 18px;
   padding: 5px;

@@ -1,4 +1,20 @@
 
+#progressbar {
+  background-color: rgba(255,255,255,0.5);
+  -webkit-box-shadow: 0 1px 3px 1px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px 1px rgba(0,0,0,0.2);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+
+  .bar {
+    background-color: #fff669;
+    @include transition-property(width);
+    @include transition-duration(1s);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+}
+
 #character {
   background-color: #5890AD;
   height: 400px;

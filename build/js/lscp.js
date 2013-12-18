@@ -147,7 +147,8 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
         time_limit: null,
         game: null,
         levels: [],
-        actions: []
+        actions: [],
+        progress: 0
     },
 
     relations: [
@@ -168,12 +169,26 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
         }
     ],
 
+    validate: function(attributes){
+        if(attributes.progress < 0 || attributes.progress > 100){
+            return "Invalid progress (should be between 0 and 100)";
+        }
+    },
+
     initialize: function(){
         log('LSCP.Model.GameSession.initialize');
+
+        this.on("invalid", function(model, error){
+            log('GameSession validation error:', error);
+        });
+        this.on('change:progress', function(){
+            log('New progress:', this.get('progress'));
+        });
 
         this.set({
             started_at: new Date()
         });
+
     },
 
     saveAction: function(action, value){
@@ -292,6 +307,7 @@ LSCP.View.Base = Backbone.View.extend({
 
     start: function(){
 //        LSCP.SessionController.render();
+        window.addToHome.close();
         $('#home').hide();
         new LSCP.View.Session();
     },
@@ -330,13 +346,20 @@ LSCP.View.Dashboard = Backbone.View.extend({
 LSCP.View.Game = Backbone.View.extend({
 
     id : "game",
+    game_session: null,
     speed: 1,
+    progressbar: null,
     layersSize: {},
 
 	initialize: function(){
         log('LSCP.View.Game initialized!');
 
+        this.game_session = this.model.get("session");
+
         this.speed = 1;
+        this.progressbar = new LSCP.View.ProgressBar({
+            model: this.game_session
+        });
 
         this.layersSize = {
             width: 1024,
@@ -361,7 +384,9 @@ LSCP.View.Game = Backbone.View.extend({
 
     render: function(){
         log('LSCP.View.Game.render');
-        this.$el.html('GAME');
+
+        this.$el.html('').prepend(this.progressbar.el);
+
         return this;
     },
 
@@ -424,6 +449,29 @@ LSCP.View.Loading = Backbone.View.extend({
 	path : "loading.html"
 	
 });
+
+LSCP.View.ProgressBar = Backbone.View.extend({
+
+    id: 'progressbar',
+
+    initialize: function() {
+        log('LSCP.View.ProgressBar initialized!');
+        this.render();
+
+        this.model.bind('change', _.bind(this.render, this));
+    },
+
+    template: Handlebars.compile('<div class="bar" title="{{progress}}%"></div>'),
+
+	render : function() {
+        log('LSCP.View.ProgressBar.render');
+        this.$el.html(this.template(this.model.attributes))
+                .find('.bar').css('width', (this.model.get('progress') * 300 / 100) + 'px');
+        return this;
+	}
+
+});
+
 LSCP.View.Session = Backbone.View.extend({
 
     el: "#session",
@@ -479,7 +527,6 @@ LSCP.View.Session = Backbone.View.extend({
 });
 LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
-    game_session: null,
     current_level: null,
     current_stage: null,
     layers: {},
@@ -490,8 +537,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         LSCP.View.Game.prototype.initialize.apply(this, arguments);
 
         log('LSCP.View.WordComprehensionGame initialized!');
-
-        this.game_session = this.model.get("session");
 
         // Preload assets
         var objects_to_preload = [
@@ -515,9 +560,16 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
          */
 	},
 
-    template: '',
+    getCurrentLevel: function(){
+        return this.game_session.get('levels').at(this.current_level);
+    },
+
+    getCurrentStage: function(){
+        return this.getCurrentLevel().get('stages').at(this.current_stage);
+    },
 
     render: function(){
+        LSCP.View.Game.prototype.render.apply(this, arguments);
         log('LSCP.View.WordComprehensionGame.render');
 
 
@@ -607,7 +659,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     nextStage: function(){
 
-        var level = this.game_session.get('levels').at(this.current_level);
+        var level = this.getCurrentLevel();
 
         this.current_stage += 1;
 
@@ -649,29 +701,35 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         log('onIteration', this.current_level, this.current_stage);
 
-        var level = this.game_session.get('levels').at(this.current_level);
-        var stage = level.get('stages').at(this.current_stage);
+        var level = this.getCurrentLevel();
+        var stage = this.getCurrentStage();
+
+        // Progress
+        if (this.current_stage === 0) this.game_session.set({progress: 0});
 
 //        var show_character = true;
-        var prefix_ask_for = "Where is the ";
-        var suffix_ask_for = "?";
+        var introduce_objects = true;
 
         // Object slots
 
         this.objects.slots = [];
-        var objects_positions = this.pos['FOR_' + stage.get("objects").length];
 
         // "Tutorial" mode when only one object
 //        if (stage.get("objects").length == 1) {
+//            introduce_objects = true;
 //            show_character = false;
-//            prefix_ask_for = "This is: ";
 //        }
 
         // Override objects positions
-        if (stage.has("objects_positions")) {
+        var objects_positions = [];
+        if (stage.get("objects_positions") == 'NATURAL') {
+            objects_positions = this.pos['FOR_' + stage.get("objects").length];
+        } else if (_.isArray(stage.get("objects_positions"))) {
             objects_positions = _.map(stage.get("objects_positions"), function(pos) {
                 return this.pos[pos];
             }, this);
+        } else {
+            throw 'Wrong value for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;
         }
 
         _.each(stage.get("objects"), function(object, i){
@@ -697,35 +755,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 this.objects.hud_text.set({visible: true});
             }.bind(this), 1000 / this.speed).
 
-            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
-                from: 0,
-                to: 1,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            }).
-
-            delay(function(){}, 3000 / this.speed).
-
-            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
-                from: 1,
-                to: 0.1,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            }).
-
-            transition(this.objects.character, 1000 / this.speed, {
-                to: 200,
-                set: "y",
-                effect: collie.Effect.easeOutQuint
-            }).
-
-            delay(function(){
-                this.objects.subtitles.set({visible: true}).text("♫ " + prefix_ask_for + stage.get('ask_for') + suffix_ask_for);
-            }.bind(this), 500 / this.speed).
-
-            delay(function(){}, 3000 / this.speed).
-
-            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
+            transition(this.objects.background, 1000 / this.speed, {
                 from: 0,
                 to: 1,
                 set: "opacity",
@@ -733,23 +763,57 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-                _.each(this.objects.slots, function(slot, i){
-                    slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
-                        .attach({
-                            mousedown: function () {
-                                this.game_session.saveAction('touch', 'slot#'+i);
+                if (introduce_objects) {
+                    this.introduceObject(this.objects.slots[0], 0);
+                }
+                else this.onObjectsIntroduced();
+            }.bind(this), 0)
 
-                                _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
-                                _.invoke(this.objects.slots, 'detachAll');
+        ;
 
-                                if (stage.get("objects")[i] == stage.get("ask_for"))
-                                    this.onCorrectAnswer(slot);
-                                else
-                                    this.onWrongAnswer();
+    },
+
+    introduceObject: function(slot, i){
+        var stage = this.getCurrentStage();
+
+        collie.Timer.queue().
+
+            transition(slot, 1000 / this.speed, {
+                from: 0,
+                to: 1,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            delay(function(){
+                this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
+
+                slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
+                    .attach({
+                        mousedown: function () {
+                            var currentY = slot.get('y');
+                            collie.Timer.transition(slot, 400 / this.speed, {
+                                to: currentY - 100,
+                                set: "y",
+                                effect: collie.Effect.wave(2, 0.25)
+                            });
+
+                            this.objects.subtitles.set({visible: false});
+
+                            _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
+                            _.invoke(this.objects.slots, 'detachAll');
+
+                            setTimeout(function(){
+                                if (i < stage.get("objects").length - 1) {
+                                    i++;
+                                    this.introduceObject(this.objects.slots[i], i);
+                                } else {
+                                    this.onObjectsIntroduced();
+                                }
+                            }.bind(this), 2000 / this.speed);
                         }.bind(this)
                     });
-                }, this);
-            }.bind(this), 50 / this.speed)
+            }.bind(this), 0)
 
         ;
 
@@ -761,6 +825,11 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Success sound
         this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
 
+        // Progress
+        var level = this.getCurrentLevel();
+        var progress = 100 / level.get('stages').length * (this.current_stage+1);
+//        log('PROGRESS:', progress, " = 100 / " + level.get('stages').length + "* (" + this.current_stage + "+1)");
+        this.game_session.set({progress: Math.floor(progress)});
 
         // Display queue
 
@@ -879,6 +948,79 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onTouch: function(){
         LSCP.View.Game.prototype.onTouch.apply(this, arguments);
         /* TODO */
+    },
+
+    onObjectsIntroduced: function(){
+
+        collie.Timer.queue().
+
+            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
+                from: 1,
+                to: 0.1,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            transition(this.objects.character, 1000 / this.speed, {
+                to: 200,
+                set: "y",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            delay(function(){
+                this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
+                    .attach({
+                        mousedown: function () {
+                            this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
+                            this.objects.character.detachAll();
+
+                            this.onTouchCharacter();
+                        }.bind(this)
+                    });
+            }.bind(this), 0)
+
+        ;
+    },
+
+    onTouchCharacter: function(){
+        var stage = this.getCurrentStage();
+
+        collie.Timer.queue().
+
+            delay(function(){
+                this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
+            }.bind(this), 500 / this.speed).
+
+            delay(function(){}, 3000 / this.speed).
+
+            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
+                from: 0,
+                to: 1,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            }).
+
+            delay(function(){
+                _.each(this.objects.slots, function(slot, i){
+                    slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
+                        .attach({
+                            mousedown: function () {
+                                this.game_session.saveAction('touch', 'slot#'+i);
+
+                                _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
+                                _.invoke(this.objects.slots, 'detachAll');
+
+                                if (stage.get("objects")[i] == stage.get("ask_for"))
+                                    this.onCorrectAnswer(slot);
+                                else
+                                    this.onWrongAnswer();
+                            }.bind(this)
+                        });
+                }, this);
+            }.bind(this), 0)
+
+        ;
+
     }
 
 

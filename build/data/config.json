@@ -59,6 +59,7 @@
                                     "apple",
                                     "banana"
                                 ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 15,
                                 "ask_for": "apple"
                             },
@@ -68,6 +69,7 @@
                                     "apple",
                                     "banana"
                                 ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 15,
                                 "ask_for": "banana"
                             }
@@ -89,6 +91,7 @@
                                     "apple",
                                     "banana"
                                 ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 15,
                                 "ask_for": "banana"
                             },
@@ -98,6 +101,7 @@
                                     "banana",
                                     "apple"
                                 ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 15,
                                 "ask_for": "apple"
                             }

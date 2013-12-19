@@ -349,6 +349,7 @@ LSCP.View.Game = Backbone.View.extend({
     game_session: null,
     speed: 1,
     progressbar: null,
+    reward: null,
     layersSize: {},
 
 	initialize: function(){
@@ -356,10 +357,11 @@ LSCP.View.Game = Backbone.View.extend({
 
         this.game_session = this.model.get("session");
 
-        this.speed = 1;
+        this.speed = 2;
         this.progressbar = new LSCP.View.ProgressBar({
             model: this.game_session
         });
+        this.reward = new LSCP.View.Reward();
 
         this.layersSize = {
             width: 1024,
@@ -385,7 +387,7 @@ LSCP.View.Game = Backbone.View.extend({
     render: function(){
         log('LSCP.View.Game.render');
 
-        this.$el.html('').prepend(this.progressbar.el);
+        this.$el.html('').prepend(this.progressbar.el).append(this.reward.el);
 
         return this;
     },
@@ -463,12 +465,57 @@ LSCP.View.ProgressBar = Backbone.View.extend({
 
     template: Handlebars.compile('<div class="bar" title="{{progress}}%"></div>'),
 
-	render : function() {
+	render: function() {
         log('LSCP.View.ProgressBar.render');
         this.$el.html(this.template(this.model.attributes))
-                .find('.bar').css('width', (this.model.get('progress') * 300 / 100) + 'px');
+                .find('.bar').css('width', this.model.get('progress') + '%');
         return this;
-	}
+	},
+
+    show: function() {
+        this.$el.show();
+    },
+
+    hide: function() {
+        this.$el.hide();
+    }
+
+});
+
+
+LSCP.View.Reward = Backbone.View.extend({
+
+    id: 'reward',
+
+    initialize: function() {
+        log('LSCP.View.Reward initialized!');
+        this.render();
+
+//        this.model.bind('change', _.bind(this.render, this));
+    },
+
+    template: Handlebars.compile('<h1>REWARD!</h1>(click to continue)'),
+
+	render: function() {
+        log('LSCP.View.Reward.render');
+        this.$el.html(this.template()).hide();
+        return this;
+	},
+
+    show: function() {
+        this.$el.show().on('mousedown', this.onClick.bind(this));
+        return this;
+    },
+
+    hide: function() {
+        this.$el.hide().off('mousedown');
+        return this;
+    },
+
+    onClick: function(){
+        log('onClick');
+        this.trigger('end');
+    }
 
 });
 
@@ -580,8 +627,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             x: "center",
             y: "center",
             backgroundImage: "background",
-            height: 908,
-            width: 1155,
+            height: 768,
+            width: 1024,
             opacity: 0
         }).addTo(this.layers.background);
 
@@ -593,8 +640,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             x: "center",
             y: 800,
             backgroundImage: "character",
-            height: 350,
-            width: 150
+            height: 400,
+            width: 400
         }).addTo(this.layers.character);
 
 
@@ -664,8 +711,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.current_stage += 1;
 
         if (this.current_stage > level.get('stages').length - 1) {
-            this.current_level += 1;
-            this.current_stage = 0;
+            this.reward.show().on('end', function(){
+                this.reward.hide().off('end');
+                this.current_level += 1;
+                this.current_stage = 0;
+                log("NEXT STAGE: level ", this.current_level, "stage", this.current_stage);
+                this.onIteration();
+            }.bind(this));
+            return;
         }
 
         if (this.current_level > this.game_session.get('levels').length - 1) {
@@ -707,14 +760,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Progress
         if (this.current_stage === 0) this.game_session.set({progress: 0});
 
-//        var show_character = true;
-        var introduce_objects = true;
 
         // Object slots
-
         this.objects.slots = [];
 
         // "Tutorial" mode when only one object
+        var introduce_objects = true;
+//        var show_character = true;
 //        if (stage.get("objects").length == 1) {
 //            introduce_objects = true;
 //            show_character = false;

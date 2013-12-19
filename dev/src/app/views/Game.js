@@ -4,6 +4,7 @@ LSCP.View.Game = Backbone.View.extend({
     game_session: null,
     speed: 1,
     progressbar: null,
+    reward: null,
     layersSize: {},
 
 	initialize: function(){
@@ -11,10 +12,11 @@ LSCP.View.Game = Backbone.View.extend({
 
         this.game_session = this.model.get("session");
 
-        this.speed = 1;
+        this.speed = 2;
         this.progressbar = new LSCP.View.ProgressBar({
             model: this.game_session
         });
+        this.reward = new LSCP.View.Reward();
 
         this.layersSize = {
             width: 1024,
@@ -40,7 +42,7 @@ LSCP.View.Game = Backbone.View.extend({
     render: function(){
         log('LSCP.View.Game.render');
 
-        this.$el.html('').prepend(this.progressbar.el);
+        this.$el.html('').prepend(this.progressbar.el).append(this.reward.el);
 
         return this;
     },

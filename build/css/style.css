@@ -93,7 +93,8 @@ body {
   -moz-transition-timing-function: ease-in;
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
-  background-color: #222; }
+  background-color: #222;
+  font-family: sans-serif; }
 
 #app footer {
   bottom: 25px;
@@ -115,6 +116,18 @@ body {
 #progressbar .bar {
   height: 21px;
   width: 0; }
+
+#reward {
+  background-color: #222;
+  color: #FFF;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 15; }
+#reward h1 {
+  font-size: 40px;
+  margin: 150px 0 20px; }
 
 .btn {
   font-size: 18px;

@@ -12,11 +12,19 @@ LSCP.View.ProgressBar = Backbone.View.extend({
 
     template: Handlebars.compile('<div class="bar" title="{{progress}}%"></div>'),
 
-	render : function() {
+	render: function() {
         log('LSCP.View.ProgressBar.render');
         this.$el.html(this.template(this.model.attributes))
-                .find('.bar').css('width', (this.model.get('progress') * 300 / 100) + 'px');
+                .find('.bar').css('width', this.model.get('progress') + '%');
         return this;
-	}
+	},
+
+    show: function() {
+        this.$el.show();
+    },
+
+    hide: function() {
+        this.$el.hide();
+    }
 
 });

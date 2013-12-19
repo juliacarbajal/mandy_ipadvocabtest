@@ -19,6 +19,7 @@ body {
   @include transition-timing-function(ease-in);
 
   background-color: #222;
+  font-family: sans-serif;
 
 //  background-color: $light-gray;
 
@@ -61,6 +62,18 @@ body {
     height: 21px;
     width: 0;
   }
+}
+
+#reward {
+  background-color: #222;
+  color: #FFF;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 15;
+
+  h1 {font-size: 40px; margin: 150px 0 20px;}
 }
 
 .btn {

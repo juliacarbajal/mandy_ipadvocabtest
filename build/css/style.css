@@ -94,7 +94,8 @@ body {
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
   background-color: #b1ddff;
-  font-family: sans-serif; }
+  font-family: sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 #app footer {
   bottom: 25px;

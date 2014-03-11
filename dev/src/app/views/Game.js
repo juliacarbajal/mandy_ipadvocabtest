@@ -12,7 +12,7 @@ LSCP.View.Game = Backbone.View.extend({
 
         this.game_session = this.model.get("session");
 
-        this.speed = 4;
+        this.speed = 2;
 
         this.progressbar = new LSCP.View.ProgressBar({model: this.game_session});
         this.reward = new LSCP.View.Reward();

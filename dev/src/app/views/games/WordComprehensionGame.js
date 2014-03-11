@@ -14,7 +14,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Preload assets
         var objects_to_preload = [
             ['character', LSCP.Locations.Images + "character.png"],
-            ['slot', LSCP.Locations.Images + "trunk.png"]
+            ['slot', LSCP.Locations.Images + "slot-bg.png"],
+            ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"]
         ];
 
         // Objects
@@ -220,18 +221,22 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             objects_positions = this.pos['FOR_' + stage.get("objects").length];
         } else if (_.isArray(stage.get("objects_positions"))) {
             objects_positions = _.map(stage.get("objects_positions"), function(pos) {
+                if (typeof this.pos[pos] == 'undefined') throw 'Wrong value "'+pos+'" for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;
                 return this.pos[pos];
             }, this);
         } else {
             throw 'Wrong value for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;
         }
 
+        // Create slots
         _.each(stage.get("objects"), function(object, i){
             var slot = new collie.DisplayObject({
-                backgroundColor: 'rgba(255,255,255,0)',
-                backgroundImage: stage.get("objects_family") + "_" + object,
+                backgroundImage: "slot",
                 opacity: 0
             }).set(objects_positions[i]).addTo(this.layers.slots);
+            new collie.DisplayObject({
+                backgroundImage: stage.get("objects_family") + "_" + object
+            }).addTo(slot).align('center', 'center', slot);
             this.objects.slots.push(slot);
         }, this);
 
@@ -328,6 +333,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Display queue
 
         var currentY = slot.get('y');
+        slot.set({backgroundImage: 'slot-correct'});
         collie.Timer.queue().
 
             transition(slot, 400 / this.speed, {

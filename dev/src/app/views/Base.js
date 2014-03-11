@@ -9,7 +9,7 @@ LSCP.View.Base = Backbone.View.extend({
     },
 
     events: {
-        "click #btn-start": "start"
+        "mousedown #btn-start": "start"
     },
 
     start: function(e){

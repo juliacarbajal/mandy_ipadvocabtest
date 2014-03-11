@@ -93,7 +93,7 @@ body {
   -moz-transition-timing-function: ease-in;
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
-  background-color: #222;
+  background-color: #b1ddff;
   font-family: sans-serif; }
 
 #app footer {
@@ -129,22 +129,29 @@ body {
   font-size: 40px;
   margin: 150px 0 20px; }
 
-.btn {
-  font-size: 18px;
-  padding: 5px;
-  text-align: center; }
-.btn strong {
+#btn-start {
+  background: url("../img/btn-start.png") top left no-repeat;
   display: block;
-  font-size: 24px;
-  font-weight: bold; }
-
-#start-btn {
-  display: block;
+  height: 378px;
   left: 50%;
-  margin-left: -110px;
+  margin-left: -225px;
+  margin-top: -189px;
   position: absolute;
-  top: 45%;
-  width: 220px; }
+  top: 40%;
+  width: 450px; }
+
+footer .btn {
+  display: inline-block; }
+
+#btn-parents {
+  background: url("../img/btn-parents.png") top left no-repeat;
+  height: 116px;
+  width: 259px; }
+
+#btn-dashboard {
+  background: url("../img/btn-dashboard.png") top left no-repeat;
+  height: 101px;
+  width: 99px; }
 
 /**
  *

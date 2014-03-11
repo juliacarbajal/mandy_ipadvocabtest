@@ -1,98 +1,105 @@
-@import 
-	"compass/reset", 
-	"compass/css3",
-    "constants",
-    "games/WordComprehensionGame.scss";
+@import
+"compass/reset",
+"compass/css3",
+"constants",
+"games/WordComprehensionGame.scss";
 
 .full {
-  height: 100%;
-  overflow: hidden;
-  width: 100%;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
 }
 
 html {@extend .full;}
 
 body {
-  @extend .full;
-  @include transition-property(background);
-  @include transition-duration(1s);
-  @include transition-timing-function(ease-in);
+    @extend .full;
+    @include transition-property(background);
+    @include transition-duration(1s);
+    @include transition-timing-function(ease-in);
 
-  background-color: #222;
-  font-family: sans-serif;
+    background-color: #b1ddff;
+    font-family: sans-serif;
 
-//  background-color: $light-gray;
+    //  background-color: $light-gray;
 
-//  &.ingame {
-//  }
+    //  &.ingame {
+    //  }
 }
 
 #app {
-  @extend .full;
+    @extend .full;
 
-  footer {
-    bottom: 25px;
-    position: absolute;
-    right: 25px;
-  }
+    footer {
+        bottom: 25px;
+        position: absolute;
+        right: 25px;
+    }
 }
 
 #session {
-  @extend .full;
+    @extend .full;
 }
 
 #game {
-  @extend .full;
+    @extend .full;
 }
 
 #progressbar {
-  height: 21px;
-  left: 50%;
-  line-height: 25px;
-  margin-left: -150px;
-  overflow: hidden;
-  padding: 2px;
-  position: absolute;
-  text-align: center;
-  top: 50px;
-  width: 300px;
-  z-index: 10;
-
-  .bar {
     height: 21px;
-    width: 0;
-  }
+    left: 50%;
+    line-height: 25px;
+    margin-left: -150px;
+    overflow: hidden;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+    top: 50px;
+    width: 300px;
+    z-index: 10;
+
+    .bar {
+        height: 21px;
+        width: 0;
+    }
 }
 
 #reward {
-  background-color: #222;
-  color: #FFF;
-  height: 100%;
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  z-index: 15;
+    background-color: #222;
+    color: #FFF;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 15;
 
-  h1 {font-size: 40px; margin: 150px 0 20px;}
+    h1 {font-size: 40px; margin: 150px 0 20px;}
 }
 
-.btn {
-  font-size: 18px;
-  padding: 5px;
-  text-align: center;
-
-  strong {
+#btn-start {
+    background: url("../img/btn-start.png") top left no-repeat;
     display: block;
-    font-size: 24px;
-    font-weight: bold;
-  }
+    height: 378px;
+    left: 50%;
+    margin-left: -225px;
+    margin-top: -189px;
+    position: absolute;
+    top: 40%;
+    width: 450px;
 }
 
-#start-btn {
-  display: block;
-  left: 50%;
-  margin-left: -110px;
-  position: absolute;
-  top: 45%;
-  width: 220px;
+footer .btn {
+    display: inline-block;
+}
+
+#btn-parents {
+    background: url("../img/btn-parents.png") top left no-repeat;
+    height: 116px;
+    width: 259px;
+}
+
+#btn-dashboard {
+    background: url("../img/btn-dashboard.png") top left no-repeat;
+    height: 101px;
+    width: 99px;
 }

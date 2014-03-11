@@ -4,7 +4,9 @@
         "time_limit": 900,
         "assets": {
             "objects": {
-                "fruits": ["apple","banana","cherry","pear"]
+                "fruits": ["apple","banana","cherry","pear"],
+                "vehicles": ["stroller","car"],
+                "animals": ["fish","dog"]
             }
         },
         "levels":
@@ -106,7 +108,40 @@
                                 "ask_for": "apple"
                             }
                         ]
+                },
+                {
+                    "name": "train the baby on the fact that the objects might change",
+                    "background_image": "/img/background.jpg",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "animals",
+                                "objects": [
+                                    "fish",
+                                    "dog"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 15,
+                                "ask_for": "dog"
+                            },
+                            {
+                                "objects_family": "vehicles",
+                                "objects": [
+                                    "stroller",
+                                    "car"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 15,
+                                "ask_for": "stroller"
+                            }
+                        ]
                 }
+
             ]
     }
 }

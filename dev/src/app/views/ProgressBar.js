@@ -6,6 +6,7 @@ LSCP.View.ProgressBar = Backbone.View.extend({
     initialize: function() {
         log('LSCP.View.ProgressBar initialized!');
         this.render();
+//        this.$el.hide();
 
         this.model.bind('change', _.bind(this.render, this));
     },
@@ -21,10 +22,12 @@ LSCP.View.ProgressBar = Backbone.View.extend({
 
     show: function() {
         this.$el.show();
+        return this;
     },
 
     hide: function() {
         this.$el.hide();
+        return this;
     }
 
 });

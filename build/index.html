@@ -3,8 +3,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>LSCP App</title>
-        <meta name="viewport" content="width=1024, user-scalable=no">
+        <meta name="viewport" content="width=1024, user-scalable=no, minimal-ui">
         <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <link rel="apple-touch-icon" href="img/touchicon.png">
 
 		<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -15,13 +16,11 @@
 
 		    <div id="home">
 
-                <button id="start-btn" class="btn">
-                    <strong>Commencer</strong>
-                </button>
+                <a href="#" id="btn-start" class="btn" title="Commencer"></a>
 
                 <footer>
-                    <button id="parent-btn" class="btn">Mode parent</button>
-                    <button id="dashboard-btn" class="btn">Configuration</button>
+                    <a href="#" id="btn-parents" class="btn" title="Mode parents"></a>
+                    <a href="#" id="btn-dashboard" class="btn" title="Configuration"></a>
                 </footer>
 
             </div>

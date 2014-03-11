@@ -1,37 +1,37 @@
 
 #progressbar {
-  background-color: rgba(255,255,255,0.5);
-  -webkit-box-shadow: 0 1px 3px 1px rgba(0,0,0,0.2);
-  box-shadow: 0 1px 3px 1px rgba(0,0,0,0.2);
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-
-  .bar {
-    background-color: #fff669;
-    @include transition-property(width);
-    @include transition-duration(1s);
+    background-color: rgba(255,255,255,0.5);
+    -webkit-box-shadow: 0 1px 3px 1px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,0.2);
     -webkit-border-radius: 10px;
     border-radius: 10px;
-  }
+
+    .bar {
+        background-color: #fff669;
+        @include transition-property(width);
+        @include transition-duration(1s);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
 }
 
 #character {
-  background-color: #5890AD;
-  height: 400px;
-  line-height: 400px;
-  position: absolute;
-  text-align: center;
-  width: 200px;
-  @include transition-property(all);
-  @include transition-duration(1s);
+    background-color: #5890AD;
+    height: 400px;
+    line-height: 400px;
+    position: absolute;
+    text-align: center;
+    width: 200px;
+    @include transition-property(all);
+    @include transition-duration(1s);
 
-  /* hidden by default */
-  left: 50%;
-  margin-left: -100px;
-  top: 100%;
+    /* hidden by default */
+    left: 50%;
+    margin-left: -100px;
+    top: 100%;
 
-  &.shown {
-    margin-top: -200px;
-    top: 50%;
-  }
+    &.shown {
+        margin-top: -200px;
+        top: 50%;
+    }
 }

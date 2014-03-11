@@ -55,20 +55,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             backgroundImage: "background",
             height: 768,
             width: 1024,
-            opacity: 0
+            opacity: 1
         }).addTo(this.layers.background);
-
-
-        // Character
-
-        this.layers.character = new collie.Layer(this.layersSize);
-        this.objects.character = new collie.DisplayObject({
-            x: "center",
-            y: 800,
-            backgroundImage: "character",
-            height: 400,
-            width: 400
-        }).addTo(this.layers.character);
 
 
         // Object slots
@@ -79,6 +67,24 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             width: this.layersSize.width - 40,
             height: this.layersSize.height - 40
         });
+
+
+        // Character
+
+        this.layers.character = new collie.Layer(this.layersSize);
+        this.objects.overlay = new collie.DisplayObject({
+            backgroundColor: '#222',
+            height: 768,
+            width: 1024,
+            opacity: 1
+        }).addTo(this.layers.character);
+        this.objects.character = new collie.DisplayObject({
+            x: "center",
+            y: 800,
+            backgroundImage: "character",
+            height: 400,
+            width: 400
+        }).addTo(this.layers.character);
 
 
         // HUD
@@ -233,9 +239,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 this.objects.hud_text.set({visible: true});
             }.bind(this), 1000 / this.speed).
 
-            transition(this.objects.background, 1000 / this.speed, {
-                from: 0,
-                to: 1,
+            transition(this.objects.overlay, 1000 / this.speed, {
+                from: 1,
+                to: 0,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
             }).
@@ -332,9 +338,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 effect: collie.Effect.easeOutQuint
             }).
 
-            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
-                from: 1,
-                to: 0,
+            transition(this.objects.overlay, 1000 / this.speed, {
+                from: 0,
+                to: 1,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
             }).
@@ -378,9 +384,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 effect: collie.Effect.easeOutQuint
             }).
 
-            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
-                from: 1,
-                to: 0,
+            transition(this.objects.overlay, 1000 / this.speed, {
+                from: 0,
+                to: 1,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
             }).
@@ -432,9 +438,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         collie.Timer.queue().
 
-            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
-                from: 1,
-                to: 0.1,
+            transition(this.objects.overlay, 1000 / this.speed, {
+                from: 0,
+                to: 0.9,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
             }).
@@ -469,11 +475,11 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
             }.bind(this), 500 / this.speed).
 
-            delay(function(){}, 3000 / this.speed).
+            delay(function(){}.bind(this), 3000 / this.speed).
 
-            transition(_.flatten([this.objects.background, this.objects.slots]), 1000 / this.speed, {
-                from: 0,
-                to: 1,
+            transition(this.objects.overlay, 1000 / this.speed, {
+                from: 0.9,
+                to: 0,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
             }).

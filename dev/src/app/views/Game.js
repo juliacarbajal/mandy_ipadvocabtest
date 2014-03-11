@@ -3,6 +3,7 @@ LSCP.View.Game = Backbone.View.extend({
     id : "game",
     game_session: null,
     speed: 1,
+    subtitles: false,
     progressbar: null,
     reward: null,
     layersSize: {},
@@ -16,6 +17,7 @@ LSCP.View.Game = Backbone.View.extend({
 
         this.progressbar = new LSCP.View.ProgressBar({model: this.game_session});
         this.reward = new LSCP.View.Reward();
+        this.sound = LSCP.SoundManager.initialize();
 
         this.layersSize = {
             width: 1024,
@@ -77,6 +79,11 @@ LSCP.View.Game = Backbone.View.extend({
     preloadImages: function(images){
         log('LSCP.View.Game is preloading images...');
         collie.ImageManager.add(images, this.start.bind(this));
+    },
+
+    preloadSounds: function(sounds){
+        log('LSCP.View.Game is preloading sounds...');
+        this.sound.addSounds(sounds);
     }
 
 

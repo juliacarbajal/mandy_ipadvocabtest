@@ -12,25 +12,49 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         log('LSCP.View.WordComprehensionGame initialized!');
 
         // Preload assets
-        var objects_to_preload = [
+        var images = [
             ['character', LSCP.Locations.Images + "character.png"],
             ['slot', LSCP.Locations.Images + "slot-bg.png"],
             ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"]
         ];
+        var sounds = [
+            ['intro', {urls: ['mandy/intro.mp3']}],
+            ['mandy', {
+                urls: ['mandy/sprite.mp3'],
+                sprite: {
+                    intro: [0, 800],
+                    greeting: [1000, 1600]
+                }
+            }],
+            ['plop', {urls: ['plop.mp3']}]
+        ];
 
         // Objects
-        _.each(this.game_session.get('assets').objects, function(objects, objects_family){
+        _.each(this.game_session.get('assets').objects, function(objects, family){
             _.each(objects, function(object){
-                objects_to_preload.push([objects_family + "_" + object, LSCP.Locations.Images + "objects/" + objects_family + "/" + object + ".png"]);
+                images.push(['object_' + object, LSCP.Locations.Images + "objects/" + family + "/" + object + ".png"]);
+                sounds.push(['object_' + object, {
+                    urls: ['objects/' + family + '/' + object + '-sprite.mp3'],
+                    sprite: {
+                        intro1: [0, 2500],
+                        intro2: [3000, 2500],
+                        ask1: [6000, 2500],
+                        ask2: [9000, 2500]
+                    }
+                }]);
             });
         });
 
         // Backgrounds
         _.each(this.game_session.get('assets').backgrounds, function(background){
-            objects_to_preload.push(["background_" + background, LSCP.Locations.Images + "backgrounds/" + background + ".jpg"]);
+            images.push(["background_" + background, LSCP.Locations.Images + "backgrounds/" + background + ".jpg"]);
         });
 
-        this.preloadImages(_.object(objects_to_preload));
+        this.preloadImages(_.object(images));
+        images = null;
+
+        this.preloadSounds(_.object(sounds));
+        sounds = null;
 
         /*
          TODO
@@ -99,7 +123,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             height: 100,
             visible: false
         }).addTo(this.layers.hud);
-        this.objects.subtitles = new collie.Text({
+        if (this.subtitles) this.objects.subtitles = new collie.Text({
             x: "center",
             y: this.layersSize.height - 50,
             fontColor: "#FFF",
@@ -235,7 +259,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 opacity: 0
             }).set(objects_positions[i]).addTo(this.layers.slots);
             new collie.DisplayObject({
-                backgroundImage: stage.get("objects_family") + "_" + object
+                backgroundImage: 'object_' + object
             }).addTo(slot).align('center', 'center', slot);
             this.objects.slots.push(slot);
         }, this);
@@ -285,11 +309,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-                this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
+                this.sound.play('object_' + stage.get('objects')[i], 'intro*');
+                if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
 
                 slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
                     .attach({
                         mousedown: function () {
+                            this.sound.play('plop');
                             var currentY = slot.get('y');
                             collie.Timer.transition(slot, 400 / this.speed, {
                                 to: currentY - 50,
@@ -297,7 +323,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 effect: collie.Effect.wave(2, 0.25)
                             });
 
-                            this.objects.subtitles.set({visible: false});
+                            if (this.subtitles) this.objects.subtitles.set({visible: false});
 
                             _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
                             _.invoke(this.objects.slots, 'detachAll');
@@ -322,7 +348,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
 
         // Success sound
-        this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+        this.sound.play('mandy', 'greeting');
+        if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
 
         // Progress
         var level = this.getCurrentLevel();
@@ -344,7 +371,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             delay(function(){}, 2000 / this.speed).
 
             delay(function(){
-                this.objects.subtitles.set({visible: false});
+                if (this.subtitles) this.objects.subtitles.set({visible: false});
             }.bind(this), 50 / this.speed).
 
             transition(this.objects.character, 1000 / this.speed, {
@@ -380,7 +407,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
         // Failure sound
-        this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
+        if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
 
         // Display queue
@@ -390,7 +417,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             delay(function(){}, 2000 / this.speed).
 
             delay(function(){
-                this.objects.subtitles.set({visible: false});
+                if (this.subtitles) this.objects.subtitles.set({visible: false});
             }.bind(this), 0).
 
             transition(this.objects.character, 1000 / this.speed, {
@@ -467,6 +494,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
+                this.sound.play('mandy', 'intro');
                 this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
                     .attach({
                         mousedown: function () {
@@ -482,12 +510,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     },
 
     onTouchCharacter: function(){
+        this.sound.play('plop');
         var stage = this.getCurrentStage();
 
         collie.Timer.queue().
 
             delay(function(){
-                this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
+                this.sound.play('object_' + stage.get('ask_for'), 'ask*');
+                if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
             }.bind(this), 500 / this.speed).
 
             delay(function(){}.bind(this), 3000 / this.speed).
@@ -504,6 +534,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
                         .attach({
                             mousedown: function () {
+                                this.sound.play('plop');
                                 this.game_session.saveAction('touch', 'slot#'+i);
 
                                 _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});

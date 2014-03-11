@@ -4,7 +4,7 @@
         "time_limit": 900,
         "assets": {
             "objects": {
-                "fruits": ["apple","banana","cherry","pear"],
+                "fruits": ["banana"],
                 "vehicles": ["stroller","car"],
                 "animals": ["fish","dog"]
             },
@@ -23,15 +23,15 @@
                     "stages":
                         [
                             {
-                                "objects_family": "fruits",
+                                "objects_family": "animals",
                                 "objects": [
-                                    "apple"
+                                    "fish"
                                 ],
                                 "objects_positions": [
                                     "CENTER_LEFT"
                                 ],
                                 "time_idle": 15,
-                                "ask_for": "apple"
+                                "ask_for": "fish"
                             },
                             {
                                 "objects_family": "fruits",
@@ -57,24 +57,24 @@
                     "stages":
                         [
                             {
-                                "objects_family": "fruits",
+                                "objects_family": "animals",
                                 "objects": [
-                                    "apple",
-                                    "banana"
+                                    "fish",
+                                    "dog"
                                 ],
                                 "objects_positions": "NATURAL",
                                 "time_idle": 15,
-                                "ask_for": "apple"
+                                "ask_for": "fish"
                             },
                             {
-                                "objects_family": "fruits",
+                                "objects_family": "animals",
                                 "objects": [
-                                    "apple",
-                                    "banana"
+                                    "fish",
+                                    "dog"
                                 ],
                                 "objects_positions": "NATURAL",
                                 "time_idle": 15,
-                                "ask_for": "banana"
+                                "ask_for": "dog"
                             }
                         ]
                 },
@@ -89,24 +89,24 @@
                     "stages":
                         [
                             {
-                                "objects_family": "fruits",
+                                "objects_family": "animals",
                                 "objects": [
-                                    "apple",
-                                    "banana"
+                                    "fish",
+                                    "dog"
                                 ],
                                 "objects_positions": "NATURAL",
                                 "time_idle": 15,
-                                "ask_for": "banana"
+                                "ask_for": "dog"
                             },
                             {
-                                "objects_family": "fruits",
+                                "objects_family": "animals",
                                 "objects": [
-                                    "banana",
-                                    "apple"
+                                    "dog",
+                                    "fish"
                                 ],
                                 "objects_positions": "NATURAL",
                                 "time_idle": 15,
-                                "ask_for": "apple"
+                                "ask_for": "fish"
                             }
                         ]
                 },

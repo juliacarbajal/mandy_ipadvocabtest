@@ -3,7 +3,7 @@
   "eqeqeq": false,
   "immed": true,
   "latedef": true,
-  "newcap": true,
+  "newcap": false,
   "noarg": true,
   "sub": true,
   "undef": true,
@@ -20,6 +20,7 @@
     "Handlebars": false,
     "collie": true,
     "LSCP": true,
+    "Howl": true,
     "log": true
   }
 }

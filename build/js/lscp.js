@@ -213,7 +213,7 @@ LSCP.Model.Level = Backbone.AssociatedModel.extend({
 
     defaults: {
         name: "Untitled level",
-        background_image: null,
+        background: null,
         reward: null,
         on_failure: null,
         stages: []
@@ -228,6 +228,7 @@ LSCP.Model.Level = Backbone.AssociatedModel.extend({
     ],
 	
 	initialize: function(){
+//        log('LSCP.Model.Level.initialize');
     }
 
 });
@@ -590,16 +591,22 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Preload assets
         var objects_to_preload = [
-            ['background', LSCP.Locations.Images + "background.jpg"],
             ['character', LSCP.Locations.Images + "character.png"],
             ['slot', LSCP.Locations.Images + "trunk.png"]
         ];
 
+        // Objects
         _.each(this.game_session.get('assets').objects, function(objects, objects_family){
             _.each(objects, function(object){
                 objects_to_preload.push([objects_family + "_" + object, LSCP.Locations.Images + "objects/" + objects_family + "/" + object + ".png"]);
             });
         });
+
+        // Backgrounds
+        _.each(this.game_session.get('assets').backgrounds, function(background){
+            objects_to_preload.push(["background_" + background, LSCP.Locations.Images + "backgrounds/" + background + ".jpg"]);
+        });
+
         this.preloadImages(_.object(objects_to_preload));
 
         /*
@@ -626,14 +633,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Background
 
         this.layers.background = new collie.Layer(this.layersSize);
-        this.objects.background = new collie.DisplayObject({
-            x: "center",
-            y: "center",
-            backgroundImage: "background",
-            height: 768,
-            width: 1024,
-            opacity: 1
-        }).addTo(this.layers.background);
 
 
         // Object slots
@@ -768,6 +767,18 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Progress
         if (this.current_stage === 0) this.game_session.set({progress: 0});
+
+
+        // Background
+        if (this.objects.background) this.layers.background.removeChild(this.objects.background);
+        this.objects.background = new collie.DisplayObject({
+            x: "center",
+            y: "center",
+            backgroundImage: "background_" + level.get('background'),
+            height: 768,
+            width: 1024,
+            opacity: 1
+        }).addTo(this.layers.background);
 
 
         // Object slots

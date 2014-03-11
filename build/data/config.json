@@ -7,13 +7,14 @@
                 "fruits": ["apple","banana","cherry","pear"],
                 "vehicles": ["stroller","car"],
                 "animals": ["fish","dog"]
-            }
+            },
+            "backgrounds": ["countryside","beach","mountain","desert"]
         },
         "levels":
             [
                 {
                     "name": "train the baby on the fact that there are hidden objects to touch",
-                    "background_image": "/img/background.jpg",
+                    "background": "countryside",
                     "reward": {
                         "type": "video",
                         "path": "..."
@@ -47,7 +48,7 @@
                 },
                 {
                     "name": "train the baby on the fact that there is a forced choice",
-                    "background_image": "/img/background.jpg",
+                    "background": "beach",
                     "reward": {
                         "type": "video",
                         "path": "..."
@@ -79,7 +80,7 @@
                 },
                 {
                     "name": "train the baby on the fact that there is a forced choice & he needs to remember where's what in this trial, cause it might change",
-                    "background_image": "/img/background.jpg",
+                    "background": "mountain",
                     "reward": {
                         "type": "video",
                         "path": "..."
@@ -111,7 +112,7 @@
                 },
                 {
                     "name": "train the baby on the fact that the objects might change",
-                    "background_image": "/img/background.jpg",
+                    "background": "desert",
                     "reward": {
                         "type": "video",
                         "path": "..."

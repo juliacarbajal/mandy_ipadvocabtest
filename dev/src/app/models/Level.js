@@ -2,7 +2,7 @@ LSCP.Model.Level = Backbone.AssociatedModel.extend({
 
     defaults: {
         name: "Untitled level",
-        background_image: null,
+        background: null,
         reward: null,
         on_failure: null,
         stages: []
@@ -17,6 +17,7 @@ LSCP.Model.Level = Backbone.AssociatedModel.extend({
     ],
 	
 	initialize: function(){
+//        log('LSCP.Model.Level.initialize');
     }
 
 });

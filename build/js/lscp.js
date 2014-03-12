@@ -361,7 +361,7 @@ LSCP.View.Game = Backbone.View.extend({
 
         this.game_session = this.model.get("session");
 
-        this.speed = 2;
+//        this.speed = 2;
 
         this.progressbar = new LSCP.View.ProgressBar({model: this.game_session});
         this.reward = new LSCP.View.Reward();
@@ -743,7 +743,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         this.layers.character = new collie.Layer(this.layersSize);
         this.objects.overlay = new collie.DisplayObject({
-            backgroundColor: '#222',
+            backgroundColor: '#000',
             height: 768,
             width: 1024,
             opacity: 1
@@ -762,7 +762,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.layers.hud = new collie.Layer(this.layersSize);
         this.objects.hud_text = new collie.Text({
             x: "center",
-            y: 10,
+            y: "bottom",
             fontColor: "#000",
             fontSize: 12,
             textAlign: 'center',
@@ -946,6 +946,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     introduceObject: function(slot, i){
         var stage = this.getCurrentStage();
 
+        this.sound.play('object_' + stage.get('objects')[i], 'intro*');
+
         collie.Timer.queue().
 
             transition(slot, 1000 / this.speed, {
@@ -956,7 +958,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-                this.sound.play('object_' + stage.get('objects')[i], 'intro*');
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
 
                 slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
@@ -1167,7 +1168,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
             }.bind(this), 500 / this.speed).
 
-            delay(function(){}.bind(this), 3000 / this.speed).
+            delay(function(){}.bind(this), 2000 / this.speed).
 
             transition(this.objects.overlay, 1000 / this.speed, {
                 from: 0.9,

@@ -21,7 +21,7 @@ LSCP.View.Reward = Backbone.View.extend({
 
 	render: function() {
         log('LSCP.View.Reward.render');
-        this.$el.css('background-image', 'url(' + this.images[_.random(0, this.images.size)] + ')').hide();
+        this.$el.css('background-image', 'url(' + this.images[_.random(0, _.size(this.images))] + ')').hide();
         return this;
 	},
 

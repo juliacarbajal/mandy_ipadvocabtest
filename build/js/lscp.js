@@ -515,7 +515,7 @@ LSCP.View.Reward = Backbone.View.extend({
 
 	render: function() {
         log('LSCP.View.Reward.render');
-        this.$el.css('background-image', 'url(' + this.images[_.random(0, this.images.size)] + ')').hide();
+        this.$el.css('background-image', 'url(' + this.images[_.random(0, _.size(this.images))] + ')').hide();
         return this;
 	},
 
@@ -1174,15 +1174,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
             }.bind(this), 500 / this.speed).
 
-            delay(function(){}.bind(this), 2000 / this.speed).
-
-            transition(this.objects.overlay, 1000 / this.speed, {
-                from: 0.9,
-                to: 0,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            }).
-
             delay(function(){
                 _.each(this.objects.slots, function(slot, i){
                     slot.set({backgroundColor: 'rgba(255,255,255,0.2)'})
@@ -1201,7 +1192,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                             }.bind(this)
                         });
                 }, this);
-            }.bind(this), 0)
+            }.bind(this), 2000 / this.speed).
+
+            transition(this.objects.overlay, 1000 / this.speed, {
+                from: 0.9,
+                to: 0,
+                set: "opacity",
+                effect: collie.Effect.easeOutQuint
+            })
 
         ;
 

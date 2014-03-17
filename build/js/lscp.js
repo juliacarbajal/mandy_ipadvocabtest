@@ -361,8 +361,6 @@ LSCP.View.Game = Backbone.View.extend({
 
         this.game_session = this.model.get("session");
 
-//        this.speed = 2;
-
         this.progressbar = new LSCP.View.ProgressBar({model: this.game_session});
         this.reward = new LSCP.View.Reward();
         this.sound = LSCP.SoundManager.initialize();
@@ -498,23 +496,31 @@ LSCP.View.ProgressBar = Backbone.View.extend({
 LSCP.View.Reward = Backbone.View.extend({
 
     id: 'reward',
+    images: [],
 
     initialize: function() {
         log('LSCP.View.Reward initialized!');
-        this.render();
 
+        for (var i = 1; i < 10; i++) {
+            this.images.push(LSCP.Locations.Images + "rewards/" + i + ".jpg");
+        }
+
+        this.hide();
+
+        log(this.images);
 //        this.model.bind('change', _.bind(this.render, this));
     },
 
-    template: Handlebars.compile('<h1>REWARD!</h1>(click to continue)'),
+    template: Handlebars.compile('<img src="{{image}}" />'),
 
 	render: function() {
         log('LSCP.View.Reward.render');
-        this.$el.html(this.template()).hide();
+        this.$el.css('background-image', 'url(' + this.images[_.random(0, this.images.size)] + ')').hide();
         return this;
 	},
 
     show: function() {
+        this.render();
         this.$el.show().on('mousedown', this.onClick.bind(this));
         return this;
     },
@@ -686,7 +692,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                         intro1: [0, 2500],
                         intro2: [3000, 2500],
                         ask1: [6000, 2500],
-                        ask2: [9000, 2500]
+                        ask2: [9000, 2500] 
                     }
                 }]);
             });

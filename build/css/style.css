@@ -119,7 +119,8 @@ body {
   width: 0; }
 
 #reward {
-  background-color: #000;
+  background: #000 center center no-repeat;
+  background-size: contain;
   color: #FFF;
   height: 100%;
   position: absolute;

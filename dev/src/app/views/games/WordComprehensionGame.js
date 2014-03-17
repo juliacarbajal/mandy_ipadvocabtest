@@ -39,7 +39,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                         intro1: [0, 2500],
                         intro2: [3000, 2500],
                         ask1: [6000, 2500],
-                        ask2: [9000, 2500]
+                        ask2: [9000, 2500] 
                     }
                 }]);
             });

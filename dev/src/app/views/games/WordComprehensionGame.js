@@ -525,7 +525,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 this.timers.characters.hello.start();
-                this.sound.delayedPlay(500, 'mandy', 'intro');
+                this.sound.delayedPlay(600, 'mandy', 'intro');
 
                 this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
                     .attach({

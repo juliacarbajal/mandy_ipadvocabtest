@@ -542,7 +542,7 @@ LSCP.Mandy = new Object({
         _.each(this.animations, function(animation, id){
             if (id == 'normal') return;
 
-            timers[id] = collie.Timer.cycle(characters[id], "12fps", {
+            timers[id] = collie.Timer.cycle(characters[id], "15fps", {
                 loop: animation.loop,
                 useAutoStart : false,
                 valueSet: animation.values,
@@ -1286,7 +1286,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 this.timers.characters.hello.start();
-                this.sound.delayedPlay(500, 'mandy', 'intro');
+                this.sound.delayedPlay(600, 'mandy', 'intro');
 
                 this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
                     .attach({

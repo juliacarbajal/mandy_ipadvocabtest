@@ -2,12 +2,17 @@
 LSCP.SoundManager = new Object({
 
     sounds: {},
+    debug: false,
     randomSpriteRegex: /(\D+)\d+$/,
 
     initialize: function() {
-        log('LSCP.SoundManager initialized!');
+        this.log('LSCP.SoundManager initialized!');
         _.extend(this, Backbone.Events);
         return this;
+    },
+
+    log: function() {
+        if (this.debug) log(arguments);
     },
 
     addSounds: function(sounds) {
@@ -16,7 +21,7 @@ LSCP.SoundManager = new Object({
     },
 
     addSound: function(sound, name) {
-        log('LSCP.SoundManager.addSound', sound, name);
+        this.log('LSCP.SoundManager.addSound', sound, name);
 
         // Add prefix to URLs
         sound.urls = _.map(sound.urls, function(u){ return LSCP.Locations.Sounds + u; });
@@ -42,7 +47,7 @@ LSCP.SoundManager = new Object({
     },
 
     play: function(sound, sprite) {
-        log('LSCP.SoundManager.play', sound, sprite);
+        this.log('LSCP.SoundManager.play', sound, sprite);
 
         // Manage random sprites
         if (typeof sprite != 'undefined' && sprite.indexOf('*') != -1) {
@@ -51,6 +56,10 @@ LSCP.SoundManager = new Object({
 
         this.sounds[sound].play(sprite);
         return this;
+    },
+
+    delayedPlay: function(delay, sound, sprite) {
+        _.delay(this.play.bind(this), delay, sound, sprite);
     },
 
     randomFromInterval: function(min,max) {

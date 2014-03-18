@@ -350,7 +350,7 @@ LSCP.View.Game = Backbone.View.extend({
 
     id : "game",
     game_session: null,
-    speed: 1,
+    speed: 4,
     subtitles: false,
     progressbar: null,
     reward: null,
@@ -459,6 +459,101 @@ LSCP.View.Loading = Backbone.View.extend({
 	
 });
 
+LSCP.Mandy = new Object({
+
+    animations: {
+        normal: {
+            sprite: 'normal.png',
+            values: [0]
+        },
+        blink: {
+            sprite: 'blink.png',
+            values: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+        },
+        ask: {
+            sprite: 'ask.png',
+            values: [0,0,0,0,1,0,2,3,4,5,6,6,7,8,8,9,10,10,6,6,8,8,8,11,12,13,14,0,0,0]
+        },
+        happy: {
+            sprite: 'happy.png',
+            values: [0,1,2,3,4,4,4,4,4,5,6,7,8,9,1,10,11,12,12,12,12,12,13,6,7]
+        },
+        hello: {
+            sprite: 'hello.png',
+            values: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,10,11,14,15,16,17,18,19,16,17,20,21,22,23,0]
+        },
+        sad: {
+            sprite: 'sad.png',
+            values: [0,1,2,3,4,5,6,6,6,6,6,6,7,8,8,8,8,8,8,8,8,8,8,9,9,9,10,11,12]
+        },
+        bored: {
+            sprite: 'bored.png',
+            values: [0,1,2,2,3,4,5,6,7,4,7,6,7,8,9,10,11,12,13,14,13,12,13,14,13,12,13,14,13,15,16,17,16,18,19,20,21,22,23,24,25,26,25,20,27,28,29,30,31,32,33,30,30,30,30,30,30,30,30,30,30,34,34,30,30,30,30,30,30,30,30,30]
+        },
+        idle: {
+            sprite: 'idle.png',
+            values: [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1]
+        }
+    },
+
+    initialize: function() {
+        log('LSCP.Mandy initialized!');
+
+        _.each(this.animations, function(animation, id){
+            var name = (id == 'normal') ? 'character' : 'character-' + id;
+            collie.ImageManager.addImage(name, LSCP.Locations.Images + 'character/' + animation.sprite);
+        });
+
+    },
+
+    addAnimations: function(parent) {
+        var characters = {};
+
+        _.each(this.animations, function(animation, id){
+            if (id == 'normal') {
+                characters.normal = new collie.DisplayObject({
+                    backgroundImage: "character"
+                }).addTo(parent);
+            } else {
+                characters[id] = new collie.DisplayObject({
+                    backgroundImage: "character-" + id,
+                    height: 400,
+                    width: 400,
+                    spriteLength: 35,
+                    visible: false
+                }).addTo(parent);
+            }
+        });
+
+        return characters;
+    },
+
+    getTimers: function(characters){
+        var timers = {};
+
+        _.each(this.animations, function(animation, id){
+            if (id == 'normal') return;
+
+            timers[id] = collie.Timer.cycle(characters[id], "12fps", {
+                loop: 1,
+                useAutoStart : false,
+                valueSet: animation.values,
+                onStart: function(){
+                    _.each(characters, function(v){v.set('visible', false);});
+                    characters[id].set('visible', true);
+                }.bind(this),
+                onComplete : function () {
+                    characters[id].set('visible', false);
+                    characters.normal.set('visible', true);
+                }.bind(this)
+            });
+        });
+
+        return timers;
+    }
+
+});
+
 LSCP.View.ProgressBar = Backbone.View.extend({
 
     id: 'progressbar',
@@ -506,9 +601,6 @@ LSCP.View.Reward = Backbone.View.extend({
         }
 
         this.hide();
-
-        log(this.images);
-//        this.model.bind('change', _.bind(this.render, this));
     },
 
     template: Handlebars.compile('<img src="{{image}}" />'),
@@ -531,7 +623,6 @@ LSCP.View.Reward = Backbone.View.extend({
     },
 
     onClick: function(){
-        log('onClick');
         this.trigger('end');
     }
 
@@ -594,12 +685,17 @@ LSCP.View.Session = Backbone.View.extend({
 LSCP.SoundManager = new Object({
 
     sounds: {},
+    debug: false,
     randomSpriteRegex: /(\D+)\d+$/,
 
     initialize: function() {
-        log('LSCP.SoundManager initialized!');
+        this.log('LSCP.SoundManager initialized!');
         _.extend(this, Backbone.Events);
         return this;
+    },
+
+    log: function() {
+        if (this.debug) log(arguments);
     },
 
     addSounds: function(sounds) {
@@ -608,7 +704,7 @@ LSCP.SoundManager = new Object({
     },
 
     addSound: function(sound, name) {
-        log('LSCP.SoundManager.addSound', sound, name);
+        this.log('LSCP.SoundManager.addSound', sound, name);
 
         // Add prefix to URLs
         sound.urls = _.map(sound.urls, function(u){ return LSCP.Locations.Sounds + u; });
@@ -634,7 +730,7 @@ LSCP.SoundManager = new Object({
     },
 
     play: function(sound, sprite) {
-        log('LSCP.SoundManager.play', sound, sprite);
+        this.log('LSCP.SoundManager.play', sound, sprite);
 
         // Manage random sprites
         if (typeof sprite != 'undefined' && sprite.indexOf('*') != -1) {
@@ -643,6 +739,10 @@ LSCP.SoundManager = new Object({
 
         this.sounds[sound].play(sprite);
         return this;
+    },
+
+    delayedPlay: function(delay, sound, sprite) {
+        _.delay(this.play.bind(this), delay, sound, sprite);
     },
 
     randomFromInterval: function(min,max) {
@@ -657,6 +757,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     current_stage: null,
     layers: {},
     objects: {},
+    timers: {},
     $character: null,
 
 	initialize: function(){
@@ -666,7 +767,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Preload assets
         var images = [
-            ['character', LSCP.Locations.Images + "character.png"],
             ['slot', LSCP.Locations.Images + "slot-bg.png"],
             ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"]
         ];
@@ -757,10 +857,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.objects.character = new collie.DisplayObject({
             x: "center",
             y: 800,
-            backgroundImage: "character",
             height: 400,
             width: 400
         }).addTo(this.layers.character);
+
+        LSCP.Mandy.initialize();
+        this.objects.characters = LSCP.Mandy.addAnimations(this.objects.character);
+        this.timers.characters = LSCP.Mandy.getTimers(this.objects.characters);
 
 
         // HUD
@@ -1148,7 +1251,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-                this.sound.play('mandy', 'intro');
+                this.timers.characters.hello.start();
+                this.sound.delayedPlay(500, 'mandy', 'intro');
+
                 this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
                     .attach({
                         mousedown: function () {
@@ -1170,7 +1275,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         collie.Timer.queue().
 
             delay(function(){
-                this.sound.play('object_' + stage.get('ask_for'), 'ask*');
+                this.timers.characters.ask.start();
+                this.sound.delayedPlay(500, 'object_' + stage.get('ask_for'), 'ask*');
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
             }.bind(this), 500 / this.speed).
 

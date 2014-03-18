@@ -12,9 +12,6 @@ LSCP.View.Reward = Backbone.View.extend({
         }
 
         this.hide();
-
-        log(this.images);
-//        this.model.bind('change', _.bind(this.render, this));
     },
 
     template: Handlebars.compile('<img src="{{image}}" />'),
@@ -37,7 +34,6 @@ LSCP.View.Reward = Backbone.View.extend({
     },
 
     onClick: function(){
-        log('onClick');
         this.trigger('end');
     }
 

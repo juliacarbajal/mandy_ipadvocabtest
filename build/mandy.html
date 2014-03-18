@@ -34,14 +34,14 @@
         });
 
         collie.ImageManager.addImages({
-            "normal" : "img/character.png",
-            "blink" : "img/character-blink.png",
-            "ask" : "img/character-ask.png",
-            "happy" : "img/character-happy.png",
-            "hello" : "img/character-hello.png",
-            "sad" : "img/character-sad.png",
-            "bored" : "img/character-bored.png",
-            "idle" : "img/character-idle.png"
+            "normal" : "img/character/normal.png",
+            "blink" : "img/character/blink.png",
+            "ask" : "img/character/ask.png",
+            "happy" : "img/character/happy.png",
+            "hello" : "img/character/hello.png",
+            "sad" : "img/character/sad.png",
+            "bored" : "img/character/bored.png",
+            "idle" : "img/character/idle.png"
         });
 
 //        collie.ImageManager.addSprite('bored', {
@@ -80,7 +80,9 @@
             oAvatar.set({backgroundImage : animation});
 //            if (animation == 'bored') oAvatar.set({spriteLength : 35});
 //            else oAvatar.set({spriteLength : 0});
-            timer.set('valueSet', animations[animation]);
+            timer.set({
+                valueSet: animations[animation]
+            });
             $('#buttons button').css('font-weight', 'normal').filter('[data-animation="'+animation+'"]').css('font-weight', 'bold');
         }
 

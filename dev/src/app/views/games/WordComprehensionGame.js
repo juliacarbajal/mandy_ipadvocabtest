@@ -4,6 +4,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     current_stage: null,
     layers: {},
     objects: {},
+    timers: {},
     $character: null,
 
 	initialize: function(){
@@ -13,7 +14,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Preload assets
         var images = [
-            ['character', LSCP.Locations.Images + "character.png"],
             ['slot', LSCP.Locations.Images + "slot-bg.png"],
             ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"]
         ];
@@ -104,10 +104,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.objects.character = new collie.DisplayObject({
             x: "center",
             y: 800,
-            backgroundImage: "character",
             height: 400,
             width: 400
         }).addTo(this.layers.character);
+
+        LSCP.Mandy.initialize();
+        this.objects.characters = LSCP.Mandy.addAnimations(this.objects.character);
+        this.timers.characters = LSCP.Mandy.getTimers(this.objects.characters);
 
 
         // HUD
@@ -495,7 +498,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-                this.sound.play('mandy', 'intro');
+                this.timers.characters.hello.start();
+                this.sound.delayedPlay(500, 'mandy', 'intro');
+
                 this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
                     .attach({
                         mousedown: function () {
@@ -517,7 +522,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         collie.Timer.queue().
 
             delay(function(){
-                this.sound.play('object_' + stage.get('ask_for'), 'ask*');
+                this.timers.characters.ask.start();
+                this.sound.delayedPlay(500, 'object_' + stage.get('ask_for'), 'ask*');
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
             }.bind(this), 500 / this.speed).
 

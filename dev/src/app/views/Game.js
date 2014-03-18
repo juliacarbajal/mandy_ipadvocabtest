@@ -2,7 +2,7 @@ LSCP.View.Game = Backbone.View.extend({
 
     id : "game",
     game_session: null,
-    speed: 1,
+    speed: 4,
     subtitles: false,
     progressbar: null,
     reward: null,

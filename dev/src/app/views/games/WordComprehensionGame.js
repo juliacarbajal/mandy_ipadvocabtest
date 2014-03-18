@@ -15,7 +15,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Preload assets
         var images = [
             ['slot', LSCP.Locations.Images + "slot-bg.png"],
-            ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"]
+            ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"],
+            ['slot-wrong', LSCP.Locations.Images + "slot-wrong-bg.png"]
         ];
         var sounds = [
             ['intro', {urls: ['mandy/intro.mp3']}],
@@ -23,7 +24,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 urls: ['mandy/sprite.mp3'],
                 sprite: {
                     intro: [0, 800],
-                    greeting: [1000, 1600]
+                    greeting: [1000, 1600],
+                    wrong: [3000, 1800],
+                    idle: [5000, 3000]
                 }
             }],
             ['plop', {urls: ['plop.mp3']}]
@@ -39,7 +42,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                         intro1: [0, 2500],
                         intro2: [3000, 2500],
                         ask1: [6000, 2500],
-                        ask2: [9000, 2500] 
+                        ask2: [9000, 2500]
                     }
                 }]);
             });
@@ -351,14 +354,19 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onCorrectAnswer: function(slot){
         LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
 
-        // Success sound
+        // Animation
+        this.timers.characters.happy.start();
+
+        // Sound
         this.sound.play('mandy', 'greeting');
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+
+        // Slot
+        slot.set('backgroundImage', 'slot-correct');
 
         // Progress
         var level = this.getCurrentLevel();
         var progress = 100 / level.get('stages').length * (this.current_stage+1);
-//        log('PROGRESS:', progress, " = 100 / " + level.get('stages').length + "* (" + this.current_stage + "+1)");
         this.game_session.set({progress: Math.floor(progress)});
 
         // Display queue
@@ -372,26 +380,32 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 effect: collie.Effect.wave(2, 0.25)
             }).
 
-            delay(function(){}, 2000 / this.speed).
-
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 50 / this.speed).
-
-            transition(this.objects.character, 1000 / this.speed, {
-                to: 800,
-                set: "y",
-                effect: collie.Effect.easeOutQuint
-            }).
-
-            transition(this.objects.overlay, 1000 / this.speed, {
-                from: 0,
-                to: 1,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            }).
+            }.bind(this), 2000 / this.speed).
 
             delay(function(){
+
+                collie.Timer.transition(this.objects.overlay, 800 / this.speed, {
+                    from: 0,
+                    to: 1,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+                collie.Timer.transition(this.objects.character, 1000 / this.speed, {
+                    from: 1,
+                    to: 0,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+
+            }.bind(this), 4000 / this.speed).
+
+            delay(function(){
+                this.objects.character.set({
+                    opacity: 1,
+                    y: 800
+                });
                 this.layers.slots.removeChildren(this.objects.slots);
                 this.nextStage();
             }.bind(this), 2000 / this.speed)
@@ -407,37 +421,49 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         */
     },
 
-    onWrongAnswer: function(){
+    onWrongAnswer: function(slot){
         LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
-        // Failure sound
+        // Animation
+        this.timers.characters.sad.start();
+
+        // Sound
+        this.sound.play('mandy', 'wrong');
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
+        // Slot
+        slot.set('backgroundImage', 'slot-wrong');
 
         // Display queue
 
         collie.Timer.queue().
 
-            delay(function(){}, 2000 / this.speed).
-
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 0).
-
-            transition(this.objects.character, 1000 / this.speed, {
-                to: 800,
-                set: "y",
-                effect: collie.Effect.easeOutQuint
-            }).
-
-            transition(this.objects.overlay, 1000 / this.speed, {
-                from: 0,
-                to: 1,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            }).
+            }.bind(this), 2000 / this.speed).
 
             delay(function(){
+
+                collie.Timer.transition(this.objects.overlay, 800 / this.speed, {
+                    from: 0,
+                    to: 1,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+                collie.Timer.transition(this.objects.character, 1000 / this.speed, {
+                    from: 1,
+                    to: 0,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+
+            }.bind(this), 4000 / this.speed).
+
+            delay(function(){
+                this.objects.character.set({
+                    opacity: 1,
+                    y: 800
+                });
                 this.layers.slots.removeChildren(this.objects.slots);
                 this.retryStage();
             }.bind(this), 2000 / this.speed)
@@ -541,7 +567,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 if (stage.get("objects")[i] == stage.get("ask_for"))
                                     this.onCorrectAnswer(slot);
                                 else
-                                    this.onWrongAnswer();
+                                    this.onWrongAnswer(slot);
                             }.bind(this)
                         });
                 }, this);

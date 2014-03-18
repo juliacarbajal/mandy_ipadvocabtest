@@ -350,7 +350,7 @@ LSCP.View.Game = Backbone.View.extend({
 
     id : "game",
     game_session: null,
-    speed: 4,
+    speed: 1,
     subtitles: false,
     progressbar: null,
     reward: null,
@@ -464,35 +464,43 @@ LSCP.Mandy = new Object({
     animations: {
         normal: {
             sprite: 'normal.png',
-            values: [0]
+            values: [0],
+            loop: 0
         },
         blink: {
             sprite: 'blink.png',
-            values: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+            values: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            loop: 0
         },
         ask: {
             sprite: 'ask.png',
-            values: [0,0,0,0,1,0,2,3,4,5,6,6,7,8,8,9,10,10,6,6,8,8,8,11,12,13,14,0,0,0]
+            values: [0,0,0,0,1,0,2,3,4,5,6,6,7,8,8,9,10,10,6,6,8,8,8,11,12,13,14,0,0,0],
+            loop: 1
         },
         happy: {
             sprite: 'happy.png',
-            values: [0,1,2,3,4,4,4,4,4,5,6,7,8,9,1,10,11,12,12,12,12,12,13,6,7]
+            values: [0,1,2,3,4,4,4,4,4,5,6,7,8,9,1,10,11,12,12,12,12,12,13,6,7],
+            loop: 2
         },
         hello: {
             sprite: 'hello.png',
-            values: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,10,11,14,15,16,17,18,19,16,17,20,21,22,23,0]
+            values: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,10,11,14,15,16,17,18,19,16,17,20,21,22,23,0],
+            loop: 1
         },
         sad: {
             sprite: 'sad.png',
-            values: [0,1,2,3,4,5,6,6,6,6,6,6,7,8,8,8,8,8,8,8,8,8,8,9,9,9,10,11,12]
+            values: [0,1,2,3,4,5,6,6,6,6,6,6,7,8,8,8,8,8,8,8,8,8,8,9,9,9,10,11,12],
+            loop: 1
         },
         bored: {
             sprite: 'bored.png',
-            values: [0,1,2,2,3,4,5,6,7,4,7,6,7,8,9,10,11,12,13,14,13,12,13,14,13,12,13,14,13,15,16,17,16,18,19,20,21,22,23,24,25,26,25,20,27,28,29,30,31,32,33,30,30,30,30,30,30,30,30,30,30,34,34,30,30,30,30,30,30,30,30,30]
+            values: [0,1,2,2,3,4,5,6,7,4,7,6,7,8,9,10,11,12,13,14,13,12,13,14,13,12,13,14,13,15,16,17,16,18,19,20,21,22,23,24,25,26,25,20,27,28,29,30,31,32,33,30,30,30,30,30,30,30,30,30,30,34,34,30,30,30,30,30,30,30,30,30],
+            loop: 1
         },
         idle: {
             sprite: 'idle.png',
-            values: [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1]
+            values: [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1],
+            loop: 1
         }
     },
 
@@ -535,7 +543,7 @@ LSCP.Mandy = new Object({
             if (id == 'normal') return;
 
             timers[id] = collie.Timer.cycle(characters[id], "12fps", {
-                loop: 1,
+                loop: animation.loop,
                 useAutoStart : false,
                 valueSet: animation.values,
                 onStart: function(){
@@ -768,7 +776,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Preload assets
         var images = [
             ['slot', LSCP.Locations.Images + "slot-bg.png"],
-            ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"]
+            ['slot-correct', LSCP.Locations.Images + "slot-correct-bg.png"],
+            ['slot-wrong', LSCP.Locations.Images + "slot-wrong-bg.png"]
         ];
         var sounds = [
             ['intro', {urls: ['mandy/intro.mp3']}],
@@ -776,7 +785,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 urls: ['mandy/sprite.mp3'],
                 sprite: {
                     intro: [0, 800],
-                    greeting: [1000, 1600]
+                    greeting: [1000, 1600],
+                    wrong: [3000, 1800],
+                    idle: [5000, 3000]
                 }
             }],
             ['plop', {urls: ['plop.mp3']}]
@@ -792,7 +803,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                         intro1: [0, 2500],
                         intro2: [3000, 2500],
                         ask1: [6000, 2500],
-                        ask2: [9000, 2500] 
+                        ask2: [9000, 2500]
                     }
                 }]);
             });
@@ -1104,14 +1115,19 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onCorrectAnswer: function(slot){
         LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
 
-        // Success sound
+        // Animation
+        this.timers.characters.happy.start();
+
+        // Sound
         this.sound.play('mandy', 'greeting');
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+
+        // Slot
+        slot.set('backgroundImage', 'slot-correct');
 
         // Progress
         var level = this.getCurrentLevel();
         var progress = 100 / level.get('stages').length * (this.current_stage+1);
-//        log('PROGRESS:', progress, " = 100 / " + level.get('stages').length + "* (" + this.current_stage + "+1)");
         this.game_session.set({progress: Math.floor(progress)});
 
         // Display queue
@@ -1125,26 +1141,32 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 effect: collie.Effect.wave(2, 0.25)
             }).
 
-            delay(function(){}, 2000 / this.speed).
-
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 50 / this.speed).
-
-            transition(this.objects.character, 1000 / this.speed, {
-                to: 800,
-                set: "y",
-                effect: collie.Effect.easeOutQuint
-            }).
-
-            transition(this.objects.overlay, 1000 / this.speed, {
-                from: 0,
-                to: 1,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            }).
+            }.bind(this), 2000 / this.speed).
 
             delay(function(){
+
+                collie.Timer.transition(this.objects.overlay, 800 / this.speed, {
+                    from: 0,
+                    to: 1,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+                collie.Timer.transition(this.objects.character, 1000 / this.speed, {
+                    from: 1,
+                    to: 0,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+
+            }.bind(this), 4000 / this.speed).
+
+            delay(function(){
+                this.objects.character.set({
+                    opacity: 1,
+                    y: 800
+                });
                 this.layers.slots.removeChildren(this.objects.slots);
                 this.nextStage();
             }.bind(this), 2000 / this.speed)
@@ -1160,37 +1182,49 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         */
     },
 
-    onWrongAnswer: function(){
+    onWrongAnswer: function(slot){
         LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
-        // Failure sound
+        // Animation
+        this.timers.characters.sad.start();
+
+        // Sound
+        this.sound.play('mandy', 'wrong');
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
+        // Slot
+        slot.set('backgroundImage', 'slot-wrong');
 
         // Display queue
 
         collie.Timer.queue().
 
-            delay(function(){}, 2000 / this.speed).
-
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 0).
-
-            transition(this.objects.character, 1000 / this.speed, {
-                to: 800,
-                set: "y",
-                effect: collie.Effect.easeOutQuint
-            }).
-
-            transition(this.objects.overlay, 1000 / this.speed, {
-                from: 0,
-                to: 1,
-                set: "opacity",
-                effect: collie.Effect.easeOutQuint
-            }).
+            }.bind(this), 2000 / this.speed).
 
             delay(function(){
+
+                collie.Timer.transition(this.objects.overlay, 800 / this.speed, {
+                    from: 0,
+                    to: 1,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+                collie.Timer.transition(this.objects.character, 1000 / this.speed, {
+                    from: 1,
+                    to: 0,
+                    set: "opacity",
+                    effect: collie.Effect.easeOutQuint
+                });
+
+            }.bind(this), 4000 / this.speed).
+
+            delay(function(){
+                this.objects.character.set({
+                    opacity: 1,
+                    y: 800
+                });
                 this.layers.slots.removeChildren(this.objects.slots);
                 this.retryStage();
             }.bind(this), 2000 / this.speed)
@@ -1294,7 +1328,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 if (stage.get("objects")[i] == stage.get("ask_for"))
                                     this.onCorrectAnswer(slot);
                                 else
-                                    this.onWrongAnswer();
+                                    this.onWrongAnswer(slot);
                             }.bind(this)
                         });
                 }, this);

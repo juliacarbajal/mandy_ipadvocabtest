@@ -222,6 +222,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Progress
         if (this.current_stage === 0) this.game_session.set({progress: 0});
 
+        // Set idle time for the current stage
+        this.idleTime = stage.get('time_idle');
 
         // Background
         if (this.objects.background) this.layers.background.removeChild(this.objects.background);
@@ -273,7 +275,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
 
         // HUD
-
         this.objects.hud_text.text('LEVEL: ' + level.get('name'));
 
 
@@ -320,6 +321,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
 
+//                this.startWatchingIdle();
+
                 slot.attach({
                         mousedown: function () {
                             this.sound.play('plop');
@@ -329,6 +332,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 set: "y",
                                 effect: collie.Effect.wave(2, 0.25)
                             });
+
+//                            this.stopWatchingIdle();
 
                             if (this.subtitles) this.objects.subtitles.set({visible: false});
 
@@ -403,6 +408,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }.bind(this), 4000 / this.speed).
 
             delay(function(){
+                LSCP.Mandy.visible = false;
                 this.objects.character.set({
                     opacity: 1,
                     y: 800
@@ -461,6 +467,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }.bind(this), 4000 / this.speed).
 
             delay(function(){
+                LSCP.Mandy.visible = false;
                 this.objects.character.set({
                     opacity: 1,
                     y: 800
@@ -492,8 +499,15 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     onIdle: function(){
         LSCP.View.Game.prototype.onIdle.apply(this, arguments);
+
+        if (LSCP.Mandy.visible) {
+            this.sound.play('mandy', 'idle');
+            this.timers.characters.bored.start();
+        } else {
+            this.sound.play('mandy', 'idle');
+        }
+
         /* TODO
-         - character talks
          - idle sound
          - after 3 times, end session
          */
@@ -525,6 +539,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
+//                this.startWatchingIdle();
+                LSCP.Mandy.visible = true;
                 this.timers.characters.hello.start();
                 this.sound.delayedPlay(600, 'mandy', 'intro');
 
@@ -534,6 +550,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                             this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
                             this.objects.character.detachAll();
 
+//                            this.stopWatchingIdle();
                             this.onTouchCharacter();
                         }.bind(this)
                     });
@@ -561,6 +578,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 this.sound.play('plop');
                                 this.game_session.saveAction('touch', 'slot#'+i);
 
+                                this.stopWatchingIdle();
+
                                 _.invoke(this.objects.slots, 'detachAll');
 
                                 if (stage.get("objects")[i] == stage.get("ask_for"))
@@ -577,7 +596,11 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 to: 0,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
-            })
+            }).
+
+            delay(function(){
+                this.startWatchingIdle();
+            }.bind(this), 0)
 
         ;
 

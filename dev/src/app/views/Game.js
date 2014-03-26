@@ -7,6 +7,9 @@ LSCP.View.Game = Backbone.View.extend({
     progressbar: null,
     reward: null,
     layersSize: {},
+    idleInterval: null,
+    idleTimer: 0,
+    idleTime: 30, // seconds
 
 	initialize: function(){
         log('LSCP.View.Game initialized!');
@@ -46,6 +49,11 @@ LSCP.View.Game = Backbone.View.extend({
         return this;
     },
 
+    events: {
+        'mousedown': 'onTouch'
+//        'touchstart': 'onTouch'
+    },
+
 
     // Game cycle
 
@@ -69,7 +77,35 @@ LSCP.View.Game = Backbone.View.extend({
 
     // Game interaction
 
-    onTouch: function(){},
+    onTouch: function(){
+        this.idleTimerReset();
+    },
+
+
+    // Idle time handling
+
+    startWatchingIdle: function(){
+        // Increment the idleTime every second
+        if (this.idleInterval === null) {
+            this.idleTimerReset();
+            this.idleInterval = setInterval(this.idleTimerIncrement.bind(this), 1000);
+        }
+    },
+    stopWatchingIdle: function(){
+        clearInterval(this.idleInterval);
+        this.idleInterval = null;
+    },
+    idleTimerReset: function(){
+        this.idleTimer = 0;
+    },
+    idleTimerIncrement: function(){
+        this.idleTimer = this.idleTimer + 1;
+//        log('idleTimerIncrement', this.idleTimer, '(max: '+this.idleTime+')');
+        if (this.idleTimer >= this.idleTime) {
+            this.stopWatchingIdle();
+            this.onIdle();
+        }
+    },
 
 
     // Game assets

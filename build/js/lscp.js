@@ -355,6 +355,9 @@ LSCP.View.Game = Backbone.View.extend({
     progressbar: null,
     reward: null,
     layersSize: {},
+    idleInterval: null,
+    idleTimer: 0,
+    idleTime: 30, // seconds
 
 	initialize: function(){
         log('LSCP.View.Game initialized!');
@@ -394,6 +397,11 @@ LSCP.View.Game = Backbone.View.extend({
         return this;
     },
 
+    events: {
+        'mousedown': 'onTouch'
+//        'touchstart': 'onTouch'
+    },
+
 
     // Game cycle
 
@@ -417,7 +425,35 @@ LSCP.View.Game = Backbone.View.extend({
 
     // Game interaction
 
-    onTouch: function(){},
+    onTouch: function(){
+        this.idleTimerReset();
+    },
+
+
+    // Idle time handling
+
+    startWatchingIdle: function(){
+        // Increment the idleTime every second
+        if (this.idleInterval === null) {
+            this.idleTimerReset();
+            this.idleInterval = setInterval(this.idleTimerIncrement.bind(this), 1000);
+        }
+    },
+    stopWatchingIdle: function(){
+        clearInterval(this.idleInterval);
+        this.idleInterval = null;
+    },
+    idleTimerReset: function(){
+        this.idleTimer = 0;
+    },
+    idleTimerIncrement: function(){
+        this.idleTimer = this.idleTimer + 1;
+//        log('idleTimerIncrement', this.idleTimer, '(max: '+this.idleTime+')');
+        if (this.idleTimer >= this.idleTime) {
+            this.stopWatchingIdle();
+            this.onIdle();
+        }
+    },
 
 
     // Game assets
@@ -494,7 +530,7 @@ LSCP.Mandy = new Object({
         },
         bored: {
             sprite: 'bored.png',
-            values: [0,1,2,2,3,4,5,6,7,4,7,6,7,8,9,10,11,12,13,14,13,12,13,14,13,12,13,14,13,15,16,17,16,18,19,20,21,22,23,24,25,26,25,20,27,28,29,30,31,32,33,30,30,30,30,30,30,30,30,30,30,34,34,30,30,30,30,30,30,30,30,30],
+            values: [0,1,2,3,4,5,6,7,8,7,6,7,9,10,11,12,13,12,11,12,13,12,11,14,15,16,17,18,19,20,21,20,22,23,24,23,25,26,27],
             loop: 1
         },
         idle: {
@@ -503,6 +539,7 @@ LSCP.Mandy = new Object({
             loop: 1
         }
     },
+    visible: false,
 
     initialize: function() {
         log('LSCP.Mandy initialized!');
@@ -983,6 +1020,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Progress
         if (this.current_stage === 0) this.game_session.set({progress: 0});
 
+        // Set idle time for the current stage
+        this.idleTime = stage.get('time_idle');
 
         // Background
         if (this.objects.background) this.layers.background.removeChild(this.objects.background);
@@ -1034,7 +1073,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
 
         // HUD
-
         this.objects.hud_text.text('LEVEL: ' + level.get('name'));
 
 
@@ -1081,6 +1119,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
 
+//                this.startWatchingIdle();
+
                 slot.attach({
                         mousedown: function () {
                             this.sound.play('plop');
@@ -1090,6 +1130,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 set: "y",
                                 effect: collie.Effect.wave(2, 0.25)
                             });
+
+//                            this.stopWatchingIdle();
 
                             if (this.subtitles) this.objects.subtitles.set({visible: false});
 
@@ -1164,6 +1206,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }.bind(this), 4000 / this.speed).
 
             delay(function(){
+                LSCP.Mandy.visible = false;
                 this.objects.character.set({
                     opacity: 1,
                     y: 800
@@ -1222,6 +1265,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }.bind(this), 4000 / this.speed).
 
             delay(function(){
+                LSCP.Mandy.visible = false;
                 this.objects.character.set({
                     opacity: 1,
                     y: 800
@@ -1253,8 +1297,15 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     onIdle: function(){
         LSCP.View.Game.prototype.onIdle.apply(this, arguments);
+
+        if (LSCP.Mandy.visible) {
+            this.sound.play('mandy', 'idle');
+            this.timers.characters.bored.start();
+        } else {
+            this.sound.play('mandy', 'idle');
+        }
+
         /* TODO
-         - character talks
          - idle sound
          - after 3 times, end session
          */
@@ -1286,6 +1337,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
+//                this.startWatchingIdle();
+                LSCP.Mandy.visible = true;
                 this.timers.characters.hello.start();
                 this.sound.delayedPlay(600, 'mandy', 'intro');
 
@@ -1295,6 +1348,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                             this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
                             this.objects.character.detachAll();
 
+//                            this.stopWatchingIdle();
                             this.onTouchCharacter();
                         }.bind(this)
                     });
@@ -1322,6 +1376,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 this.sound.play('plop');
                                 this.game_session.saveAction('touch', 'slot#'+i);
 
+                                this.stopWatchingIdle();
+
                                 _.invoke(this.objects.slots, 'detachAll');
 
                                 if (stage.get("objects")[i] == stage.get("ask_for"))
@@ -1338,7 +1394,11 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 to: 0,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
-            })
+            }).
+
+            delay(function(){
+                this.startWatchingIdle();
+            }.bind(this), 0)
 
         ;
 

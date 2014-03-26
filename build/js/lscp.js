@@ -1112,60 +1112,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     },
 
-    prepareParticles: function(){
-
-    },
-
-    addParticlesToSlot: function(slot){
-        log('addParticlesToSlot');
-        var x = slot.get('x') + 40,
-            y = slot.get('y') + 40,
-            width = slot.get('width'),
-            height = slot.get('height');
-        log(x, y, width, height);
-        var number_particles = 100;
-        var pool = new collie.Pool(number_particles * 100, {
-            backgroundImage : 'star',
-            x: 'center',
-            y: 'center',
-            zIndex: 1
-        });
-        var options = [ // top, right, bottom, left
-            {velocityY: [-80, -150], velocityX: [-80, 80], x: [x, x+width], y: y},
-            {velocityX: [80, 150],   velocityY: [-80, 80], x: x+width-40, y: [y, y+height]},
-            {velocityY: [80, 150],   velocityX: [-80, 80], x: [x, x+width], y: y+height-40},
-            {velocityX: [-80, -150], velocityY: [-80, 80], x: x, y: [y, y+height]}
-        ];
-        collie.Timer.cycle(function addParticleToLayer(e) {
-            var particle = pool.get().addTo(this.layers.background);
-            var op = options[e.frame % 4];
-            for (var o in op) {
-                if (typeof op[o] == 'object') {
-                    particle.set(o, LSCP.randomFromInterval(op[o][0], op[o][1]));
-                } else {
-                    particle.set(o, op[o]);
-                }
-            }
-            particle.set('velocityRotate', LSCP.randomFromInterval(10, 360));
-            collie.Timer.transition(particle, 1000, {
-                from: 1,
-                to: 0,
-                set: "opacity",
-                onComplete: function(){
-                    this.layers.background.removeChild(particle);
-                }.bind(this)
-            });
-        }.bind(this), 200, {
-            from: 0,
-            to: number_particles,
-            loop: 15,
-            onComplete : function () {
-                log('COMPLETE!');
-            }
-        });
-        log('addParticlesToSlot END');
-    },
-
     onCorrectAnswer: function(slot){
         LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
 
@@ -1194,7 +1140,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 slot.set('backgroundImage', 'slot-correct');
-//                this.addParticlesToSlot(slot);
             }.bind(this), 0).
 
             delay(function(){

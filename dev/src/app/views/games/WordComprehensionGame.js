@@ -20,7 +20,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             ['slot-wrong',   LSCP.Locations.Images + "slot-wrong-bg.png"]
         ];
         var sounds = [
-            ['intro', {urls: ['mandy/intro.mp3']}],
             ['mandy', {
                 urls: ['mandy/sprite.mp3'],
                 sprite: {
@@ -194,29 +193,24 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     nextStage: function(){
 
-        log('nextStage', this.current_level, this.game_session.get('levels').size());
-
         var level = this.getCurrentLevel();
 
         this.current_stage += 1;
 
-        if (this.current_stage > level.get('stages').length - 1) {
+        if (this.current_stage > level.get('stages').size() - 1) {
             this.reward.show().on('end', function(){
                 this.reward.hide().off('end');
                 this.current_level += 1;
                 this.current_stage = 0;
-                log("NEXT STAGE: level ", this.current_level, "stage", this.current_stage);
-                this.onIteration();
+
+                if (this.current_level > this.game_session.get('levels').size() - 1) {
+                    this.end();
+                } else {
+                    this.onIteration();
+                }
             }.bind(this));
             return;
         }
-
-        if (this.current_level > this.game_session.get('levels').size() - 1) {
-            this.end();
-            return;
-        }
-
-        log("NEXT STAGE: level ", this.current_level, "stage", this.current_stage);
 
         this.onIteration();
     },
@@ -230,10 +224,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     end: function(){
         LSCP.View.Game.prototype.end.apply(this, arguments);
-        log('END!');
         /* TODO
         - save game session
-        - send GAME_END to controller
         */
     },
 

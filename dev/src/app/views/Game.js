@@ -63,6 +63,9 @@ LSCP.View.Game = Backbone.View.extend({
 
     end: function(){
         log('LSCP.View.Game ends!');
+        setTimeout(function(){
+            this.trigger('end');
+        }.bind(this), 5000 / this.speed);
     },
 
 

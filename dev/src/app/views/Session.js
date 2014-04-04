@@ -47,7 +47,19 @@ LSCP.View.Session = Backbone.View.extend({
 
         this.$el.append(this.current_game_view.render().el);
 
+        this.listenToOnce(this.current_game_view, 'end', this.endSession);
+
 //        this.current_game_view.start();
 
+    },
+
+    endSession: function(){
+        this.config = null;
+        this.current_game = null;
+        this.current_game_session = null;
+        this.current_game_view = null;
+        this.$el.empty();
+        $('#home').show(); // TODO: temp
     }
+
 });

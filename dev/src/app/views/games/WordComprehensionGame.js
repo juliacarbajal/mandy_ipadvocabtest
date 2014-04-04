@@ -24,10 +24,38 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             ['mandy', {
                 urls: ['mandy/sprite.mp3'],
                 sprite: {
-                    intro: [0, 800],
-                    greeting: [1000, 1600],
-                    wrong: [3000, 1800],
-                    idle: [5000, 3000]
+                    intro:    [0, 3700],
+                    hello1:   [4000, 800],
+                    hello2:   [5000, 700],
+                    hello3:   [6000, 800],
+                    hello4:   [7000, 1200],
+                    hello5:   [9000, 600],
+                    right1:   [10000, 1200],
+                    right2:   [12000, 1900],
+                    right3:   [14000, 1800],
+                    right4:   [16000, 1400],
+                    right5:   [18000, 1100],
+                    right6:   [20000, 1500],
+                    wrong1:   [30000, 1500],
+                    wrong2:   [32000, 1200],
+                    wrong3:   [34000, 2100],
+                    wrong4:   [37000, 2100],
+                    wrong5:   [40000, 1300],
+                    idle1:    [50000, 900],
+                    idle2:    [51000, 900],
+                    idle3:    [52000, 900],
+                    idle4:    [53000, 1600],
+                    idle5:    [55000, 2000],
+                    idle6:    [57000, 1500],
+                    invite1:  [60000, 1300],
+                    invite2:  [62000, 1100],
+                    invite3:  [64000, 1200],
+                    invite4:  [66000, 800],
+                    invite5:  [67000, 1200],
+                    bye1:     [70000, 1200],
+                    bye2:     [72000, 1200],
+                    bye3:     [74000, 1200],
+                    bye4:     [76000, 1200]
                 }
             }],
             ['plop', {urls: ['plop.mp3']}]
@@ -40,10 +68,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 sounds.push(['object_' + object, {
                     urls: ['objects/' + family + '/' + object + '-sprite.mp3'],
                     sprite: {
-                        intro1: [0, 2500],
-                        intro2: [3000, 2500],
-                        ask1: [6000, 2500],
-                        ask2: [9000, 2500]
+                        ask:   [0, 2000],
+                        intro: [3000, 2000]
                     }
                 }]);
             });
@@ -168,6 +194,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     nextStage: function(){
 
+        log('nextStage', this.current_level, this.game_session.get('levels').size());
+
         var level = this.getCurrentLevel();
 
         this.current_stage += 1;
@@ -183,7 +211,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             return;
         }
 
-        if (this.current_level > this.game_session.get('levels').length - 1) {
+        if (this.current_level > this.game_session.get('levels').size() - 1) {
             this.end();
             return;
         }
@@ -202,6 +230,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     end: function(){
         LSCP.View.Game.prototype.end.apply(this, arguments);
+        log('END!');
         /* TODO
         - save game session
         - send GAME_END to controller
@@ -307,7 +336,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     introduceObject: function(slot, i){
         var stage = this.getCurrentStage();
 
-        this.sound.play('object_' + stage.get('objects')[i], 'intro*');
+        this.sound.play('object_' + stage.get('objects')[i], 'intro');
 
         collie.Timer.queue().
 
@@ -363,7 +392,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.timers.characters.happy.start();
 
         // Sound
-        this.sound.play('mandy', 'greeting');
+        this.sound.play('mandy', 'right*');
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
 
         // Progress
@@ -418,14 +447,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }.bind(this), 2000 / this.speed)
 
         ;
-
-        /* TODO
-        - animate object and character
-        - success sound
-        - character leaves
-        - fade to black
-        - next iteration
-        */
     },
 
     onWrongAnswer: function(slot){
@@ -435,7 +456,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.timers.characters.sad.start();
 
         // Sound
-        this.sound.play('mandy', 'wrong');
+        this.sound.play('mandy', 'wrong*');
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
         // Slot
@@ -501,14 +522,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         LSCP.View.Game.prototype.onIdle.apply(this, arguments);
 
         if (LSCP.Mandy.visible) {
-            this.sound.play('mandy', 'idle');
+            this.sound.play('mandy', 'idle*');
             this.timers.characters.bored.start();
         } else {
-            this.sound.play('mandy', 'idle');
+            this.sound.play('mandy', 'idle*');
         }
 
         /* TODO
-         - idle sound
          - after 3 times, end session
          */
     },
@@ -542,7 +562,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 //                this.startWatchingIdle();
                 LSCP.Mandy.visible = true;
                 this.timers.characters.hello.start();
-                this.sound.delayedPlay(600, 'mandy', 'intro');
+                this.sound.delayedPlay(600, 'mandy', 'hello*');
 
                 this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
                     .attach({
@@ -567,7 +587,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 this.timers.characters.ask.start();
-                this.sound.delayedPlay(500, 'object_' + stage.get('ask_for'), 'ask*');
+                this.sound.delayedPlay(500, 'object_' + stage.get('ask_for'), 'ask');
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
             }.bind(this), 500 / this.speed).
 

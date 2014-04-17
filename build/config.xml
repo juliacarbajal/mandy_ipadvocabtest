@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:gap="http://phonegap.com/ns/1.0"
+        id="com.etaminstudio.lscp.idevxxi"
+        version="0.1">
+
+    <name>LSCP iDevXXI</name>
+    <description>Experiments with babies</description>
+    <author href="http://etaminstudio.com" email="hans@etaminstudio.com">Etamin Studio</author>
+
+    <preference name="orientation" value="landscape" />
+    <!--<preference name="fullscreen" value="true" />-->
+
+    <gap:platform name="ios" />
+    <preference name="EnableViewportScale" value="true"/>
+    <preference name="BackupWebStorage" value="none"/>
+    <preference name="target-device" value="tablet" />
+    <preference name="detect-data-types" value="false" />
+    <preference name="exit-on-suspend" value="true" />
+
+    <!-- Define app icon for each platform. -->
+    <icon src="img/touchicon.png" />
+
+    <!--
+    Define access to external domains.
+
+    <access /> - a blank access tag denies access to all external resources.
+    <access origin="*" /> - a wildcard access tag allows access to all external resource.
+
+    Otherwise, you can specify specific domains:
+    -->
+    <access origin="*"/> <!-- allow local pages -->
+    <!--
+    <access origin="http://phonegap.com" /> - allow any secure requests to http://phonegap.com/
+    <access origin="http://phonegap.com" subdomains="true" /> - same as above, but including subdomains, such as http://build.phonegap.com/
+    -->
+
+</widget>

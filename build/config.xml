@@ -21,6 +21,9 @@
     <!-- Define app icon for each platform. -->
     <icon src="img/touchicon.png" />
 
+    <!-- Define app splash screen for each platform. -->
+    <gap:splash src="img/splashscreen.png" gap:platform="ios" width="2048" height="1536" />
+
     <!--
     Define access to external domains.
 

@@ -1,4 +1,5 @@
 /node_modules/
 /.sass-cache/
 /.idea
-/build/mongoose-tiny-4.1.exe
+/build/*.exe
+/build/mongoose.conf

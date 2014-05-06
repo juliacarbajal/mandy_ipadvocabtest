@@ -50,8 +50,8 @@ LSCP.View.Game = Backbone.View.extend({
     },
 
     events: {
-        'mousedown': 'onTouch'
-//        'touchstart': 'onTouch'
+        'mousedown': 'onTouch',
+        'touchstart': 'onTouch'
     },
 
 

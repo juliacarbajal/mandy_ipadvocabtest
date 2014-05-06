@@ -1222,7 +1222,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 2000 / this.speed).
+            }.bind(this), 0).
 
             delay(function(){
 
@@ -1239,7 +1239,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     effect: collie.Effect.easeOutQuint
                 });
 
-            }.bind(this), 4000 / this.speed).
+            }.bind(this), 3000 / this.speed).
 
             delay(function(){
                 LSCP.Mandy.visible = false;
@@ -1273,7 +1273,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 2000 / this.speed).
+            }.bind(this), 0).
 
             delay(function(){
 
@@ -1290,7 +1290,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     effect: collie.Effect.easeOutQuint
                 });
 
-            }.bind(this), 4000 / this.speed).
+            }.bind(this), 3000 / this.speed).
 
             delay(function(){
                 LSCP.Mandy.visible = false;
@@ -1303,14 +1303,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }.bind(this), 2000 / this.speed)
 
         ;
-
-        /* TODO
-         - animate object and character
-         - failure sound
-         - character leaves
-         - fade to black
-         - next iteration
-         */
     },
 
     onNoAnswer: function(){

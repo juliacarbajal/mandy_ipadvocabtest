@@ -543,6 +543,7 @@ LSCP.Mandy = new Object({
         }
     },
     visible: false,
+    currentAnimation: null,
 
     initialize: function() {
         log('LSCP.Mandy initialized!');
@@ -587,12 +588,15 @@ LSCP.Mandy = new Object({
                 useAutoStart : false,
                 valueSet: animation.values,
                 onStart: function(){
-                    _.each(characters, function(v){v.set('visible', false);});
-                    characters[id].set('visible', true);
+                    _.each(characters, function(v,i){v.set('visible', false); log('set visible false', i);});
+                    characters[id].set('visible', true); log('set visible true ', id);
+                    this.currentAnimation = id;
                 }.bind(this),
                 onComplete : function () {
-                    characters[id].set('visible', false);
-                    characters.normal.set('visible', true);
+                    if (this.currentAnimation != id) {return;}
+                    characters[id].set('visible', false); log('set visible false ', id);
+                    characters.normal.set('visible', true); log('set visible true normal');
+                    this.currentAnimation = null;
                 }.bind(this)
             });
         });
@@ -1257,6 +1261,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onWrongAnswer: function(slot){
         LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
+        var level = this.getCurrentLevel();
+
         // Animation
         this.timers.characters.sad.start();
 
@@ -1299,7 +1305,23 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     y: 800
                 });
                 this.layers.slots.removeChildren(this.objects.slots);
-                this.retryStage();
+
+                switch (level.get('on_failure')) {
+                    // Handling of different possible behaviors in case of failure
+
+                    case 'REPEAT_STAGE':
+                        this.retryStage();
+                        break;
+
+                    case 'CONTINUE':
+                        // Progress
+                        var progress = 100 / level.get('stages').length * (this.current_stage+1);
+                        this.game_session.set({progress: Math.floor(progress)});
+
+                        this.nextStage();
+                        break;
+                }
+
             }.bind(this), 2000 / this.speed)
 
         ;

@@ -444,6 +444,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onWrongAnswer: function(slot){
         LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
+        var level = this.getCurrentLevel();
+
         // Animation
         this.timers.characters.sad.start();
 
@@ -486,7 +488,23 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     y: 800
                 });
                 this.layers.slots.removeChildren(this.objects.slots);
-                this.retryStage();
+
+                switch (level.get('on_failure')) {
+                    // Handling of different possible behaviors in case of failure
+
+                    case 'REPEAT_STAGE':
+                        this.retryStage();
+                        break;
+
+                    case 'CONTINUE':
+                        // Progress
+                        var progress = 100 / level.get('stages').length * (this.current_stage+1);
+                        this.game_session.set({progress: Math.floor(progress)});
+
+                        this.nextStage();
+                        break;
+                }
+
             }.bind(this), 2000 / this.speed)
 
         ;

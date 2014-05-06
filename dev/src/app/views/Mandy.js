@@ -44,6 +44,7 @@ LSCP.Mandy = new Object({
         }
     },
     visible: false,
+    currentAnimation: null,
 
     initialize: function() {
         log('LSCP.Mandy initialized!');
@@ -88,12 +89,15 @@ LSCP.Mandy = new Object({
                 useAutoStart : false,
                 valueSet: animation.values,
                 onStart: function(){
-                    _.each(characters, function(v){v.set('visible', false);});
-                    characters[id].set('visible', true);
+                    _.each(characters, function(v,i){v.set('visible', false); log('set visible false', i);});
+                    characters[id].set('visible', true); log('set visible true ', id);
+                    this.currentAnimation = id;
                 }.bind(this),
                 onComplete : function () {
-                    characters[id].set('visible', false);
-                    characters.normal.set('visible', true);
+                    if (this.currentAnimation != id) {return;}
+                    characters[id].set('visible', false); log('set visible false ', id);
+                    characters.normal.set('visible', true); log('set visible true normal');
+                    this.currentAnimation = null;
                 }.bind(this)
             });
         });

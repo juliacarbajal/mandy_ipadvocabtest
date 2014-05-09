@@ -10,6 +10,8 @@ LSCP.View.Game = Backbone.View.extend({
     idleInterval: null,
     idleTimer: 0,
     idleTime: 30, // seconds
+    imagesLoaded: false,
+    soundsLoaded: false,
 
 	initialize: function(){
         log('LSCP.View.Game initialized!');
@@ -115,12 +117,21 @@ LSCP.View.Game = Backbone.View.extend({
 
     preloadImages: function(images){
         log('LSCP.View.Game is preloading images...');
-        collie.ImageManager.add(images, this.start.bind(this));
+        collie.ImageManager.add(images, function(){
+            this.imagesLoaded = true;
+            this.onLoaded();
+        }.bind(this));
     },
 
     preloadSounds: function(sounds){
         log('LSCP.View.Game is preloading sounds...');
         this.sound.addSounds(sounds);
+        this.soundsLoaded = true;
+        this.onLoaded();
+    },
+
+    onLoaded: function(){
+        if (this.imagesLoaded && this.soundsLoaded) this.start();
     }
 
 

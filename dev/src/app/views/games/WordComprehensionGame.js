@@ -224,6 +224,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     end: function(){
         LSCP.View.Game.prototype.end.apply(this, arguments);
+        collie.Renderer.removeAllLayer();
+        collie.Renderer.unload();
         /* TODO
         - save game session
         */

@@ -310,9 +310,10 @@ LSCP.View.Base = Backbone.View.extend({
     start: function(e){
 //        LSCP.SessionController.render();
         e.preventDefault();
+        LSCP.Session = null;
         window.addToHome.close();
         $('#home').hide();
-        new LSCP.View.Session();
+        LSCP.Session = new LSCP.View.Session();
     },
 
 	render : function() {
@@ -358,6 +359,8 @@ LSCP.View.Game = Backbone.View.extend({
     idleInterval: null,
     idleTimer: 0,
     idleTime: 30, // seconds
+    imagesLoaded: false,
+    soundsLoaded: false,
 
 	initialize: function(){
         log('LSCP.View.Game initialized!');
@@ -463,12 +466,21 @@ LSCP.View.Game = Backbone.View.extend({
 
     preloadImages: function(images){
         log('LSCP.View.Game is preloading images...');
-        collie.ImageManager.add(images, this.start.bind(this));
+        collie.ImageManager.add(images, function(){
+            this.imagesLoaded = true;
+            this.onLoaded();
+        }.bind(this));
     },
 
     preloadSounds: function(sounds){
         log('LSCP.View.Game is preloading sounds...');
         this.sound.addSounds(sounds);
+        this.soundsLoaded = true;
+        this.onLoaded();
+    },
+
+    onLoaded: function(){
+        if (this.imagesLoaded && this.soundsLoaded) this.start();
     }
 
 
@@ -611,7 +623,7 @@ LSCP.View.ProgressBar = Backbone.View.extend({
     id: 'progressbar',
 
     initialize: function() {
-        log('LSCP.View.ProgressBar initialized!');
+//        log('LSCP.View.ProgressBar initialized!');
         this.render();
 //        this.$el.hide();
 
@@ -621,7 +633,7 @@ LSCP.View.ProgressBar = Backbone.View.extend({
     template: Handlebars.compile('<div class="bar" title="{{progress}}%"></div>'),
 
 	render: function() {
-        log('LSCP.View.ProgressBar.render');
+//        log('LSCP.View.ProgressBar.render');
         this.$el.html(this.template(this.model.attributes))
                 .find('.bar').css('width', this.model.get('progress') + '%');
         return this;
@@ -648,7 +660,7 @@ LSCP.View.Reward = Backbone.View.extend({
     initialize: function() {
         log('LSCP.View.Reward initialized!');
 
-        for (var i = 1; i < 10; i++) {
+        for (var i = 0; i < 9; i++) {
             this.images.push(LSCP.Locations.Images + "rewards/" + i + ".jpg");
         }
 
@@ -659,7 +671,8 @@ LSCP.View.Reward = Backbone.View.extend({
 
 	render: function() {
         log('LSCP.View.Reward.render');
-        this.$el.css('background-image', 'url(' + this.images[_.random(0, _.size(this.images))] + ')').hide();
+        var url = this.images[_.random(0, _.size(this.images) - 1)];
+        this.$el.css('background-image', 'url(' + url + ')').hide();
         return this;
 	},
 
@@ -691,7 +704,6 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
-
         $.getJSON('data/config.json', this.onConfigLoaded.bind(this));
     },
 
@@ -739,9 +751,10 @@ LSCP.View.Session = Backbone.View.extend({
         this.config = null;
         this.current_game = null;
         this.current_game_session = null;
-        this.current_game_view = null;
-        this.$el.empty();
-        $('#home').show(); // TODO: temp
+        this.current_game_view.remove();
+//        this.$el.empty();
+//        $('#home').show(); // TODO: temp
+        window.location.reload(false);
     }
 
 });
@@ -1041,6 +1054,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     end: function(){
         LSCP.View.Game.prototype.end.apply(this, arguments);
+        collie.Renderer.removeAllLayer();
+        collie.Renderer.unload();
         /* TODO
         - save game session
         */

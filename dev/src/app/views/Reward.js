@@ -7,7 +7,7 @@ LSCP.View.Reward = Backbone.View.extend({
     initialize: function() {
         log('LSCP.View.Reward initialized!');
 
-        for (var i = 1; i < 10; i++) {
+        for (var i = 0; i < 9; i++) {
             this.images.push(LSCP.Locations.Images + "rewards/" + i + ".jpg");
         }
 
@@ -18,7 +18,8 @@ LSCP.View.Reward = Backbone.View.extend({
 
 	render: function() {
         log('LSCP.View.Reward.render');
-        this.$el.css('background-image', 'url(' + this.images[_.random(0, _.size(this.images))] + ')').hide();
+        var url = this.images[_.random(0, _.size(this.images) - 1)];
+        this.$el.css('background-image', 'url(' + url + ')').hide();
         return this;
 	},
 

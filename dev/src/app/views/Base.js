@@ -15,9 +15,10 @@ LSCP.View.Base = Backbone.View.extend({
     start: function(e){
 //        LSCP.SessionController.render();
         e.preventDefault();
+        LSCP.Session = null;
         window.addToHome.close();
         $('#home').hide();
-        new LSCP.View.Session();
+        LSCP.Session = new LSCP.View.Session();
     },
 
 	render : function() {

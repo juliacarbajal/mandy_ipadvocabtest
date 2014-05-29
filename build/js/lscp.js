@@ -1230,14 +1230,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Display queue
 
-        var currentY = slot.get('y');
         collie.Timer.queue().
-
-            transition(slot, 400 / this.speed, {
-                to: currentY - 50,
-                set: "y",
-                effect: collie.Effect.wave(2, 0.25)
-            }).
 
             delay(function(){
                 slot.set('backgroundImage', 'slot-correct');
@@ -1441,17 +1434,30 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
                                 _.invoke(this.objects.slots, 'detachAll');
 
+                                var currentY = slot.get('y');
                                 var slots_to_hide = _.reject(this.objects.slots, function(s){return s === slot;});
-                                collie.Timer.transition(slots_to_hide, 500 / this.speed, {
-                                    from: 1,
-                                    to: 0,
-                                    set: "opacity"
-                                });
 
-                                if (stage.get("objects")[i] == stage.get("ask_for"))
-                                    this.onCorrectAnswer(slot);
-                                else
-                                    this.onWrongAnswer(slot);
+                                collie.Timer.queue().
+
+                                    transition(slot, 400 / this.speed, {
+                                        to: currentY - 50,
+                                        set: "y",
+                                        effect: collie.Effect.wave(2, 0.25)
+                                    }).
+
+                                    transition(slots_to_hide, 400 / this.speed, {
+                                        from: 1,
+                                        to: 0,
+                                        set: "opacity"
+                                    }).
+
+                                    delay(function(){
+                                        if (stage.get("objects")[i] == stage.get("ask_for"))
+                                            this.onCorrectAnswer(slot);
+                                        else
+                                            this.onWrongAnswer(slot);
+                                    }.bind(this), 500 / this.speed);
+
                             }.bind(this)
                         });
                 }, this);

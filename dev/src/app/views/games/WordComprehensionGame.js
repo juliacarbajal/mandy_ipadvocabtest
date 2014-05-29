@@ -611,6 +611,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
                                 _.invoke(this.objects.slots, 'detachAll');
 
+                                var slots_to_hide = _.reject(this.objects.slots, function(s){return s === slot;});
+                                collie.Timer.transition(slots_to_hide, 500 / this.speed, {
+                                    from: 1,
+                                    to: 0,
+                                    set: "opacity"
+                                });
+
                                 if (stage.get("objects")[i] == stage.get("ask_for"))
                                     this.onCorrectAnswer(slot);
                                 else

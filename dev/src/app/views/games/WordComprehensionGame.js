@@ -224,6 +224,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     end: function(){
         LSCP.View.Game.prototype.end.apply(this, arguments);
+        collie.Renderer.removeAllLayer();
+        collie.Renderer.unload();
         /* TODO
         - save game session
         */
@@ -342,7 +344,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
 
-//                this.startWatchingIdle();
+                this.startWatchingIdle();
 
                 slot.attach({
                         mousedown: function () {
@@ -354,7 +356,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 effect: collie.Effect.wave(2, 0.25)
                             });
 
-//                            this.stopWatchingIdle();
+                            this.stopWatchingIdle();
 
                             if (this.subtitles) this.objects.subtitles.set({visible: false});
 
@@ -380,6 +382,11 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onCorrectAnswer: function(slot){
         LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
 
+        var level = this.getCurrentLevel();
+
+        // Idle
+        this.stopWatchingIdle();
+
         // Animation
         this.timers.characters.happy.start();
 
@@ -388,20 +395,12 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
 
         // Progress
-        var level = this.getCurrentLevel();
         var progress = 100 / level.get('stages').length * (this.current_stage+1);
         this.game_session.set({progress: Math.floor(progress)});
 
         // Display queue
 
-        var currentY = slot.get('y');
         collie.Timer.queue().
-
-            transition(slot, 400 / this.speed, {
-                to: currentY - 50,
-                set: "y",
-                effect: collie.Effect.wave(2, 0.25)
-            }).
 
             delay(function(){
                 slot.set('backgroundImage', 'slot-correct');
@@ -409,7 +408,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 2000 / this.speed).
+            }.bind(this), 0).
 
             delay(function(){
 
@@ -426,7 +425,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     effect: collie.Effect.easeOutQuint
                 });
 
-            }.bind(this), 4000 / this.speed).
+            }.bind(this), 3000 / this.speed).
 
             delay(function(){
                 LSCP.Mandy.visible = false;
@@ -444,6 +443,11 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onWrongAnswer: function(slot){
         LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
+        var level = this.getCurrentLevel();
+
+        // Idle
+        this.stopWatchingIdle();
+
         // Animation
         this.timers.characters.sad.start();
 
@@ -460,7 +464,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 if (this.subtitles) this.objects.subtitles.set({visible: false});
-            }.bind(this), 2000 / this.speed).
+            }.bind(this), 0).
 
             delay(function(){
 
@@ -477,7 +481,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     effect: collie.Effect.easeOutQuint
                 });
 
-            }.bind(this), 4000 / this.speed).
+            }.bind(this), 3000 / this.speed).
 
             delay(function(){
                 LSCP.Mandy.visible = false;
@@ -486,18 +490,26 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     y: 800
                 });
                 this.layers.slots.removeChildren(this.objects.slots);
-                this.retryStage();
+
+                switch (level.get('on_failure')) {
+                    // Handling of different possible behaviors in case of failure
+
+                    case 'REPEAT_STAGE':
+                        this.retryStage();
+                        break;
+
+                    case 'CONTINUE':
+                        // Progress
+                        var progress = 100 / level.get('stages').length * (this.current_stage+1);
+                        this.game_session.set({progress: Math.floor(progress)});
+
+                        this.nextStage();
+                        break;
+                }
+
             }.bind(this), 2000 / this.speed)
 
         ;
-
-        /* TODO
-         - animate object and character
-         - failure sound
-         - character leaves
-         - fade to black
-         - next iteration
-         */
     },
 
     onNoAnswer: function(){
@@ -551,7 +563,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-//                this.startWatchingIdle();
+                this.startWatchingIdle();
                 LSCP.Mandy.visible = true;
                 this.timers.characters.hello.start();
                 this.sound.delayedPlay(600, 'mandy', 'hello*');
@@ -562,7 +574,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                             this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
                             this.objects.character.detachAll();
 
-//                            this.stopWatchingIdle();
+                            this.stopWatchingIdle();
                             this.onTouchCharacter();
                         }.bind(this)
                     });
@@ -590,17 +602,37 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 this.sound.play('plop');
                                 this.game_session.saveAction('touch', 'slot#'+i);
 
-                                this.stopWatchingIdle();
-
                                 _.invoke(this.objects.slots, 'detachAll');
 
-                                if (stage.get("objects")[i] == stage.get("ask_for"))
-                                    this.onCorrectAnswer(slot);
-                                else
-                                    this.onWrongAnswer(slot);
+                                var currentY = slot.get('y');
+                                var slots_to_hide = _.reject(this.objects.slots, function(s){return s === slot;});
+
+                                collie.Timer.queue().
+
+                                    transition(slot, 400 / this.speed, {
+                                        to: currentY - 50,
+                                        set: "y",
+                                        effect: collie.Effect.wave(2, 0.25)
+                                    }).
+
+                                    transition(slots_to_hide, 400 / this.speed, {
+                                        from: 1,
+                                        to: 0,
+                                        set: "opacity"
+                                    }).
+
+                                    delay(function(){
+                                        if (stage.get("objects")[i] == stage.get("ask_for"))
+                                            this.onCorrectAnswer(slot);
+                                        else
+                                            this.onWrongAnswer(slot);
+                                    }.bind(this), 500 / this.speed);
+
                             }.bind(this)
                         });
                 }, this);
+
+                this.startWatchingIdle();
             }.bind(this), 2000 / this.speed).
 
             transition(this.objects.overlay, 1000 / this.speed, {
@@ -608,11 +640,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 to: 0,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
-            }).
-
-            delay(function(){
-                this.startWatchingIdle();
-            }.bind(this), 0)
+            })
 
         ;
 

@@ -9,7 +9,6 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
-
         $.getJSON('data/config.json', this.onConfigLoaded.bind(this));
     },
 
@@ -57,9 +56,10 @@ LSCP.View.Session = Backbone.View.extend({
         this.config = null;
         this.current_game = null;
         this.current_game_session = null;
-        this.current_game_view = null;
-        this.$el.empty();
-        $('#home').show(); // TODO: temp
+        this.current_game_view.remove();
+//        this.$el.empty();
+//        $('#home').show(); // TODO: temp
+        window.location.reload(false);
     }
 
 });

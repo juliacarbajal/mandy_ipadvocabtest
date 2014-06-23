@@ -9,7 +9,9 @@ LSCP.View.Base = Backbone.View.extend({
     },
 
     events: {
-        "mousedown #btn-start": "start"
+        "mousedown #btn-start": "start",
+        "mousedown #btn-dashboard": "toggleDashboard",
+        "mousedown #dashboard .close": "toggleDashboard"
     },
 
     start: function(e){
@@ -19,6 +21,11 @@ LSCP.View.Base = Backbone.View.extend({
         window.addToHome.close();
         $('#home').hide();
         LSCP.Session = new LSCP.View.Session();
+    },
+
+    toggleDashboard: function(e){
+        e.preventDefault();
+        $('#home, #dashboard').toggle();
     },
 
 	render : function() {

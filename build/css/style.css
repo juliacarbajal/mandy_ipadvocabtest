@@ -80,6 +80,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   overflow: hidden;
   width: 100%; }
 
+strong {
+  font-weight: bold; }
+
 body {
   -webkit-transition-property: background;
   -moz-transition-property: background;
@@ -154,6 +157,41 @@ footer .btn {
   background: url("../img/btn-dashboard.png") top left no-repeat;
   height: 101px;
   width: 99px; }
+
+#dashboard {
+  background-color: #fff;
+  border-radius: 20px;
+  display: none;
+  padding: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  top: 20px; }
+#dashboard .close {
+  float: right;
+  color: #799cb7;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 36px;
+  padding: 0 10px;
+  text-decoration: none; }
+#dashboard h1 {
+  color: #799cb7;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 36px;
+  margin-bottom: 14px;
+  text-transform: uppercase; }
+#dashboard h2 {
+  font-weight: bold;
+  margin-bottom: 10px; }
+#dashboard fieldset {
+  border-top: 4px dotted rgba(121, 156, 183, 0.5);
+  padding: 20px 0;
+  line-height: 26px; }
+#dashboard label {
+  display: block; }
 
 /**
  *

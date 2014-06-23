@@ -33,18 +33,18 @@
                 <a href="#" class="close">&times;</a>
                 <h1>Dashboard</h1>
                 <fieldset class="config">
-                    <h2>Fichier de configuration</h2>
-                    <p>En cours d'utilisation : <strong class="config-current">data/config.json</strong></p>
+                    <h2><strong>Fichier de configuration</strong> (actuellement : <em class="config-current">data/config.json</em>)</h2>
                     <label>Choisir un fichier local :
                         <select name="config-local">
                             <option>data/config.json</option>
-                            <option>data/config2.json</option>
+                            <option>data/config_WithRampUp.json</option>
+                            <option>data/config_NoRamp.json</option>
                         </select>
                     </label>
-                    <label>ou entrer l'URL d'un fichier distant :
+                    <!--<label>ou entrer l'URL d'un fichier distant :
                         <input type="url" name="config-url" style="width: 300px" />
-                    </label>
-                    <button>Changer la configuration</button>
+                    </label>-->
+                    <button id="changeConfig">Changer la configuration</button>
                 </fieldset>
             </div>
 

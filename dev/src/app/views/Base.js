@@ -9,7 +9,7 @@ LSCP.View.Base = Backbone.View.extend({
         // Set config default
         log('lscp.idevxxi.current_config in localStorage', ('lscp.idevxxi.current_config' in localStorage), localStorage['lscp.idevxxi.current_config']);
         if (!('lscp.idevxxi.current_config' in localStorage)) {
-            localStorage['lscp.idevxxi.current_config'] = 'config/data.json';
+            localStorage['lscp.idevxxi.current_config'] = 'data/config_WithRampUp.json';
         }
         $('.config-current').text(localStorage['lscp.idevxxi.current_config']);
 

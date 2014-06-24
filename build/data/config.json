@@ -19,6 +19,8 @@
                         "type": "video",
                         "path": "..."
                     },
+                    "introduce_objects": true,
+                    "feedback": false,
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -53,6 +55,8 @@
                         "type": "video",
                         "path": "..."
                     },
+                    "introduce_objects": false,
+                    "feedback": false,
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -85,6 +89,8 @@
                         "type": "video",
                         "path": "..."
                     },
+                    "introduce_objects": true,
+                    "feedback": true,
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -117,6 +123,8 @@
                         "type": "video",
                         "path": "..."
                     },
+                    "introduce_objects": true,
+                    "feedback": true,
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [

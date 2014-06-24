@@ -264,7 +264,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.objects.slots = [];
 
         // "Tutorial" mode when only one object
-        var introduce_objects = true;
+//        var introduce_objects = true;
 //        var show_character = true;
 //        if (stage.get("objects").length == 1) {
 //            introduce_objects = true;
@@ -317,10 +317,24 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-                if (introduce_objects) {
+                if (level.get('introduce_objects') === true) {
                     this.introduceObject(this.objects.slots[0], 0);
                 }
-                else this.onObjectsIntroduced();
+                else {
+                    _.each(this.objects.slots, function(slot, i){
+                        setTimeout(function(){
+                            collie.Timer.transition(this.objects.slots[i], 1000 / this.speed, {
+                                from: 0,
+                                to: 1,
+                                set: "opacity",
+                                effect: collie.Effect.easeOutQuint
+                            });
+                            if (i === stage.get("objects").length - 1) {
+                                setTimeout(this.onObjectsIntroduced.bind(this), 2000 / this.speed);
+                            }
+                        }.bind(this), 1500 * i / this.speed);
+                    }.bind(this));
+                }
             }.bind(this), 0)
 
         ;
@@ -387,12 +401,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Idle
         this.stopWatchingIdle();
 
-        // Animation
-        this.timers.characters.happy.start();
+        if (level.get('feedback') === true) {
+            // Animation
+            this.timers.characters.happy.start();
 
-        // Sound
-        this.sound.play('mandy', 'right*');
-        if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+            // Sound
+            this.sound.play('mandy', 'right*');
+            if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+        }
 
         // Progress
         var progress = 100 / level.get('stages').length * (this.current_stage+1);
@@ -400,14 +416,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Display queue
 
-        var currentY = slot.get('y');
         collie.Timer.queue().
-
-            transition(slot, 400 / this.speed, {
-                to: currentY - 50,
-                set: "y",
-                effect: collie.Effect.wave(2, 0.25)
-            }).
 
             delay(function(){
                 slot.set('backgroundImage', 'slot-correct');
@@ -455,15 +464,19 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Idle
         this.stopWatchingIdle();
 
-        // Animation
-        this.timers.characters.sad.start();
+        if (level.get('feedback') === true) {
+            // Animation
+            this.timers.characters.sad.start();
 
-        // Sound
-        this.sound.play('mandy', 'wrong*');
-        if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
+            // Sound
+            this.sound.play('mandy', 'wrong*');
+            if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
-        // Slot
-        slot.set('backgroundImage', 'slot-wrong');
+            // Slot
+            slot.set('backgroundImage', 'slot-wrong');
+        } else {
+            slot.set('backgroundImage', 'slot-correct');
+        }
 
         // Display queue
 
@@ -611,10 +624,30 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
                                 _.invoke(this.objects.slots, 'detachAll');
 
-                                if (stage.get("objects")[i] == stage.get("ask_for"))
-                                    this.onCorrectAnswer(slot);
-                                else
-                                    this.onWrongAnswer(slot);
+                                var currentY = slot.get('y');
+                                var slots_to_hide = _.reject(this.objects.slots, function(s){return s === slot;});
+
+                                collie.Timer.queue().
+
+                                    transition(slot, 400 / this.speed, {
+                                        to: currentY - 50,
+                                        set: "y",
+                                        effect: collie.Effect.wave(2, 0.25)
+                                    }).
+
+                                    transition(slots_to_hide, 400 / this.speed, {
+                                        from: 1,
+                                        to: 0,
+                                        set: "opacity"
+                                    }).
+
+                                    delay(function(){
+                                        if (stage.get("objects")[i] == stage.get("ask_for"))
+                                            this.onCorrectAnswer(slot);
+                                        else
+                                            this.onWrongAnswer(slot);
+                                    }.bind(this), 500 / this.speed);
+
                             }.bind(this)
                         });
                 }, this);

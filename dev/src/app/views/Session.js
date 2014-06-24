@@ -9,7 +9,7 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
-        $.getJSON('data/config.json', this.onConfigLoaded.bind(this));
+        $.getJSON(localStorage['lscp.idevxxi.current_config'], this.onConfigLoaded.bind(this));
     },
 
     render: function(){

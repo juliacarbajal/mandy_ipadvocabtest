@@ -4,6 +4,8 @@ LSCP.Model.Level = Backbone.AssociatedModel.extend({
         name: "Untitled level",
         background: null,
         reward: null,
+        introduce_objects: true,
+        feedback: true,
         on_failure: null,
         stages: []
     },

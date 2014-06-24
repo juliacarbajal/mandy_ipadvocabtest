@@ -10,6 +10,8 @@
     width: 100%;
 }
 
+strong {font-weight: bold;}
+
 html {@extend .full;}
 
 body {
@@ -18,7 +20,7 @@ body {
     @include transition-duration(1s);
     @include transition-timing-function(ease-in);
 
-    background-color: #b1ddff;
+    background-color: $light-blue;
     font-family: sans-serif;
 
     //  background-color: $light-gray;
@@ -105,4 +107,53 @@ footer .btn {
     background: url("../img/btn-dashboard.png") top left no-repeat;
     height: 101px;
     width: 99px;
+}
+
+#dashboard {
+    background-color: #fff;
+    border-radius: 20px;
+    display: none;
+    padding: 20px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+
+    em {background-color: #FFE87C;}
+
+    .close {
+        float: right;
+        color: $blue;
+        font-weight: bold;
+        font-size: 36px;
+        line-height: 36px;
+        padding: 0 10px;
+        text-decoration: none;
+    }
+
+    h1 {
+        color: $blue;
+        font-weight: bold;
+        font-size: 36px;
+        line-height: 36px;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+    }
+    h2 {
+        margin-bottom: 10px;
+    }
+    fieldset {
+        border-top: 4px dotted transparentize($blue, 0.5);
+        padding: 20px 0;
+        line-height: 26px;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    button {
+        font-size: 16px;
+        padding: 5px 15px;
+    }
 }

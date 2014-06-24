@@ -216,6 +216,8 @@ LSCP.Model.Level = Backbone.AssociatedModel.extend({
         name: "Untitled level",
         background: null,
         reward: null,
+        introduce_objects: true,
+        feedback: true,
         on_failure: null,
         stages: []
     },
@@ -300,11 +302,22 @@ LSCP.View.Base = Backbone.View.extend({
 
     initialize: function() {
         log('LSCP.View.Base initialized!');
+
+        // Set config default
+        log('lscp.idevxxi.current_config in localStorage', ('lscp.idevxxi.current_config' in localStorage), localStorage['lscp.idevxxi.current_config']);
+        if (!('lscp.idevxxi.current_config' in localStorage)) {
+            localStorage['lscp.idevxxi.current_config'] = 'data/config_WithRampUp.json';
+        }
+        $('.config-current').text(localStorage['lscp.idevxxi.current_config']);
+
 //        LSCP.View.Session.init();
     },
 
     events: {
-        "mousedown #btn-start": "start"
+        "mousedown #btn-start": "start",
+        "mousedown #btn-dashboard": "toggleDashboard",
+        "mousedown #dashboard .close": "toggleDashboard",
+        "click .config button": "changeConfig"
     },
 
     start: function(e){
@@ -316,8 +329,20 @@ LSCP.View.Base = Backbone.View.extend({
         LSCP.Session = new LSCP.View.Session();
     },
 
+    toggleDashboard: function(e){
+        e.preventDefault();
+        $('#home, #dashboard').toggle();
+    },
+
 	render : function() {
-	}
+	},
+
+    changeConfig: function(){
+        var new_config = $('.config select[name=config-local]').val();
+        log("changeConfig", new_config);
+        localStorage['lscp.idevxxi.current_config'] = new_config;
+        $('.config-current').text(new_config);
+    }
 
 });
 
@@ -656,6 +681,7 @@ LSCP.View.Reward = Backbone.View.extend({
 
     id: 'reward',
     images: [],
+    previous_image_id: null,
 
     initialize: function() {
         log('LSCP.View.Reward initialized!');
@@ -671,8 +697,16 @@ LSCP.View.Reward = Backbone.View.extend({
 
 	render: function() {
         log('LSCP.View.Reward.render');
-        var url = this.images[_.random(0, _.size(this.images) - 1)];
-        this.$el.css('background-image', 'url(' + url + ')').hide();
+
+        var available_images = this.images.slice();
+
+        if (this.previous_image_id !== null) {
+            available_images.splice(this.previous_image_id, 1);
+        }
+
+        var id = _.random(0, _.size(available_images) - 1);
+        this.$el.css('background-image', 'url(' + available_images[id] + ')').hide();
+        this.previous_image_id = id;
         return this;
 	},
 
@@ -704,7 +738,7 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
-        $.getJSON('data/config.json', this.onConfigLoaded.bind(this));
+        $.getJSON(localStorage['lscp.idevxxi.current_config'], this.onConfigLoaded.bind(this));
     },
 
     render: function(){
@@ -1094,7 +1128,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.objects.slots = [];
 
         // "Tutorial" mode when only one object
-        var introduce_objects = true;
+//        var introduce_objects = true;
 //        var show_character = true;
 //        if (stage.get("objects").length == 1) {
 //            introduce_objects = true;
@@ -1147,10 +1181,24 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             }).
 
             delay(function(){
-                if (introduce_objects) {
+                if (level.get('introduce_objects') === true) {
                     this.introduceObject(this.objects.slots[0], 0);
                 }
-                else this.onObjectsIntroduced();
+                else {
+                    _.each(this.objects.slots, function(slot, i){
+                        setTimeout(function(){
+                            collie.Timer.transition(this.objects.slots[i], 1000 / this.speed, {
+                                from: 0,
+                                to: 1,
+                                set: "opacity",
+                                effect: collie.Effect.easeOutQuint
+                            });
+                            if (i === stage.get("objects").length - 1) {
+                                setTimeout(this.onObjectsIntroduced.bind(this), 2000 / this.speed);
+                            }
+                        }.bind(this), 1500 * i / this.speed);
+                    }.bind(this));
+                }
             }.bind(this), 0)
 
         ;
@@ -1217,12 +1265,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Idle
         this.stopWatchingIdle();
 
-        // Animation
-        this.timers.characters.happy.start();
+        if (level.get('feedback') === true) {
+            // Animation
+            this.timers.characters.happy.start();
 
-        // Sound
-        this.sound.play('mandy', 'right*');
-        if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+            // Sound
+            this.sound.play('mandy', 'right*');
+            if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+        }
 
         // Progress
         var progress = 100 / level.get('stages').length * (this.current_stage+1);
@@ -1230,14 +1280,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Display queue
 
-        var currentY = slot.get('y');
         collie.Timer.queue().
-
-            transition(slot, 400 / this.speed, {
-                to: currentY - 50,
-                set: "y",
-                effect: collie.Effect.wave(2, 0.25)
-            }).
 
             delay(function(){
                 slot.set('backgroundImage', 'slot-correct');
@@ -1285,15 +1328,19 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Idle
         this.stopWatchingIdle();
 
-        // Animation
-        this.timers.characters.sad.start();
+        if (level.get('feedback') === true) {
+            // Animation
+            this.timers.characters.sad.start();
 
-        // Sound
-        this.sound.play('mandy', 'wrong*');
-        if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
+            // Sound
+            this.sound.play('mandy', 'wrong*');
+            if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
-        // Slot
-        slot.set('backgroundImage', 'slot-wrong');
+            // Slot
+            slot.set('backgroundImage', 'slot-wrong');
+        } else {
+            slot.set('backgroundImage', 'slot-correct');
+        }
 
         // Display queue
 
@@ -1441,10 +1488,30 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
                                 _.invoke(this.objects.slots, 'detachAll');
 
-                                if (stage.get("objects")[i] == stage.get("ask_for"))
-                                    this.onCorrectAnswer(slot);
-                                else
-                                    this.onWrongAnswer(slot);
+                                var currentY = slot.get('y');
+                                var slots_to_hide = _.reject(this.objects.slots, function(s){return s === slot;});
+
+                                collie.Timer.queue().
+
+                                    transition(slot, 400 / this.speed, {
+                                        to: currentY - 50,
+                                        set: "y",
+                                        effect: collie.Effect.wave(2, 0.25)
+                                    }).
+
+                                    transition(slots_to_hide, 400 / this.speed, {
+                                        from: 1,
+                                        to: 0,
+                                        set: "opacity"
+                                    }).
+
+                                    delay(function(){
+                                        if (stage.get("objects")[i] == stage.get("ask_for"))
+                                            this.onCorrectAnswer(slot);
+                                        else
+                                            this.onWrongAnswer(slot);
+                                    }.bind(this), 500 / this.speed);
+
                             }.bind(this)
                         });
                 }, this);

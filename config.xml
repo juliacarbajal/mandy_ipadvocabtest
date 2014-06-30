@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
         id="com.etaminstudio.lscp.idevxxi"
-<<<<<<< HEAD
-        version="0.2">
-=======
-        version="0.4">
->>>>>>> version0.4
+        version="0.5">
 
     <name>LSCP iDevXXI</name>
     <description>Experiments with babies</description>
@@ -16,6 +13,7 @@
     <!--<preference name="fullscreen" value="true" />-->
 
     <gap:platform name="ios" />
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="EnableViewportScale" value="true"/>
     <preference name="BackupWebStorage" value="none"/>
     <preference name="target-device" value="tablet" />
@@ -27,6 +25,10 @@
 
     <!-- Define app splash screen for each platform. -->
     <gap:splash src="img/splashscreen.png" gap:platform="ios" width="2048" height="1536" />
+
+    <!-- Plugins -->
+    <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
+    <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.2" />
 
     <!--
     Define access to external domains.

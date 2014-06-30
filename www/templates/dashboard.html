@@ -1,0 +1,16 @@
+<a href="#" class="close">&times;</a>
+<h1>Dashboard</h1>
+<fieldset class="config">
+    <h2><strong>Fichier de configuration</strong> (actuellement : <em class="config-current"><%= current_config_file %></em>)</h2>
+    <label>Choisir un fichier local :
+        <select name="config-local">
+            <% _.each(config_files, function(f) { %>
+            <option<% if (f.get('path') == current_config_file) { %> selected="selected"<% } %>><%= f.get('path') %></option>
+            <% }); %>
+        </select>
+    </label>
+    <!--<label>ou entrer l'URL d'un fichier distant :
+        <input type="url" name="config-url" style="width: 300px" />
+    </label>-->
+    <button id="changeConfig">Changer la configuration</button>
+</fieldset>

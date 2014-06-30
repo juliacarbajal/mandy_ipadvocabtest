@@ -1,0 +1,658 @@
+{
+    "name": "Pilot_rampup",
+    "session": {
+        "time_limit": 900,
+        "assets": {
+            "objects": {
+                "tous": ["banane","gasse","barti","voiture","chaussure","poussette","chien","poisson"]
+            },
+            "backgrounds": ["countryside","beach","mountain","desert"]
+        },
+        "levels":
+            [
+                {
+                    "name": "train the baby on the fact that there are hidden objects to touch",
+                    "background": "countryside",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "poisson"
+                                ],
+                                "objects_positions": [
+                                    "CENTER_LEFT"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poisson"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane"
+                                ],
+                                "objects_positions": [
+                                    "CENTER_RIGHT"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "banane"
+                            }
+                        ]
+                },
+                {
+                    "name": "train the baby on the fact that there is a forced choice",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "poisson",
+                                    "chien"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 5,
+                                "ask_for": "poisson"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "poisson",
+                                    "chien"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            }
+                        ]
+                },
+                {
+                    "name": "train the baby on the fact that there is a forced choice & he needs to remember where's what in this trial, cause it might change",
+                    "background": "mountain",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "poisson",
+                                    "chien"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 5,
+                                "ask_for": "poisson"
+                            }
+                        ]
+                },
+                {
+                    "name": "train the baby on the fact that the objects might change",
+                    "background": "desert",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "poisson",
+                                    "chien"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "poussette",
+                                    "voiture"
+                                ],
+                                "objects_positions": "NATURAL",
+                                "time_idle": 5,
+                                "ask_for": "poussette"
+                            }
+                        ]
+                },
+                {
+                    "name": "block4 2 objects and 6 trials",
+                    "background": "countryside",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "gasse"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "barti"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "banane"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "voiture"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chaussure"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poisson"
+                            }
+                        ]
+                },
+   				{
+                    "name": "block6 4 objects and 2 trials",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette",
+                                    "gasse",
+                                    "banane"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chaussure"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson",
+                                    "voiture",
+                                    "barti"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poisson"
+                            }
+                        ]
+                },
+   				{
+                    "name": "block1 2 objects and 2 trials",
+                    "background": "mountain",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poussette"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            }
+                        ]
+                },
+                {
+                    "name": "block3 2 objects and 6 trials",
+                    "background": "desert",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "banane"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "voiture"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "gasse"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "barti"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poussette"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            }
+                        ]
+                },
+                {
+                    "name": "block7 4 objects and 6 trials",
+                    "background": "countryside",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse",
+                                    "chaussure",
+                                    "poussette"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "banane"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture",
+                                    "chien",
+                                    "poisson"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "voiture"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse",
+                                    "poussette",
+                                    "chaussure"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "gasse"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture",
+                                    "poisson",
+                                    "chien"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "barti"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette",
+                                    "gasse",
+                                    "banane"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poussette"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson",
+                                    "voiture",
+                                    "barti"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            }
+                        ]
+                },
+   				{
+                    "name": "block2 2 objects and 2 trials",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chaussure"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poisson"
+                            }
+                        ]
+                },
+                {
+                    "name": "block8 4 objects and 6 trials",
+                    "background": "mountain",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse",
+                                    "chaussure",
+                                    "poussette"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "banane"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture",
+                                    "chien",
+                                    "poisson"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "voiture"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane",
+                                    "gasse",
+                                    "poussette",
+                                    "chaussure"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "gasse"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti",
+                                    "voiture",
+                                    "poisson",
+                                    "chien"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "barti"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette",
+                                    "gasse",
+                                    "banane"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poussette"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson",
+                                    "voiture",
+                                    "barti"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            }
+                        ]
+                },
+   				{
+                    "name": "block5 4 objects and 2 trials",
+                    "background": "desert",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure",
+                                    "poussette",
+                                    "banane",
+                                    "gasse"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poussette"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien",
+                                    "poisson",
+                                    "barti",
+                                    "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chien"
+                            }
+                        ]
+                }
+
+            ]
+    }
+}

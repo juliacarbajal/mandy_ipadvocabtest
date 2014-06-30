@@ -1,6 +1,4 @@
 /node_modules/
 /.sass-cache/
 /.idea
-/build/*.exe
-/build/*.zip
-/build/mongoose.conf
+*.zip

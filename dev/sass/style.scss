@@ -112,7 +112,6 @@ footer .btn {
 #dashboard {
     background-color: #fff;
     border-radius: 20px;
-    display: none;
     padding: 20px;
     position: absolute;
     bottom: 20px;
@@ -151,6 +150,9 @@ footer .btn {
     label {
         display: block;
         margin-bottom: 10px;
+    }
+    select {
+        padding: 5px;
     }
     button {
         font-size: 16px;

@@ -21,7 +21,7 @@ module.exports = function(grunt) {
           'dev/src/app/views/**/*.js',
           'dev/src/utils/*.js'
         ],
-        dest: 'build/js/<%= pkg.namespace %>.js'
+        dest: 'www/js/<%= pkg.namespace %>.js'
       },
       libs : {
         src : [
@@ -29,25 +29,25 @@ module.exports = function(grunt) {
           'node_modules/backbone/backbone.js',
           'dev/src/libs/*.js'
         ],
-        dest: 'build/js/libs/libs.js'
+        dest: 'www/js/libs/libs.js'
       },
       css : {
         src : [
-            'build/css/style.css',
+            'www/css/style.css',
             'dev/css/**/*.css'
         ],
-        dest: 'build/css/style.css'
+        dest: 'www/css/style.css'
       }
     },
     
     uglify: {
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'build/js/<%= pkg.namespace %>.min.js'
+        dest: 'www/js/<%= pkg.namespace %>.min.js'
       },
       libs: {
         src: '<%= concat.libs.dest %>',
-        dest: 'build/js/libs/libs.min.js'
+        dest: 'www/js/libs/libs.min.js'
       }
     },
 
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
   configOptions.sass = {
     dev: {
       src: 'dev/sass/style.scss',
-      dest: 'build/css/style.css',
+      dest: 'www/css/style.css',
       options: {
         style: 'expand',
         compass : true
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
     },
     deploy: {
       src: 'dev/scss/style.scss',
-      dest: 'build/css/style.css'
+      dest: 'www/css/style.css'
     }
   };
 

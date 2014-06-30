@@ -85,19 +85,14 @@ LSCP.Model.Action = Backbone.AssociatedModel.extend({
 LSCP.Model.Config = Backbone.Model.extend({
 	
 	defaults: {
-		id : 0,
-		title : "",
-		version : ""
+		path : ""
 	},
 	
 	initialize: function(){
 	},
 
 	parse : function(data){
-		this.id = data.id;
-		this.title = data.title;
-		this.version = data.version;
-
+		this.path = data.path;
 		return this;
 	}
 	
@@ -270,6 +265,52 @@ LSCP.Collection.ActionCollection = Backbone.Collection.extend({
     }
 
 });
+LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
+
+    model: LSCP.Model.Config,
+
+    initialize : function() {
+        this.loadLocalFiles();
+    },
+
+    setDefault: function() {
+
+//        log('lscp.idevxxi.current_config in localStorage', ('lscp.idevxxi.current_config' in localStorage), localStorage['lscp.idevxxi.current_config']);
+        if (!('lscp.idevxxi.current_config' in localStorage)) {
+            localStorage['lscp.idevxxi.current_config'] = this.first();
+        }
+    },
+
+    getCurrent: function() {
+        return localStorage['lscp.idevxxi.current_config'];
+    },
+
+    loadLocalFiles: function() {
+
+        $.getJSON('data/config_files_list.json', _.bind(function(data){
+
+            var local_files = [];
+            _.each(data.files, _.bind(function(file){
+                local_files.push(new LSCP.Model.Config({path: 'data/' + file}));
+            }, this));
+            this.add(local_files);
+
+        }, this));
+
+    },
+
+    loadCurrentConfig: function(callback) {
+
+        if (!('lscp.idevxxi.current_config' in localStorage)) {
+            localStorage['lscp.idevxxi.current_config'] = 'data/config/default.json';
+        }
+
+        $.getJSON(this.getCurrent(), callback);
+
+    }
+
+
+});
 LSCP.Collection.GameCollection = Backbone.Collection.extend({
 
     model : LSCP.Model.Game,
@@ -303,21 +344,14 @@ LSCP.View.Base = Backbone.View.extend({
     initialize: function() {
         log('LSCP.View.Base initialized!');
 
-        // Set config default
-        log('lscp.idevxxi.current_config in localStorage', ('lscp.idevxxi.current_config' in localStorage), localStorage['lscp.idevxxi.current_config']);
-        if (!('lscp.idevxxi.current_config' in localStorage)) {
-            localStorage['lscp.idevxxi.current_config'] = 'data/config_WithRampUp.json';
-        }
-        $('.config-current').text(localStorage['lscp.idevxxi.current_config']);
+//        (new LSCP.Collection.ConfigCollection()).setDefault();
 
 //        LSCP.View.Session.init();
     },
 
     events: {
         "mousedown #btn-start": "start",
-        "mousedown #btn-dashboard": "toggleDashboard",
-        "mousedown #dashboard .close": "toggleDashboard",
-        "click .config button": "changeConfig"
+        "mousedown #btn-dashboard": "openDashboard"
     },
 
     start: function(e){
@@ -329,48 +363,64 @@ LSCP.View.Base = Backbone.View.extend({
         LSCP.Session = new LSCP.View.Session();
     },
 
-    toggleDashboard: function(e){
+    openDashboard: function(e){
         e.preventDefault();
-        $('#home, #dashboard').toggle();
+        $('#home').hide();
+        this.dashboard = new LSCP.View.Dashboard();
     },
 
 	render : function() {
-	},
+	}
 
-    changeConfig: function(){
-        var new_config = $('.config select[name=config-local]').val();
-        log("changeConfig", new_config);
-        localStorage['lscp.idevxxi.current_config'] = new_config;
-        $('.config-current').text(new_config);
-    }
+//    changeConfig: function(){
+//        var new_config = $('.config select[name=config-local]').val();
+//        log("changeConfig", new_config);
+//        localStorage['lscp.idevxxi.current_config'] = new_config;
+//        $('.config-current').text(new_config);
+//    }
 
 });
 
 LSCP.View.Dashboard = Backbone.View.extend({
 
 	id: "dashboard",
-	path: "dashboard.html",
-
-//    template: _.template($('#treesListTemplate').html()),
+	template_path: "templates/dashboard.html",
 
     initialize: function() {
-        this.params.config = this.model;
+        this.config_files = new LSCP.Collection.ConfigCollection();
+        $.get(this.template_path, function(template) {
+            this.template = template;
+            this.render();
+        }.bind(this));
+    },
+
+    events: {
+        "mousedown .close": "close",
+        "click .config button": "changeConfig"
     },
 
     render: function(){
-//        var that = this;
-//        LSCP.TemplateManager.get(this.template, function (tmp) {
-//            var html = tmp(that.model.toJSON());
-//            that.$el.html(html);
-//        });
-        return this;
+        var html = _.template(this.template, {
+            'current_config_file': this.config_files.getCurrent(),
+            'config_files': this.config_files.models
+        });
+        this.$el.html(html);
+        if ($('#'+this.id).length === 0) $('#app').append(this.$el);
     },
 
     close: function() {
         this.remove();
         this.unbind();
+        $('#home').show();
+    },
+
+    changeConfig: function(){
+        var new_config = $('.config select[name=config-local]').val();
+        log("changeConfig", new_config);
+        localStorage['lscp.idevxxi.current_config'] = new_config;
+        this.render();
     }
-	
+
 });
 LSCP.View.Game = Backbone.View.extend({
 
@@ -738,7 +788,8 @@ LSCP.View.Session = Backbone.View.extend({
 
     initialize: function(){
         log('LSCP.View.Session initialized!');
-        $.getJSON(localStorage['lscp.idevxxi.current_config'], this.onConfigLoaded.bind(this));
+
+        new LSCP.Collection.ConfigCollection().loadCurrentConfig(this.onConfigLoaded.bind(this));
     },
 
     render: function(){

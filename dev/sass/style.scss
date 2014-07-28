@@ -1,6 +1,6 @@
 @import
-"compass/reset",
-"compass/css3",
+//"compass/reset",
+//"compass/css3",
 "constants",
 "games/WordComprehensionGame.scss";
 
@@ -16,9 +16,9 @@ html {@extend .full;}
 
 body {
     @extend .full;
-    @include transition-property(background);
-    @include transition-duration(1s);
-    @include transition-timing-function(ease-in);
+//    @include transition-property(background);
+//    @include transition-duration(1s);
+//    @include transition-timing-function(ease-in);
 
     background-color: $light-blue;
     font-family: sans-serif;
@@ -151,11 +151,20 @@ footer .btn {
         display: block;
         margin-bottom: 10px;
     }
+    p {
+        margin-bottom: 10px;
+    }
     select {
         padding: 5px;
     }
     button {
         font-size: 16px;
         padding: 5px 15px;
+    }
+
+    #log {
+        background-color: #eee;
+        overflow: auto;
+        height: 200px;
     }
 }

@@ -2,3 +2,5 @@
 /.sass-cache/
 /.idea
 *.zip
+/www/*.exe
+/www/mongoose.conf

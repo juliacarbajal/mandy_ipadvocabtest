@@ -34,11 +34,4 @@ LSCP.View.Base = Backbone.View.extend({
 	render : function() {
 	}
 
-//    changeConfig: function(){
-//        var new_config = $('.config select[name=config-local]').val();
-//        log("changeConfig", new_config);
-//        localStorage['lscp.idevxxi.current_config'] = new_config;
-//        $('.config-current').text(new_config);
-//    }
-
 });

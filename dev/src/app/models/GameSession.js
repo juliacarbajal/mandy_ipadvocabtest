@@ -47,6 +47,7 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
             started_at: new Date()
         });
 
+
     },
 
     saveAction: function(action, value){

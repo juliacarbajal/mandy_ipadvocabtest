@@ -1,6 +1,7 @@
 {
     "files": [
         "config/default.json",
+        "config/varied.json",
         "config/NoRamp.json",
         "config/NoRamp_o1.json",
         "config/NoRamp_o2.json",

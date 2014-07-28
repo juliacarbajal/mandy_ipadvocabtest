@@ -82,7 +82,7 @@ module.exports = function(grunt) {
       }
     },
     deploy: {
-      src: 'dev/scss/style.scss',
+      src: 'dev/sass/style.scss',
       dest: 'www/css/style.css'
     }
   };

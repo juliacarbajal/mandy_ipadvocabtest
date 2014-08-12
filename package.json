@@ -13,23 +13,42 @@
     "type": "git",
     "url": "git://git.etaminstudio.com/lscp/app.git"
   },
-  "bugs": {
-    "url": ""
-  },
   "keywords": [],
   "namespace": "lscp",
   "css_preprocessor": "sass",
-  "jquery_version": "1.9.1",
+  "jquery_version": "1.11.1",
+  "dependencies": {},
   "devDependencies": {
-    "grunt": "x",
-    "grunt-contrib-watch": "x",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "x",
-    "grunt-contrib-jshint": "x",
     "underscore": "~1.5.2",
     "backbone": "~1.1.0",
     "grunt-contrib-sass": "~0.5.1",
     "requirejs": "~2.1.11",
-    "es6-promise": "~0.1.1"
+    "es6-promise": "~0.1.1",
+    "connect": "^2.14.4",
+    "connect-livereload": "^0.4.0",
+    "gulp": "^3.6.0",
+    "gulp-autoprefixer": "^0.0.7",
+    "main-bower-files": "^1.0.1",
+    "gulp-cache": "^0.1.1",
+    "gulp-clean": "^0.2.4",
+    "gulp-csso": "^0.2.6",
+    "gulp-filter": "^0.4.1",
+    "gulp-flatten": "^0.0.2",
+    "gulp-imagemin": "^0.5.0",
+    "gulp-jshint": "^1.5.3",
+    "gulp-livereload": "^1.2.0",
+    "gulp-load-plugins": "^0.5.0",
+    "gulp-ruby-sass": "^0.4.3",
+    "gulp-size": "^0.3.0",
+    "gulp-uglify": "^0.2.1",
+    "gulp-useref": "^0.4.2",
+    "jshint-stylish": "^0.2.0",
+    "opn": "^0.1.1",
+    "wiredep": "^1.4.3",
+    "gulp-concat": "^2.3.4",
+    "gulp-zip": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
   }
 }

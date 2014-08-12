@@ -1,6 +1,9 @@
-/node_modules/
-/.sass-cache/
-/.idea
+node_modules
+www
+.tmp
+.sass-cache
+bower_components
+test/bower_components
+
+.idea
 *.zip
-/www/*.exe
-/www/mongoose.conf

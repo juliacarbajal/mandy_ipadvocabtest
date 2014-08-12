@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>LSCP App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="img/touchicon.png">
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- UNCOMMENT THE FOLLOWING LINE FOR WEINRE DEBUGGING-->
+    <!-- <script src="http://192.168.1.91:8080/target/target-script-min.js#anonymous"></script>-->
+
+  </head>
+  <body>
+
+    <div id="app">
+      <div id="home">
+        <a href="#" id="btn-start" class="btn" title="Commencer"></a>
+        <footer>
+          <a href="#" id="btn-parents" class="btn" title="Mode parents"></a>
+          <a href="#" id="btn-dashboard" class="btn" title="Configuration"></a>
+        </footer>
+      </div>
+      <div id="session"></div>
+    </div>
+
+    <script type="text/javascript">
+      var addToHomeConfig = {
+        expire: 0,
+        startDelay: 500
+      };
+    </script>
+
+    <script type="text/javascript" src="phonegap.js"></script>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <!-- endbower -->
+    <script src="scripts/libs.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>

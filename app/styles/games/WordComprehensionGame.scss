@@ -8,8 +8,7 @@
 
     .bar {
         background-color: #fff669;
-//        @include transition-property(width);
-//        @include transition-duration(1s);
+        transition: width 1s;
         -webkit-border-radius: 10px;
         border-radius: 10px;
     }
@@ -22,8 +21,7 @@
     position: absolute;
     text-align: center;
     width: 200px;
-//    @include transition-property(all);
-//    @include transition-duration(1s);
+    transition: all 1s;
 
     /* hidden by default */
     left: 50%;

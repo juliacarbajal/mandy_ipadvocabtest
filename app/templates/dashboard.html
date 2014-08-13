@@ -1,27 +1,38 @@
 <a href="#" class="close">&times;</a>
 <h1>Dashboard</h1>
-<fieldset class="config">
-    <h2><strong>Fichier de configuration</strong> (actuellement : <em class="config-current"><%= current_config_file %></em>)</h2>
-    <label>Choisir un fichier local :
+  <div class="col">
+    <fieldset class="config">
+      <h2><strong>Fichier de configuration</strong><br />
+        Actuellement : <em class="config-current"><%= current_config_file %></em></h2>
+      <label>Choisir un fichier local :
         <select name="config-local">
-            <% _.each(config_files, function(f) { %>
-            <option<% if (f.get('path') == current_config_file) { %> selected="selected"<% } %>><%= f.get('path') %></option>
-            <% }); %>
+          <% _.each(config_files, function(f) { %>
+          <option<% if (f.get('path') == current_config_file) { %> selected="selected"<% } %>><%= f.get('path') %></option>
+          <% }); %>
         </select>
-    </label>
-    <!--<label>ou entrer l'URL d'un fichier distant :
-        <input type="url" name="config-url" style="width: 300px" />
-    </label>-->
-    <button id="changeConfig">Changer la configuration</button>
-</fieldset>
-<fieldset class="sync">
-    <h2><strong>Synchronisation</strong></h2>
-    <p><em class="total-sessions">23</em> sessions enregistrées<br />
+      </label>
+      <!--<label>ou entrer l'URL d'un fichier distant :
+          <input type="url" name="config-url" style="width: 300px" />
+      </label>-->
+      <button id="changeConfig">Changer la configuration</button>
+    </fieldset>
+    <fieldset class="sync">
+      <h2><strong>Synchronisation</strong></h2>
+      <p><em class="total-sessions">23</em> sessions enregistrées<br />
         <em class="sessions-to-sync">23</em> sessions à synchroniser</p>
-    <button id="syncNow">Synchroniser maintenant</button>
-</fieldset>
-<fieldset class="log">
+      <button id="syncNow">Synchroniser maintenant</button>
+    </fieldset>
+  </div>
+  <div class="col">
+    <fieldset class="subject">
+      <h2><strong>Identifiant anonyme du sujet</strong><br />
+        Actuellement : <em class="subject-current"><%= current_subject_id || 'aucun' %></em></h2>
+      <label>Saisir un nouvel identifiant : <input type="text" name="subject-id" style="width: 70px" /></label>
+      <button id="changeSubjectId">Changer l'identifiant</button>
+    </fieldset>
+  </div>
+  <fieldset class="log">
+    <button id="eraseLog">Effacer le log</button>
     <h2><strong>Log</strong></h2>
     <pre id="log"></pre>
-    <button id="eraseLog">Effacer le log</button>
-</fieldset>
+  </fieldset>

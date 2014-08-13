@@ -3,7 +3,8 @@
   "private": true,
   "dependencies": {
     "jquery": "~1.11.0",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "reset-css": "~2.0.20110126"
   },
   "devDependencies": {}
 }

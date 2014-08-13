@@ -2,7 +2,7 @@
 //"compass/reset",
 //"compass/css3",
 "constants",
-"games/WordComprehensionGame.scss";
+"games/WordComprehensionGame";
 
 .full {
     height: 100%;
@@ -16,18 +16,13 @@ html {@extend .full;}
 
 body {
     @extend .full;
-//    @include transition-property(background);
-//    @include transition-duration(1s);
-//    @include transition-timing-function(ease-in);
-
     background-color: $light-blue;
     font-family: sans-serif;
-
-    //  background-color: $light-gray;
 
     //  &.ingame {
     //  }
 
+    transition: background 1s ease-in;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
@@ -121,6 +116,14 @@ footer .btn {
 
     em {background-color: #FFE87C;}
 
+    .col {
+        float: left;
+        width: 47%;
+    }
+    .col + .col {
+        margin-left: 6%;
+    }
+
     .close {
         float: right;
         color: $blue;
@@ -146,6 +149,10 @@ footer .btn {
         border-top: 4px dotted transparentize($blue, 0.5);
         padding: 20px 0;
         line-height: 26px;
+
+        &.log {
+            clear: both;
+        }
     }
     label {
         display: block;
@@ -154,7 +161,7 @@ footer .btn {
     p {
         margin-bottom: 10px;
     }
-    select {
+    input, select {
         padding: 5px;
     }
     button {
@@ -162,9 +169,11 @@ footer .btn {
         padding: 5px 15px;
     }
 
+    #eraseLog {float: right}
     #log {
         background-color: #eee;
+        clear: both;
         overflow: auto;
-        height: 200px;
+        height: 180px;
     }
 }

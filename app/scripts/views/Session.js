@@ -3,14 +3,17 @@ LSCP.View.Session = Backbone.View.extend({
     el: "#session",
 
     config: null,
+    subject: null,
     current_game: null,
     current_game_session: null,
     current_game_view: null,
 
     initialize: function(){
-        log('LSCP.View.Session initialized!');
+      log('LSCP.View.Session initialized!');
 
-        new LSCP.Collection.ConfigCollection().loadCurrentConfig(this.onConfigLoaded.bind(this));
+      this.subject = new LSCP.Model.Subject();
+
+      new LSCP.Collection.ConfigCollection().loadCurrentConfig(this.onConfigLoaded.bind(this));
     },
 
     render: function(){
@@ -18,8 +21,8 @@ LSCP.View.Session = Backbone.View.extend({
     },
 
     onConfigLoaded: function(data){
-        this.config = new LSCP.Model.Session(data);
-        this.startSession();
+      this.config = new LSCP.Model.Session(data);
+      this.startSession();
     },
 
     startSession: function(){

@@ -35,7 +35,8 @@ var paths = {
     '.tmp/styles/**/*.css',
     'app/scripts/**/*.js',
     'app/images/**/*',
-    'app/data/**/*'
+    'app/data/**/*',
+    'app/templates/**/*'
   ]
 };
 

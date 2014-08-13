@@ -2,7 +2,7 @@ node_modules
 www
 .tmp
 .sass-cache
-bower_components
+app/bower_components
 test/bower_components
 
 .idea

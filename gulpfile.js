@@ -5,7 +5,14 @@ var gulp = require('gulp');
 // paths
 var paths = {
   styles: 'app/styles/main.scss',
-  scripts: ['!app/scripts/libs/**/*.js', 'app/scripts/**/*.js'],
+  scripts: [
+    'app/scripts/App.js',
+    'app/scripts/controllers/*.js',
+    'app/scripts/models/*.js',
+    'app/scripts/collections/*.js',
+    'app/scripts/views/Base.js',
+    'app/scripts/views/**/*.js'
+  ],
   scriptlibs: 'app/scripts/libs/**/*.js',
   images: 'app/images/**/*',
   fonts: 'app/fonts/**/*',

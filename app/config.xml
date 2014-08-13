@@ -21,10 +21,10 @@
     <preference name="exit-on-suspend" value="false" />
 
     <!-- Define app icon for each platform. -->
-    <icon src="img/touchicon.png" />
+    <icon src="images/touchicon.png" />
 
     <!-- Define app splash screen for each platform. -->
-    <gap:splash src="img/splashscreen.png" gap:platform="ios" width="2048" height="1536" />
+    <gap:splash src="images/splashscreen.png" gap:platform="ios" width="2048" height="1536" />
 
     <!-- Plugins -->
     <gap:plugin name="org.apache.cordova.device" version="0.2.8" />

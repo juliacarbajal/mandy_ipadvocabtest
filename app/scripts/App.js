@@ -18,7 +18,7 @@ LSCP.Data = LSCP.Data || {};
 LSCP.Locations = LSCP.Locations || {};
 LSCP.Locations.Templates = '/templates/';
 LSCP.Locations.JSON = '/data/';
-LSCP.Locations.Images = 'img/';
+LSCP.Locations.Images = 'images/';
 LSCP.Locations.Sounds = 'audio/';
 
 /*

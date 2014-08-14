@@ -10,6 +10,7 @@ LSCP.View.Game = Backbone.View.extend({
     idleInterval: null,
     idleTimer: 0,
     idleTime: 30, // seconds
+    timeLimitInterval: null,
     imagesLoaded: false,
     soundsLoaded: false,
 
@@ -61,10 +62,13 @@ LSCP.View.Game = Backbone.View.extend({
 
     start: function(){
         log('LSCP.View.Game starts!');
+        this.startCheckingTimeLimit();
     },
 
     end: function(){
         log('LSCP.View.Game ends!');
+        this.stopWatchingIdle();
+        this.stopCheckingTimeLimit();
         setTimeout(function(){
             this.trigger('end');
         }.bind(this), 5000 / this.speed);
@@ -82,8 +86,9 @@ LSCP.View.Game = Backbone.View.extend({
 
     // Game interaction
 
-    onTouch: function(){
-        this.idleTimerReset();
+    onTouch: function(e){
+      e.stopPropagation(); e.preventDefault();
+      this.idleTimerReset();
     },
 
 
@@ -110,6 +115,33 @@ LSCP.View.Game = Backbone.View.extend({
             this.stopWatchingIdle();
             this.onIdle();
         }
+    },
+
+
+    // Time limit handling
+
+    startCheckingTimeLimit: function(){
+      if (this.timeLimitInterval === null) {
+        this.timeLimitInterval = setInterval(this.checkTimeLimit.bind(this), 10000);
+      }
+    },
+    stopCheckingTimeLimit: function(){
+      clearInterval(this.timeLimitInterval);
+      this.timeLimitInterval = null;
+    },
+    checkTimeLimit: function(){
+      if (this.game_session.isTimeLimitOver()) {
+        this.endGracefully();
+      }
+    },
+    endGracefully: function(){
+      log('endGracefully');
+      this.stopWatchingIdle();
+
+      this.reward.show().on('end', function(){
+        this.reward.hide().off('end');
+        this.end();
+      }.bind(this));
     },
 
 

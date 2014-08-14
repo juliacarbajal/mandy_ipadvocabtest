@@ -33,18 +33,19 @@ LSCP.View.Reward = Backbone.View.extend({
 	},
 
     show: function() {
-        this.render();
-        this.$el.show().on('mousedown', this.onClick.bind(this));
-        return this;
+      this.render();
+      this.$el.show().on('touchstart click', this.onClick.bind(this));
+      return this;
     },
 
     hide: function() {
-        this.$el.hide().off('mousedown');
-        return this;
+      this.$el.hide().off('touchstart click');
+      return this;
     },
 
-    onClick: function(){
-        this.trigger('end');
+    onClick: function(e){
+      e.stopPropagation(); e.preventDefault();
+      this.trigger('end');
     }
 
 });

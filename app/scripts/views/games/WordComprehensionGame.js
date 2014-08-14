@@ -223,6 +223,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     },
 
     end: function(){
+      log('LSCP.View.WordComprehensionGame ends!');
         LSCP.View.Game.prototype.end.apply(this, arguments);
         collie.Renderer.removeAllLayer();
         collie.Renderer.unload();

@@ -28,9 +28,25 @@ LSCP.Events = {
 	APP_LOADING : "APP_LOADING"
 };
 
-$(window).ready(function(){
 
-    LSCP.App = new LSCP.View.Base();
-//	LSCP.AppRouter = new LSCP.Router();
+// Wait for both jQuery and Phonegap ready events
+// http://stackoverflow.com/a/10046671/1789900
+
+var jqReady = $.Deferred();
+var pgReady = $.Deferred();
+
+var isInBrowser = document.URL.match(/^https?:/);
+
+if (isInBrowser) {
+  pgReady.resolve();
+} else {
+  document.addEventListener('deviceready', pgReady.resolve, false);
+}
+
+$(document).bind('ready', jqReady.resolve);
+
+$.when(jqReady, pgReady).then(function () {
+
+  LSCP.App = new LSCP.View.Base();
 
 });

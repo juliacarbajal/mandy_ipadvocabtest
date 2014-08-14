@@ -1,17 +1,18 @@
 # LSCP iDevXXI App
 
-## Introduction
+This app is designed to perform experiments about language learning in babies. It will be composed of several mini games. For now, it's only one game, called Word Comprehension.
 
-This app is designed to perform experiments on language learning in babies. It will be composed of several mini games. For now, it's only one game.
+This app communicates with a back-office that receives and safely stores the experimental data.
 
-*Now say hi to Mandy!*
+* **Client**: [LSCP](http://www.lscp.net)
+* **Targeted platform**: iPad with iOS 7.1 or newer
 
-![Mandy](http://idevxxi.acristia.org/assets/mandy-hello-b3c05f337045d53c2c709f49598bcf43.png)
+![Mandy](http://idevxxi.acristia.org/assets/mandy-hello-b3c05f337045d53c2c709f49598bcf43.png) *Say hi to Mandy!*
 
 ## Dependencies
 
 * Git
-* Node and npm
+* Node and npm ([download](http://nodejs.org/download/))
 * Bower `npm install -g bower`
 * Gulp (will be installed by npm)
 
@@ -25,8 +26,10 @@ This app is designed to perform experiments on language learning in babies. It w
 * `npm install`
 * `bower install`
 
-`gulp watch` for in-browser development and test with livereload
+Run `gulp watch` for in-browser development and test with livereload.
 
 ## Deploy
 
-`gulp` to prepare the app for release and create a zip archive, ready to be uploaded to Phonegap Build
+We do not package the app locally, but use [Phonegap Build](http://build.phonegap.com) instead.
+
+Run `gulp` to prepare the app for release and create a zip archive, then upload it to Phonegap Build to package the app.

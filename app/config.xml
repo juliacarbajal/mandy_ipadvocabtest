@@ -3,7 +3,9 @@
         xmlns:gap="http://phonegap.com/ns/1.0"
         xmlns:cdv="http://cordova.apache.org/ns/1.0"
         id="com.etaminstudio.lscp.idevxxi"
-        version="0.6">
+        version="0.7">
+
+    <preference name="phonegap-version" value="3.5.0" />
 
     <name>LSCP iDevXXI</name>
     <description>Experiments with babies</description>

@@ -19,11 +19,17 @@ LSCP.View.Dashboard = Backbone.View.extend({
     },
 
     events: {
+      "touchstart .close": "close",
+      "touchstart .config button": "changeConfig",
+      "touchstart .sync button": "syncNow",
+      "touchstart .subject button": "changeSubjectId",
+      "touchstart .log button": "eraseLog",
+
       "mousedown .close": "close",
-      "click .config button": "changeConfig",
-      "click .sync button": "syncNow",
-      "click .subject button": "changeSubjectId",
-      "click .log button": "eraseLog"
+      "mousedown .config button": "changeConfig",
+      "mousedown .sync button": "syncNow",
+      "mousedown .subject button": "changeSubjectId",
+      "mousedown .log button": "eraseLog"
     },
 
     render: function(){
@@ -36,20 +42,23 @@ LSCP.View.Dashboard = Backbone.View.extend({
         if ($('#'+this.id).length === 0) $('#app').append(this.$el);
     },
 
-    close: function() {
-        this.remove();
-        this.unbind();
-        $('#home').show();
+    close: function(e) {
+      e.stopPropagation(); e.preventDefault();
+      this.remove();
+      this.unbind();
+      $('#home').show();
     },
 
-    changeConfig: function(){
+    changeConfig: function(e){
+      e.stopPropagation(); e.preventDefault();
       var new_config = $('.config select[name=config-local]').val();
       log("changeConfig", new_config);
       this.addToLog('Config changed for ' + new_config);
       this.config_files.use(new_config);
     },
 
-    changeSubjectId: function(){
+    changeSubjectId: function(e){
+      e.stopPropagation(); e.preventDefault();
       var new_subject_id = $('.subject input[name=subject-id]').val();
       if (new_subject_id === '') return;
       log("changeSubjectId", new_subject_id);
@@ -62,52 +71,54 @@ LSCP.View.Dashboard = Backbone.View.extend({
       this.$el.find('#log').prepend(line + "\n");
     },
 
-    eraseLog: function(){
+    eraseLog: function(e){
+      e.stopPropagation(); e.preventDefault();
       this.$el.find('#log').empty();
     },
 
-    syncNow: function(){
-        log("syncNow");
-        // TODO
-        var device = window.device || {uuid: 'UUID', version: 'VERSION', model: 'MODEL'};
-        var data = {
-            device: {
-                uuid: device.uuid,
-                os_version: device.version,
-                device_name: device.model
-            },
-            subject: this.subject.get('anonymous_id'),
-            sessions: [
-                {uuid: 'UUID', data: 'DATA'},
-                {uuid: 'UUID', data: 'DATA'}
-            ]
-        };
-        this.addToLog('test uuid: ' + device.uuid);
-        log(data);
-        var url = 'http://idevxxi.acristia.org/sync/update';
+    syncNow: function(e){
+      e.stopPropagation(); e.preventDefault();
+      log("syncNow");
+      // TODO
+      var device = window.device;
+      var data = {
+          device: {
+              uuid: device.uuid,
+              os_version: device.version,
+              device_name: device.model
+          },
+          subject: this.subject.get('anonymous_id'),
+          sessions: [
+              {uuid: 'UUID', data: 'DATA'},
+              {uuid: 'UUID', data: 'DATA'}
+          ]
+      };
+      this.addToLog('test uuid: ' + device.uuid);
+      log(data);
+      var url = 'http://idevxxi.acristia.org/sync/update';
 //        var url = 'http://lscp.dev:3000/sync/update';
-        $.ajax({
-            type: 'POST',
-            url: url,
-            dataType: 'json',
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            processData: false,
-            success: function(data, textStatus){
-                log('data has been successfully sent!', data, textStatus);
-            },
-            error: function(jqXHT, textStatus, errorThrown){
-                log('error during sync!', textStatus, errorThrown);
-            }
-        });
+      $.ajax({
+          type: 'POST',
+          url: url,
+          dataType: 'json',
+          contentType: "application/json",
+          data: JSON.stringify(data),
+          processData: false,
+          success: function(data, textStatus){
+              log('data has been successfully sent!', data, textStatus);
+          },
+          error: function(jqXHT, textStatus, errorThrown){
+              log('error during sync!', textStatus, errorThrown);
+          }
+      });
     },
 
     onOnline: function(){
-        $('#syncNow').show();
+      $('#syncNow').show();
     },
 
     onOffline: function(){
-        $('#syncNow').hide();
+      $('#syncNow').hide();
     }
 
 });

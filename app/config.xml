@@ -14,13 +14,14 @@
     <preference name="orientation" value="landscape" />
     <!--<preference name="fullscreen" value="true" />-->
 
-    <gap:platform name="ios" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="EnableViewportScale" value="true"/>
-    <preference name="BackupWebStorage" value="none"/>
-    <preference name="target-device" value="tablet" />
-    <preference name="detect-data-types" value="false" />
-    <preference name="exit-on-suspend" value="false" />
+    <gap:platform name="ios">
+        <preference name="DisallowOverscroll" value="true" />
+        <preference name="EnableViewzportScale" value="true"/>
+        <preference name="BackupWebStorage" value="none"/>
+        <preference name="target-device" value="tablet" />
+        <preference name="detect-data-types" value="false" />
+        <preference name="exit-on-suspend" value="false" />
+    </gap:platform>
 
     <!-- Define app icon for each platform. -->
     <icon src="images/touchicon.png" />

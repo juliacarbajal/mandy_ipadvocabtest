@@ -23,13 +23,11 @@ LSCP.View.Dashboard = Backbone.View.extend({
       "touchstart .config button": "changeConfig",
       "touchstart .sync button": "syncNow",
       "touchstart .subject button": "changeSubjectId",
-      "touchstart .log button": "eraseLog",
 
       "mousedown .close": "close",
       "mousedown .config button": "changeConfig",
       "mousedown .sync button": "syncNow",
-      "mousedown .subject button": "changeSubjectId",
-      "mousedown .log button": "eraseLog"
+      "mousedown .subject button": "changeSubjectId"
     },
 
     render: function(){
@@ -53,7 +51,6 @@ LSCP.View.Dashboard = Backbone.View.extend({
       e.stopPropagation(); e.preventDefault();
       var new_config = $('.config select[name=config-local]').val();
       log("changeConfig", new_config);
-      this.addToLog('Config changed for ' + new_config);
       this.config_files.use(new_config);
     },
 
@@ -62,18 +59,7 @@ LSCP.View.Dashboard = Backbone.View.extend({
       var new_subject_id = $('.subject input[name=subject-id]').val();
       if (new_subject_id === '') return;
       log("changeSubjectId", new_subject_id);
-      this.addToLog('Subject ID changed for ' + new_subject_id);
       this.subject.set('anonymous_id', new_subject_id);
-    },
-
-    addToLog: function(line){
-      log('addToLog', line);
-      this.$el.find('#log').prepend(line + "\n");
-    },
-
-    eraseLog: function(e){
-      e.stopPropagation(); e.preventDefault();
-      this.$el.find('#log').empty();
     },
 
     syncNow: function(e){
@@ -85,7 +71,7 @@ LSCP.View.Dashboard = Backbone.View.extend({
           device: {
               uuid: device.uuid,
               os_version: device.version,
-              device_name: device.model
+              model: device.model
           },
           subject: this.subject.get('anonymous_id'),
           sessions: [
@@ -93,7 +79,6 @@ LSCP.View.Dashboard = Backbone.View.extend({
               {uuid: 'UUID', data: 'DATA'}
           ]
       };
-      this.addToLog('test uuid: ' + device.uuid);
       log(data);
       var url = 'http://idevxxi.acristia.org/sync/update';
 //        var url = 'http://lscp.dev:3000/sync/update';

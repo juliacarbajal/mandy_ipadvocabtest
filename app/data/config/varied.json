@@ -4,7 +4,7 @@
         "time_limit": 900,
         "assets": {
             "objects": {
-                "tous": ["vache","bain","gateau","balais","mouche","poussette","crocodile","biberon","livre","bateau","pain","canard","pot","barti","chien","maison","gasse","voiture","cuillere","fleur","verre","chaussure","pull","cochon","pomme","chat","poupee","poisson","ballon","poule"]
+                "tous": ["vache","bain","gateau","balai","mouche","poussette","crocodile","biberon","livre","bateau","pain","canard","pot","barti","chien","maison","gasse","voiture","cuillere","fleur","verre","chaussure","pull","cochon","pomme","chat","poupee","poisson","ballon","poule"]
             },
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
@@ -23,13 +23,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "vache", "bain", "gateau", "balais"
+                                    "vache", "bain", "gateau", "balai"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "balais"
+                                "ask_for": "balai"
                             },
                             {
                                 "objects_family": "tous",
@@ -202,7 +202,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "bain", "gateau", "balais", "mouche"
+                                    "bain", "gateau", "balai", "mouche"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -269,7 +269,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "gateau", "balais", "mouche", "poussette"
+                                    "gateau", "balai", "mouche", "poussette"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -359,7 +359,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "balais", "mouche", "poussette", "crocodile"
+                                    "balai", "mouche", "poussette", "crocodile"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"

@@ -53,10 +53,9 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
         $.when.apply($, localFiles).then(function(){
           console.log('All config files loaded!');
-          console.log(this.toJSON());
 
           this.sync('create', this.models).then(function(){
-            console.log('CREATE DONE!');
+            $('#syncConfig').hide();
           });
 
         }.bind(this));

@@ -5,7 +5,7 @@ LSCP.View.Dashboard = Backbone.View.extend({
 
     initialize: function() {
       this.config_files = new LSCP.Collection.ConfigCollection();
-      this.listenTo(this.config_files, "change", this.render);
+      this.listenTo(this.config_files, "change", _.throttle(this.render, 250));
 
       this.subject = new LSCP.Model.Subject();
       this.listenTo(this.subject, "change", this.render);
@@ -33,7 +33,6 @@ LSCP.View.Dashboard = Backbone.View.extend({
     },
 
     render: function(){
-      console.log('LSCP.View.Dashboard.render');
         var html = _.template(this.template, {
           'current_config_file': this.config_files.getCurrent(),
           'config_files': this.config_files.models,

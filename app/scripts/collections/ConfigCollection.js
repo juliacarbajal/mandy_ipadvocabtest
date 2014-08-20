@@ -4,7 +4,7 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
     url: '/temp',
 
     initialize : function() {
-      this.persist = this.model.persist;
+      this.populateFromDatabase();
     },
 
     setDefault: function() {
@@ -20,6 +20,15 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
     getCurrent: function() {
       return localStorage['lscp.idevxxi.current_config'];
+    },
+
+    populateFromDatabase: function() {
+      console.log('populateFromDatabase');
+      this.sync('read', new this.model).then(_.bind(function(e){
+        console.log('populateFromDatabase DONE');
+        this.add(e);
+        this.trigger('change');
+      }, this));
     },
 
     populateFromLocalFiles: function() {

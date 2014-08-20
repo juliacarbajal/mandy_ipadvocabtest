@@ -10,12 +10,12 @@
           <option<% if (f.get('path') == current_config_file) { %> selected="selected"<% } %>><%= f.get('path') %></option>
           <% }); %>
         </select>
+        <button id="syncConfig">Charger les fichiers locaux</button>
       </label>
       <!--<label>ou entrer l'URL d'un fichier distant :
           <input type="url" name="config-url" style="width: 300px" />
       </label>-->
       <button id="changeConfig">Changer la configuration</button>
-      <button id="syncConfig">Synchro</button>
     </fieldset>
     <fieldset class="sync">
       <h2><strong>Synchronisation</strong></h2>

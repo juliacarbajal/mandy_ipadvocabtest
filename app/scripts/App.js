@@ -53,18 +53,16 @@ $.when(jqReady, pgReady).then(function () {
   Backbone.sync = function (method, model, options) {
     var dao = new DAO(model.persist);
     switch (method) {
-      case "read":
-        console.log("sync read")
+      case 'read':
+        console.log("sync read");
         if (model.id) {
-          console.log("reading a single mode using the passed id");
+          console.log("sync read one");
           dao.findById(model.id, function(data) {
             options.success(data);
           });
         } else {
-          console.log("fetching our list of stuff");
-          dao.findAll(function (data) {
-            options.success(data);
-          });
+          console.log("sync read all");
+          return dao.findAll(model);
         }
         break;
 

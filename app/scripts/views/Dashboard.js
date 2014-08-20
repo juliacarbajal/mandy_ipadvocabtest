@@ -33,6 +33,7 @@ LSCP.View.Dashboard = Backbone.View.extend({
     },
 
     render: function(){
+      console.log('LSCP.View.Dashboard.render');
         var html = _.template(this.template, {
           'current_config_file': this.config_files.getCurrent(),
           'config_files': this.config_files.models,

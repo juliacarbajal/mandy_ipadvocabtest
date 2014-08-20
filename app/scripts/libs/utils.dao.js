@@ -7,21 +7,18 @@ var DAO = function(db) {
 
 _.extend(DAO.prototype, {
 
-  //Fetches all the record in our table and returns the results to the callback function
-  findAll: function (callback) {
-    console.log("made it to find all");
+  // Fetches all the record in our table and returns the results to the callback function
+  findAll: function(model) {
+    console.log("DAO findAll models");
+    var globalDeferred = $.Deferred();
 
-    var stuffs = [];
-    this.db.all().order("name", true).list(null, function(results){
-      var len = results.length;
-      for (var i = 0; i < len; i++) {
-        stuffs[i] = results[i];
-      }
-      callback(stuffs);
+    var all = model.persistableEntity.all().order('name', true);
 
+    all.list(function(results){
+      globalDeferred.resolve(results);
     });
 
-    // TODO
+    return globalDeferred;
   },
 
   //Gets a record based on the id, returns the results to the callback function
@@ -48,9 +45,9 @@ _.extend(DAO.prototype, {
     // TODO
   },
 
-  //Creates a new record in the table based on the passed Model
-  create: function (models, callback) {
-    console.log("dao create model", models);
+  // Creates a new record in the table based on the passed Model
+  create: function(models) {
+    console.log("DAO create models");
     var globalDeferred = $.Deferred();
     var deferreds = [];
 
@@ -65,7 +62,6 @@ _.extend(DAO.prototype, {
       persistence.add(model.persistable());
 
       persistence.flush(function(){
-        console.log('ONE DEFERRED DONE');
         deferred.resolve();
       });
 
@@ -74,7 +70,6 @@ _.extend(DAO.prototype, {
     }, this));
 
     $.when.apply($, deferreds).then(function(){
-      console.log('ALL DEFERREDS DONE');
       globalDeferred.resolve();
     });
 

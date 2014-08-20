@@ -29,6 +29,7 @@
       "LSCP": true,
       "Howl": true,
       "log": true,
-      "localStorage": true
+      "localStorage": true,
+      "persistence": true
     }
 }

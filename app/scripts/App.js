@@ -21,9 +21,7 @@ LSCP.Locations.JSON = '/data/';
 LSCP.Locations.Images = 'images/';
 LSCP.Locations.Sounds = 'audio/';
 
-/*
- * EVENTS
- */
+/* EVENTS */
 LSCP.Events = {
 	APP_LOADING : "APP_LOADING"
 };
@@ -48,5 +46,47 @@ $(document).bind('ready', jqReady.resolve);
 $.when(jqReady, pgReady).then(function () {
 
   LSCP.App = new LSCP.View.Base();
+  persistence.store.websql.config(persistence, 'idevxxi', 'Local database for iDevXXI', 25 * 1024 * 1024);
+  persistence.schemaSync();
+
+  /* SYNC */
+  Backbone.sync = function (method, model, options) {
+    var dao = new DAO(model.persist);
+    switch (method) {
+      case "read":
+        console.log("sync read")
+        if (model.id) {
+          console.log("reading a single mode using the passed id");
+          dao.findById(model.id, function(data) {
+            options.success(data);
+          });
+        } else {
+          console.log("fetching our list of stuff");
+          dao.findAll(function (data) {
+            options.success(data);
+          });
+        }
+        break;
+
+      case "create":
+        console.log("sync create");
+        return dao.create(model);
+        break;
+
+      case "update":
+        console.log("sync update");
+        dao.update(model, function (data) {
+          options.success(data);
+        });
+        break;
+
+      case "delete":
+        console.log("sync delete");
+        dao.delete(model, function () {
+          options.success();
+        });
+        break;
+    }
+  };
 
 });

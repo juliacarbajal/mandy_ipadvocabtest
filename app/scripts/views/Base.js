@@ -5,7 +5,6 @@ LSCP.View.Base = Backbone.View.extend({
 
     initialize: function() {
         log('LSCP.View.Base initialized!');
-//        (new LSCP.Collection.ConfigCollection()).setDefault();
 //        LSCP.View.Session.init();
     },
 

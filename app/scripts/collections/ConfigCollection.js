@@ -1,9 +1,10 @@
 LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
     model: LSCP.Model.Config,
+    url: '/temp',
 
     initialize : function() {
-      this.loadLocalFiles();
+      this.persist = this.model.persist;
     },
 
     setDefault: function() {
@@ -21,13 +22,35 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
       return localStorage['lscp.idevxxi.current_config'];
     },
 
-    loadLocalFiles: function() {
-      $.getJSON('data/config_files_list.json', _.bind(function(data){
-        var local_files = [];
+    populateFromLocalFiles: function() {
+      var loadFilesList = $.getJSON('data/config_files_list.json');
+      var localFiles = [];
+
+      loadFilesList.then(_.bind(function(data){
+        console.log('Loaded config files list: ' + _.size(data.files) + ' files');
+
+        this.reset();
+
         _.each(data.files, _.bind(function(file){
-            local_files.push({path: 'data/' + file});
+
+          var model = this.add({
+            path: 'data/' + file,
+            current: false
+          });
+
+          localFiles.push(model.loadDataFromFile());
+
         }, this));
-        this.add(local_files);
+
+        $.when.apply($, localFiles).then(function(){
+          console.log('All config files loaded!');
+          console.log(this.toJSON());
+
+          this.sync('create', this.models).then(function(){
+            console.log('CREATE DONE!');
+          });
+
+        }.bind(this));
       }, this));
     },
 

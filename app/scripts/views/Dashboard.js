@@ -20,12 +20,14 @@ LSCP.View.Dashboard = Backbone.View.extend({
 
     events: {
       "touchstart .close": "close",
-      "touchstart .config button": "changeConfig",
+      "touchstart #changeConfig": "changeConfig",
+      "touchstart #syncConfig": "syncConfig",
       "touchstart .sync button": "syncNow",
       "touchstart .subject button": "changeSubjectId",
 
       "mousedown .close": "close",
-      "mousedown .config button": "changeConfig",
+      "mousedown #changeConfig": "changeConfig",
+      "mousedown #syncConfig": "syncConfig",
       "mousedown .sync button": "syncNow",
       "mousedown .subject button": "changeSubjectId"
     },
@@ -52,6 +54,15 @@ LSCP.View.Dashboard = Backbone.View.extend({
       var new_config = $('.config select[name=config-local]').val();
       log("changeConfig", new_config);
       this.config_files.use(new_config);
+    },
+
+    syncConfig: function(e){
+      e.stopPropagation(); e.preventDefault();
+
+      // Load local files in DB
+      this.config_files.populateFromLocalFiles();
+
+//      Backbone.sync('read', this.config_files);
     },
 
     changeSubjectId: function(e){

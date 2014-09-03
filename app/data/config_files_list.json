@@ -7,6 +7,7 @@
         "config/NoRamp_o2.json",
         "config/WithRampUp.json",
         "config/WithRampUp_o1.json",
-        "config/WithRampUp_o2.json"
+        "config/WithRampUp_o2.json",
+        "config/tog.json"
     ]
 }

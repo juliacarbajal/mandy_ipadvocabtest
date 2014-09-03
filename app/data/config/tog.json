@@ -1,0 +1,358 @@
+{
+    "name": "TogPad",
+    "session": {
+        "time_limit": 900,
+        "assets": {
+            "objects": {
+                "tous": ["vache","bain","balai","mouche","poussette","crocodile","biberon","livre","pain","pot","barti","chien","maison","gasse","voiture","cuillere","fleur","verre","chaussure","pull","pomme","chat","poupee","poisson","poule","torba", "ganard"]
+            },
+            "backgrounds": ["countryside","beach","mountain","desert"]
+        },
+        "levels":
+            [
+                {
+                    "name": "learning",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "torba", "chaussure"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "torba"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "biberon"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "torba", "pomme"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "torba"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "pull"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            }
+                        ]
+                },
+                {
+                    "name": "learning2",
+                    "background": "countryside",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "verre"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "torba", "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "torba"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "livre"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "torba", "maison"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "torba"
+                            }
+                        ]
+                },
+                {
+                    "name": "consolidating",
+                    "background": "mountain",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": false,
+                    "feedback": false,
+                    "on_failure": "CONTINUE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "cuillere", "fleur"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "fleur"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "torba", "balai"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "torba"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien", "poisson"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poisson"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "poupee"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            }
+                        ]
+                },
+                {
+                    "name": "test1",
+                    "background": "desert",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": false,
+                    "feedback": false,
+                    "on_failure": "CONTINUE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure", "mouche"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chaussure"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "torba", "ganard"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "torba"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "maison", "cuillere"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "maison"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "torba", "ganard"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            }
+                        ]
+                },
+                {
+                    "name": "interlude",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "cuillere", "fleur", "pomme", "chat"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "pomme"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "poupee", "poisson", "pot", "poule"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poule"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chaussure", "balai", "mouche", "poussette"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poussette"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "crocodile", "biberon", "livre", "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "crocodile"
+                            }
+                        ]
+                },
+                {
+                    "name": "test2",
+                    "background": "mountain",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": false,
+                    "feedback": false,
+                    "on_failure": "CONTINUE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "pull", "poule", "banane", "voiture"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "banane"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "torba"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "pain", "crocodile", "chat", "vache"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "vache"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "torba"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "torba"
+                            }
+                        ]
+                }
+
+            ]
+    }
+}

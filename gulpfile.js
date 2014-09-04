@@ -161,7 +161,7 @@ gulp.task('connect', function () {
         });
 });
 
-gulp.task('serve', ['connect', 'styles'], function () {
+gulp.task('serve', ['connect', 'styles', 'scriptlibs', 'scripts'], function () {
     require('opn')('http://localhost:9000');
 });
 

@@ -69,7 +69,6 @@ $.when(jqReady, pgReady).then(function () {
       case "create":
         console.log("sync create");
         return dao.create(model);
-        break;
 
       case "update":
         console.log("sync update");

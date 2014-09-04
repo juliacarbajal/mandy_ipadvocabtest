@@ -2,14 +2,18 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
     model: LSCP.Model.Config,
     url: '/temp',
+    default_config_file: 'config/default.json',
 
     initialize : function() {
       this.populateFromDatabase();
+      this.setDefault();
     },
 
     setDefault: function() {
       if (!('lscp.idevxxi.current_config' in localStorage)) {
-        localStorage['lscp.idevxxi.current_config'] = this.first().get('path');
+        // TODO manage async
+        // localStorage['lscp.idevxxi.current_config'] = this.first().get('path');
+        localStorage['lscp.idevxxi.current_config'] = this.default_config_file;
       }
     },
 
@@ -24,7 +28,7 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
     populateFromDatabase: function() {
       console.log('populateFromDatabase');
-      this.sync('read', new this.model).then(_.bind(function(e){
+      this.sync('read', new this.model()).then(_.bind(function(e){
         console.log('populateFromDatabase DONE');
         this.add(e);
         this.trigger('change');

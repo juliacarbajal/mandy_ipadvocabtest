@@ -30,6 +30,7 @@
       "Howl": true,
       "log": true,
       "localStorage": true,
-      "persistence": true
+      "persistence": true,
+      "DAO": true
     }
 }

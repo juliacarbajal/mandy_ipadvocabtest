@@ -11,7 +11,7 @@ LSCP.View.Dashboard = Backbone.View.extend({
       this.listenTo(this.subject, "change", this.render);
 
       $.get(this.template_path, function(template) {
-        this.template = template;
+        this.template = _.template(template);
         $(document).on("online", this.onOnline);
         $(document).on("offline", this.onOffline);
         this.render();
@@ -33,11 +33,12 @@ LSCP.View.Dashboard = Backbone.View.extend({
     },
 
     render: function(){
-        var html = _.template(this.template, {
-          'current_config_file': this.config_files.getCurrent(),
-          'config_files': this.config_files.models,
-          'current_subject_id': this.subject.get('anonymous_id')
-        });
+        var data = {
+            current_config_file: this.config_files.getCurrent(),
+            config_files: this.config_files.models,
+            current_subject_id: this.subject.get('anonymous_id')
+        };
+        var html = this.template(data);
         this.$el.html(html);
         if ($('#'+this.id).length === 0) $('#app').append(this.$el);
     },

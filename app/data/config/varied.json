@@ -4,7 +4,7 @@
         "time_limit": 900,
         "assets": {
             "objects": {
-                "tous": ["vache","bain","gateau","balai","mouche","poussette","crocodile","biberon","livre","bateau","pain","canard","pot","barti","chien","maison","gasse","voiture","cuillere","fleur","verre","chaussure","pull","cochon","pomme","chat","poupee","poisson","ballon","poule"]
+                "tous": ["vache","bain","gateau","balai","mouche","poussette","crocodile","biberon","livre","bateau","pain","canard","pot","barti","chien","gasse","voiture","fleur","verre","chaussure","pull","cochon","pomme","chat","poupee","poisson","ballon","poule"]
             },
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
@@ -112,13 +112,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "ballon", "barti", "chien", "maison"
+                                    "ballon", "barti", "chien"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "maison"
+                                "ask_for": "ballon"
                             }
                         ]
                 },
@@ -157,7 +157,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "barti", "chien", "maison", "verre"
+                                    "barti", "chien",  "verre"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -336,7 +336,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "chien", "maison", "verre", "chaussure"
+                                    "chien",  "verre", "chaussure"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -426,7 +426,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "maison", "verre", "chaussure", "pull"
+                                     "verre", "chaussure", "pull"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"

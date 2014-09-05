@@ -90,13 +90,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "gasse", "voiture", "cuillere", "fleur"
+                                    "gasse", "voiture", "poupee", "fleur"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "cuillere"
+                                "ask_for": "poupee"
                             },
                             {
                                 "objects_family": "tous",
@@ -135,7 +135,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "voiture", "cuillere", "fleur", "pomme"
+                                    "voiture", "chaussure", "fleur", "pomme"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -247,7 +247,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "cuillere", "fleur", "pomme", "chat"
+                                    "biberon", "fleur", "pomme", "chat"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -370,7 +370,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "cochon", "gasse", "voiture", "cuillere"
+                                    "cochon", "gasse", "voiture", "ballon"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"

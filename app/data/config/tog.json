@@ -4,7 +4,7 @@
         "time_limit": 900,
         "assets": {
             "objects": {
-                "tous": ["vache","bain","balai","mouche","poussette","crocodile","biberon","livre","pain","pot","barti","chien","maison","gasse","voiture","cuillere","fleur","verre","chaussure","pull","pomme","chat","poupee","poisson","poule","torba", "ganard"]
+                "tous": ["vache","bain","balai","mouche","poussette","crocodile","biberon","livre","pain","pot","barti","chien","gasse","voiture","fleur","verre","chaussure","pull","pomme","chat","poupee","poisson","poule","barti", "ganard"]
             },
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
@@ -23,13 +23,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "torba", "chaussure"
+                                    "barti", "chaussure"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "torba"
+                                "ask_for": "barti"
                             },
                             {
                                 "objects_family": "tous",
@@ -45,13 +45,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "torba", "pomme"
+                                    "barti", "pomme"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "torba"
+                                "ask_for": "barti"
                             },
                             {
                                 "objects_family": "tous",
@@ -90,13 +90,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "torba", "voiture"
+                                    "barti", "voiture"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "torba"
+                                "ask_for": "barti"
                             },
                             {
                                 "objects_family": "tous",
@@ -112,13 +112,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "torba", "maison"
+                                    "barti", "poule"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "torba"
+                                "ask_for": "barti"
                             }
                         ]
                 },
@@ -137,7 +137,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "cuillere", "fleur"
+                                    "verre", "fleur"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -148,13 +148,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "torba", "balai"
+                                    "barti", "balai"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "torba"
+                                "ask_for": "barti"
                             },
                             {
                                 "objects_family": "tous",
@@ -206,29 +206,29 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "torba", "ganard"
+                                    "barti", "ganard"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "torba"
+                                "ask_for": "barti"
                             },
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "maison", "cuillere"
+                                    "poule", "verre"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "maison"
+                                "ask_for": "poule"
                             },
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "torba", "ganard"
+                                    "barti", "ganard"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -251,7 +251,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "cuillere", "fleur", "pomme", "chat"
+                                    "verre", "fleur", "pomme", "chat"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -320,7 +320,7 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "ganard", "torba"
+                                    "ganard", "barti"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
@@ -342,13 +342,13 @@
                             {
                                 "objects_family": "tous",
                                 "objects": [
-                                    "ganard", "torba"
+                                    "ganard", "barti"
                                 ],
                                 "objects_positions": [
                                     "NATURAL"
                                 ],
                                 "time_idle": 5,
-                                "ask_for": "torba"
+                                "ask_for": "barti"
                             }
                         ]
                 }

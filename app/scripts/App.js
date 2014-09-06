@@ -51,20 +51,24 @@ $.when(jqReady, pgReady).then(function () {
 
   /* SYNC */
   Backbone.sync = function (method, model, options) {
-    var dao = new DAO(model.persist);
+    var dao = new DAO();
     switch (method) {
       case 'read':
         console.log("sync read");
         if (model.id) {
           console.log("sync read one");
-          dao.findById(model.id, function(data) {
+          return dao.findById(model.id, function(data) {
             options.success(data);
           });
         } else {
           console.log("sync read all");
           return dao.findAll(model);
         }
-        break;
+        return;
+
+      case 'count':
+        console.log('sync count');
+        return dao.count(model);
 
       case "create":
         console.log("sync create");
@@ -72,17 +76,14 @@ $.when(jqReady, pgReady).then(function () {
 
       case "update":
         console.log("sync update");
-        dao.update(model, function (data) {
-          options.success(data);
-        });
-        break;
+        return dao.update(model);
 
-      case "delete":
-        console.log("sync delete");
-        dao.delete(model, function () {
-          options.success();
-        });
-        break;
+//      case "delete":
+//        console.log("sync delete");
+//        dao.delete(model, function () {
+//          options.success();
+//        });
+//        break;
     }
   };
 

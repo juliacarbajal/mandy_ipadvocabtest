@@ -3,6 +3,7 @@ LSCP.View.Session = Backbone.View.extend({
     el: "#session",
 
     config: null,
+    game_sessions: null,
     subject: null,
     current_game: null,
     current_game_session: null,
@@ -12,6 +13,7 @@ LSCP.View.Session = Backbone.View.extend({
       log('LSCP.View.Session initialized!');
 
       this.subject = new LSCP.Model.Subject();
+      this.game_sessions = new LSCP.Collection.GameSessionCollection();
 
       new LSCP.Collection.ConfigCollection().loadCurrentConfig(this.onConfigLoaded.bind(this));
     },
@@ -29,7 +31,7 @@ LSCP.View.Session = Backbone.View.extend({
 
         this.current_game = this.config.games.shift();
 
-        this.current_game_session = new LSCP.Model.GameSession(_.extend(this.config.get("session"), {
+        this.current_game_session = this.game_sessions.create(_.extend(this.config.get("session"), {
             game: this.current_game
         }));
 
@@ -38,6 +40,8 @@ LSCP.View.Session = Backbone.View.extend({
         this.current_game_view = new LSCP.View.WordComprehensionGame({
             model: this.current_game
         });
+
+
 
 //        switch (this.current_game.get('type')) {
 //

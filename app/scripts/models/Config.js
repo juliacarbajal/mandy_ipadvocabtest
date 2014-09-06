@@ -11,16 +11,16 @@ LSCP.Model.ConfigPersist.index(['path'],{unique:true});
 LSCP.Model.Config = Backbone.Model.extend({
 
   persistableEntity: LSCP.Model.ConfigPersist,
-	
-	defaults: {
+
+  defaults: {
     name: "",
-		path: "",
-		current: false,
+    path: "",
+    current: false,
     data: null
-	},
-	
-	initialize: function(){
-	},
+  },
+
+  initialize: function(){
+  },
 
   loadDataFromFile: function(){
     var addData = function(e){

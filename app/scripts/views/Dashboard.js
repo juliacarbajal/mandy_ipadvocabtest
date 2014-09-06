@@ -7,6 +7,9 @@ LSCP.View.Dashboard = Backbone.View.extend({
       this.config_files = new LSCP.Collection.ConfigCollection();
       this.listenTo(this.config_files, "change", _.throttle(this.render, 250));
 
+      this.game_sessions = new LSCP.Collection.GameSessionCollection().populateFromDatabase();
+      this.listenTo(this.game_sessions, "change", _.throttle(this.render, 250));
+
       this.subject = new LSCP.Model.Subject();
       this.listenTo(this.subject, "change", this.render);
 
@@ -33,14 +36,17 @@ LSCP.View.Dashboard = Backbone.View.extend({
     },
 
     render: function(){
-        var data = {
-            current_config_file: this.config_files.getCurrent(),
-            config_files: this.config_files.models,
-            current_subject_id: this.subject.get('anonymous_id')
-        };
-        var html = this.template(data);
-        this.$el.html(html);
-        if ($('#'+this.id).length === 0) $('#app').append(this.$el);
+      var data = {
+        current_config_file: this.config_files.getCurrent(),
+        config_files: this.config_files.models,
+        current_subject_id: this.subject.get('anonymous_id'),
+        total_game_sessions: this.game_sessions.count(),
+        game_sessions_to_sync: this.game_sessions.count({synced: false})
+      };
+      console.log('render', data);
+      var html = this.template(data);
+      this.$el.html(html);
+      if ($('#'+this.id).length === 0) $('#app').append(this.$el);
     },
 
     close: function(e) {
@@ -86,27 +92,28 @@ LSCP.View.Dashboard = Backbone.View.extend({
               model: device.model
           },
           subject: this.subject.get('anonymous_id'),
-          sessions: [
-              {uuid: 'UUID', data: 'DATA'},
-              {uuid: 'UUID', data: 'DATA'}
-          ]
+          sessions: this.game_sessions.dump({synced: false})
       };
       log(data);
       var url = 'http://idevxxi.acristia.org/sync/update';
-//        var url = 'http://lscp.dev:3000/sync/update';
+//      var url = 'http://lscp.dev:3000/sync/update';
       $.ajax({
-          type: 'POST',
-          url: url,
-          dataType: 'json',
-          contentType: "application/json",
-          data: JSON.stringify(data),
-          processData: false,
-          success: function(data, textStatus){
-              log('data has been successfully sent!', data, textStatus);
-          },
-          error: function(jqXHT, textStatus, errorThrown){
-              log('error during sync!', textStatus, errorThrown);
-          }
+        type: 'POST',
+        url: url,
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        processData: false,
+        success: function(data, textStatus){
+          log('data has been successfully sent!', data, textStatus);
+          _.each(data.synced, function(uuid){
+            var gs = this.game_sessions.get(uuid);
+            gs.setAsSynced();
+          }, this);
+        }.bind(this),
+        error: function(jqXHT, textStatus, errorThrown){
+          log('error during sync!', textStatus, errorThrown);
+        }
       });
     },
 

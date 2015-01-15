@@ -9,6 +9,7 @@
         "config/WithRampUp_o1.json",
         "config/WithRampUp_o2.json",
         "config/tog.json",
-        "config/togmp.json"
+        "config/togmp.json",
+        "config/test_random.json"
     ]
 }

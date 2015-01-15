@@ -278,7 +278,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         // Override objects positions
         var objects_positions = [];
         if (stage.get("objects_positions") == 'NATURAL') {
-            objects_positions = this.pos['FOR_' + stage.get("objects").length];
+          objects_positions = this.pos['FOR_' + stage.get("objects").length];
+        } else if (stage.get("objects_positions") == 'RANDOM') {
+          objects_positions = this.pos['FOR_' + stage.get("objects").length].shuffle();
         } else if (_.isArray(stage.get("objects_positions"))) {
             objects_positions = _.map(stage.get("objects_positions"), function(pos) {
                 if (typeof this.pos[pos] == 'undefined') throw 'Wrong value "'+pos+'" for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;

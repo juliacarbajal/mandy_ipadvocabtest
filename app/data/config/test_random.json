@@ -1,0 +1,43 @@
+{
+  "name": "Test RANDOM param for objects_positions",
+  "session": {
+    "time_limit": 900,
+    "assets": {
+      "objects": ["canard", "chat", "chien", "vache"],
+      "backgrounds": ["countryside","beach","mountain","desert"]
+    },
+    "levels":
+        [
+          {
+            "name": "train the baby on the fact that there are hidden objects to touch",
+            "background": "countryside",
+            "reward": {
+              "type": "video",
+              "path": "..."
+            },
+            "introduce_objects": true,
+            "feedback": false,
+            "on_failure": "REPEAT_STAGE",
+            "stages":
+                [
+                  {
+                    "objects": [
+                      "canard", "chat", "chien", "vache"
+                    ],
+                    "objects_positions": "RANDOM",
+                    "time_idle": 15,
+                    "ask_for": "canard"
+                  },
+                  {
+                    "objects": [
+                      "canard", "chat", "chien", "vache"
+                    ],
+                    "objects_positions": "RANDOM",
+                    "time_idle": 15,
+                    "ask_for": "canard"
+                  }
+                ]
+          }
+        ]
+  }
+}

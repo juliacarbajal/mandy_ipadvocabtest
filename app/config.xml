@@ -1,48 +1,73 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns="http://www.w3.org/ns/widgets"
-        xmlns:gap="http://phonegap.com/ns/1.0"
-        xmlns:cdv="http://cordova.apache.org/ns/1.0"
-        id="com.etaminstudio.lscp.idevxxi"
-        version="0.8">
+<?xml version='1.0' encoding='utf-8'?>
 
-    <preference name="phonegap-version" value="3.5.0" />
+<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
+<widget id="com.etaminstudio.lscp.idevxxi" version="0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 
     <name>LSCP iDevXXI</name>
-    <description>Experiments with babies</description>
-    <author href="http://etaminstudio.com" email="hans@etaminstudio.com">Etamin Studio</author>
 
-    <preference name="orientation" value="landscape" />
-    <!--<preference name="fullscreen" value="true" />-->
+    <description>
+        Experiments with babies
+    </description>
 
+    <author email="hans@etaminstudio.com" href="http://etaminstudio.com">
+        Etamin Studio
+    </author>
+
+    <!-- Define the main entry-point to the application -->
+    <content src="index.html" />
+
+    <!-- Plaforms -->
     <gap:platform name="ios" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="EnableViewzportScale" value="true"/>
-    <preference name="BackupWebStorage" value="none"/>
-    <preference name="target-device" value="tablet" />
-    <preference name="detect-data-types" value="false" />
-    <preference name="exit-on-suspend" value="false" />
 
-    <!-- Define app icon for each platform. -->
-    <icon src="images/touchicon.png" />
+    <!--
+    If you do not want any permissions to be added to your app, add the
+    following tag to your config.xml; you will still have the INTERNET
+    permission on your app, which PhoneGap requires.
+    -->
+    <preference name="permissions" value="none" />
 
-    <!-- Define app splash screen for each platform. -->
-    <gap:splash src="images/splashscreen.png" gap:platform="ios" width="2048" height="1536" />
+    <!-- Customize your app and platform with the preference element. -->
+    <preference name="phonegap-version" value="3.6.3" />            <!-- all: current version of PhoneGap -->
+    <preference name="orientation" value="landscape" />             <!-- all: default means both landscape and portrait are enabled -->
+    <preference name="target-device" value="tablet" />              <!-- all: possible values handset, tablet, or universal -->
+    <preference name="fullscreen" value="true" />                   <!-- all: hides the status bar at the top of the screen -->
+    <preference name="webviewbounce" value="false" />               <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
+    <preference name="prerendered-icon" value="true" />             <!-- ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen -->
+    <preference name="stay-in-webview" value="false" />             <!-- ios: external links should open in the default browser, 'true' would use the webview the app lives in -->
+    <preference name="ios-statusbarstyle" value="black-opaque" />   <!-- ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar -->
+    <preference name="detect-data-types" value="false" />           <!-- ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system -->
+    <preference name="exit-on-suspend" value="false" />             <!-- ios: if set to true, app will terminate when home button is pressed -->
+    <preference name="show-splash-screen-spinner" value="true" />   <!-- ios: if set to false, the spinner won't appear on the splash screen during app loading -->
+    <preference name="auto-hide-splash-screen" value="true" />      <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
 
     <!-- Plugins -->
-    <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
+
+    <!-- Core plugins -->
+    <gap:plugin name="org.apache.cordova.device" />
+
+    <!-- Third party plugins -->
+    <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
+    <!--
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+    -->
+
+    <!-- Define app icon -->
+    <icon src="icon.png" />
+
+    <!-- Define app splash screen -->
+    <gap:splash src="splash.png" />
 
     <!--
     Define access to external domains.
-
     <access /> - a blank access tag denies access to all external resources.
     <access origin="*" /> - a wildcard access tag allows access to all external resource.
-
     Otherwise, you can specify specific domains:
     -->
-    <access origin="*"/> <!-- allow local pages -->
+    <access origin="*"/>
     <!--
     <access origin="http://phonegap.com" /> - allow any secure requests to http://phonegap.com/
     <access origin="http://phonegap.com" subdomains="true" /> - same as above, but including subdomains, such as http://build.phonegap.com/
+    <access origin="http://phonegap.com" browserOnly="true" /> - only allows http://phonegap.com to be opened by the child browser.
     -->
 
 </widget>

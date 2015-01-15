@@ -24,11 +24,13 @@ var paths = {
     '!app/*.html'
   ],
   archive: [
-    'hooks/**/*',
-    'merges/**/*',
-    'platforms/**/*',
+//    'hooks/**/*',
+//    'merges/**/*',
+//    'platforms/**/*',
     'plugins/**/*',
-    'www/**/*'
+    'www/**/*',
+    'icon.png',
+    'splash.png'
   ],
   watch: [
     'app/*.html',

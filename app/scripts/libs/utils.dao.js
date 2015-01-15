@@ -36,17 +36,17 @@ _.extend(DAO.prototype, {
   },
 
   //Gets a record based on the id, returns the results to the callback function
-  findById: function(id, callback) {
-    console.log("getting a model information by the id passed");
-    if (id != 0)
-    {
-      this.db.load(id, callback(results));
-    } else {
-      alert("Transaction Error: " + error);
-    }
-
-    // TODO
-  },
+//  findById: function(id, callback) {
+//    console.log("getting a model information by the id passed");
+//    if (id != 0)
+//    {
+//      this.db.load(id, callback(results));
+//    } else {
+//      alert("Transaction Error: " + error);
+//    }
+//
+//    // TODO
+//  },
 
   // Gets a record based on a field, returns the results to the callback function
   findBy: function(property, value, callback) {
@@ -64,6 +64,7 @@ _.extend(DAO.prototype, {
     console.log("DAO create models");
     var globalDeferred = $.Deferred();
     var deferreds = [];
+    var ids = [];
 
     if (!(models instanceof Array)) {
       models = [models];
@@ -73,9 +74,11 @@ _.extend(DAO.prototype, {
 
       var deferred = $.Deferred();
 
-      this.db.add(model.persistable());
+      var persisted_model = model.persistable();
+      this.db.add(persisted_model);
 
       this.db.flush(function(){
+        ids.push(persisted_model.id);
         deferred.resolve();
       });
 
@@ -84,7 +87,7 @@ _.extend(DAO.prototype, {
     }, this));
 
     $.when.apply($, deferreds).then(function(){
-      globalDeferred.resolve();
+      globalDeferred.resolve(ids);
     });
 
     return globalDeferred;
@@ -124,7 +127,7 @@ _.extend(DAO.prototype, {
     });
 
     return globalDeferred;
-  },
+  }
 
   //Removes a record from the table identified by the model's id
 //  delete: function (model, callback)

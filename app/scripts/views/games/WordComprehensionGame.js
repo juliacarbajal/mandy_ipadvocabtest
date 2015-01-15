@@ -188,6 +188,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.current_level = 0;
         this.current_stage = 0;
 
+        this.game_session.saveEvent('start');
+
         this.onIteration();
     },
 
@@ -198,10 +200,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.current_stage += 1;
 
         if (this.current_stage > level.get('stages').size() - 1) {
+            this.game_session.saveEvent('show_reward');
             this.reward.show().on('end', function(){
                 this.reward.hide().off('end');
                 this.current_level += 1;
                 this.current_stage = 0;
+
+                this.game_session.saveEvent('touch_reward');
 
                 if (this.current_level > this.game_session.get('levels').size() - 1) {
                     this.end();
@@ -362,32 +367,34 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 this.startWatchingIdle();
 
                 slot.attach({
-                        mousedown: function () {
-                            this.sound.play('plop');
-                            var currentY = slot.get('y');
-                            collie.Timer.transition(slot, 400 / this.speed, {
-                                to: currentY - 50,
-                                set: "y",
-                                effect: collie.Effect.wave(2, 0.25)
-                            });
+                  mousedown: function () {
+                      this.sound.play('plop');
+                      var currentY = slot.get('y');
+                      collie.Timer.transition(slot, 400 / this.speed, {
+                          to: currentY - 50,
+                          set: "y",
+                          effect: collie.Effect.wave(2, 0.25)
+                      });
 
-                            this.stopWatchingIdle();
+                      this.stopWatchingIdle();
 
-                            if (this.subtitles) this.objects.subtitles.set({visible: false});
+                      if (this.subtitles) this.objects.subtitles.set({visible: false});
 
-                            _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
-                            _.invoke(this.objects.slots, 'detachAll');
+                      _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
+                      _.invoke(this.objects.slots, 'detachAll');
 
-                            setTimeout(function(){
-                                if (i < stage.get("objects").length - 1) {
-                                    i++;
-                                    this.introduceObject(this.objects.slots[i], i);
-                                } else {
-                                    this.onObjectsIntroduced();
-                                }
-                            }.bind(this), 2000 / this.speed);
-                        }.bind(this)
-                    });
+                      this.game_session.saveEvent('touch_object', stage.get('objects')[i]);
+
+                      setTimeout(function(){
+                          if (i < stage.get("objects").length - 1) {
+                              i++;
+                              this.introduceObject(this.objects.slots[i], i);
+                          } else {
+                              this.onObjectsIntroduced();
+                          }
+                      }.bind(this), 2000 / this.speed);
+                  }.bind(this)
+              });
             }.bind(this), 0)
 
         ;
@@ -608,6 +615,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.sound.play('plop');
         var stage = this.getCurrentStage();
 
+        this.game_session.saveEvent('touch_mandy');
+
         collie.Timer.queue().
 
             delay(function(){
@@ -621,7 +630,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     slot.attach({
                             mousedown: function () {
                                 this.sound.play('plop');
-                                this.game_session.saveAction('touch', 'slot#'+i);
+                                this.game_session.saveEvent('touch_object', stage.get("objects")[i]);
 
                                 _.invoke(this.objects.slots, 'detachAll');
 

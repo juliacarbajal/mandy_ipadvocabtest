@@ -5,18 +5,20 @@ LSCP.View.Dashboard = Backbone.View.extend({
 
     initialize: function() {
       this.config_files = new LSCP.Collection.ConfigCollection();
-      this.listenTo(this.config_files, "change", _.throttle(this.render, 250));
 
       this.game_sessions = new LSCP.Collection.GameSessionCollection().populateFromDatabase();
-      this.listenTo(this.game_sessions, "change", _.throttle(this.render, 250));
 
       this.subject = new LSCP.Model.Subject();
-      this.listenTo(this.subject, "change", this.render);
 
       $.get(this.template_path, function(template) {
         this.template = _.template(template);
         $(document).on("online", this.onOnline);
         $(document).on("offline", this.onOffline);
+
+        this.listenTo(this.config_files, "change", _.throttle(this.render, 250));
+        this.listenTo(this.game_sessions, "change", _.throttle(this.render, 250));
+        this.listenTo(this.subject, "change", this.render);
+
         this.render();
       }.bind(this));
     },

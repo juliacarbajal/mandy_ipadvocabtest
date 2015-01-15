@@ -27,21 +27,20 @@ LSCP.View.Session = Backbone.View.extend({
       this.startSession();
     },
 
-    startSession: function(){
+  startSession: function(){
 
-        this.current_game = this.config.games.shift();
+    this.current_game = this.config.games.shift();
 
-        this.current_game_session = this.game_sessions.create(_.extend(this.config.get("session"), {
-            game: this.current_game
-        }));
+    this.game_sessions.create(_.extend(this.config.get("session"), {
+          game: this.current_game
+        })).then(_.bind(function(gs){
+          this.current_game_session = gs;
 
-        this.current_game.set('session', this.current_game_session);
+          this.current_game.set('session', this.current_game_session);
 
-        this.current_game_view = new LSCP.View.WordComprehensionGame({
+          this.current_game_view = new LSCP.View.WordComprehensionGame({
             model: this.current_game
-        });
-
-
+          });
 
 //        switch (this.current_game.get('type')) {
 //
@@ -52,9 +51,11 @@ LSCP.View.Session = Backbone.View.extend({
 //
 //        }
 
-        this.$el.append(this.current_game_view.render().el);
+          this.$el.append(this.current_game_view.render().el);
 
-        this.listenToOnce(this.current_game_view, 'end', this.endSession);
+          this.listenToOnce(this.current_game_view, 'end', this.endSession);
+
+        }, this));
 
 //        this.current_game_view.start();
 

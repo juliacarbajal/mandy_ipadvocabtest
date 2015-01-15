@@ -3,7 +3,7 @@ LSCP.Model.GameSessionPersist = persistence.define('GameSession', {
   started_at: 'DATE',
   ended_at: 'DATE',
   time_limit: 'INT',
-  actions: 'JSON',
+  events: 'JSON',
   progress: 'INT',
   synced: 'BOOL'
 });
@@ -20,7 +20,7 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
     time_limit: null,
     game: null,
     levels: [],
-    actions: [],
+    events: [],
     progress: 0,
     synced: false
   },
@@ -35,11 +35,6 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
       type: Backbone.Many,
       key: 'levels',
       collectionType: 'LSCP.Collection.LevelCollection'
-    },
-    {
-      type: Backbone.Many,
-      key: 'actions',
-      collectionType: 'LSCP.Collection.ActionCollection'
     }
   ],
 
@@ -65,34 +60,37 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
 
   },
 
-  saveAction: function(action, value){
-    this.get("actions").add(new LSCP.Model.Action({
-      action: action,
-      value: value
-    }));
+  saveEvent: function(event, value){
+    var e = {
+      event: event,
+      at: new Date()
+    };
+    if (typeof value !== 'undefined') e.value = value;
+    this.set('events', this.get('events').concat(e));
+    this.sync('update',this).then(_.bind(function(){
+      this.trigger('change');
+    }, this));
   },
 
   isTimeLimitOver: function(){
     var now = new Date();
     var is_over = now > this.get('should_end_at');
 
-    log('should_end_at', this.get('should_end_at'));
-    log('now', now);
-    log('is_over', is_over);
+    log('should_end_at', this.get('should_end_at'), 'now', now, 'is_over', is_over);
 
     return is_over;
   },
 
   setAsSynced: function(){
     this.set('synced', true);
-    this.sync('update',this).then(_.bind(function(e){
+    this.sync('update',this).then(_.bind(function(){
       this.trigger('change');
     }, this));
   },
 
   // TODO move this as a mixin?
   persistable_attributes: function(){
-    return _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'actions', 'progress', 'synced']);
+    return _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'events', 'progress', 'synced']);
   },
 
   persistable: function(){
@@ -101,7 +99,7 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
   },
 
   syncable_attributes: function(){
-    return _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'actions']);
+    return _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'events']);
   }
 
 });

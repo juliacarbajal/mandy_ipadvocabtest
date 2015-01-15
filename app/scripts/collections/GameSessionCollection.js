@@ -7,13 +7,16 @@ LSCP.Collection.GameSessionCollection = Backbone.Collection.extend({
 
   create: function(data){
     console.log('Creating GameSession...', data);
+    var deferred = $.Deferred();
     var model = this.add(data);
 
-    this.sync('create', model).then(function(){
+    this.sync('create', model).then(function(ids){
       console.log('GameSession created!');
+      model.set('id', _.first(ids));
+      deferred.resolve(model);
     });
 
-    return model;
+    return deferred;
   },
 
   populateFromDatabase: function(){

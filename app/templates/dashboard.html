@@ -10,7 +10,7 @@
           <option<% if (f.get('path') == current_config_file) { %> selected="selected"<% } %>><%= f.get('path') %></option>
           <% }); %>
         </select>
-        <% if (_.size(config_files) == 0) { %><button id="syncConfig">Charger les fichiers locaux</button><% } %>
+        <button id="syncConfig">Recharger les fichiers locaux</button>
       </label>
       <!--<label>ou entrer l'URL d'un fichier distant :
           <input type="url" name="config-url" style="width: 300px" />

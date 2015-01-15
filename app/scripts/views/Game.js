@@ -140,6 +140,8 @@ LSCP.View.Game = Backbone.View.extend({
       log('endGracefully');
       this.stopWatchingIdle();
 
+      this.game_session.saveEvent('end_gracefully');
+
       this.reward.show().on('end', function(){
         this.reward.hide().off('end');
         this.end();

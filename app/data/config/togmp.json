@@ -1,0 +1,196 @@
+{
+    "name": "TogMP",
+    "session": {
+        "time_limit": 900,
+        "assets": {
+            "objects": {
+                "tous": ["barti", "ganard","chaussure","pomme","chien","pain", "banane", "fleur", "barti", "ganard", "verre", "poisson", "pomme", "chat", "mouche", "poule", "balai", "poupee", "painMP","chien","pain"]
+                },
+            "backgrounds": ["countryside","beach","mountain","desert"]
+        },
+        "levels":
+            [
+                {
+                    "name": "learning",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "chien", "pain"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "pain"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti", "chaussure"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "barti"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "ganard", "pomme"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            }
+                        ]
+                },
+                {
+                    "name": "consolidating",
+                    "background": "mountain",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": false,
+                    "feedback": false,
+                    "on_failure": "CONTINUE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "banane", "fleur"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "banane"
+                            }
+                        ]
+                },
+                {
+                    "name": "test",
+                    "background": "desert",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": false,
+                    "feedback": false,
+                    "on_failure": "CONTINUE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti", "ganard"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "barti"
+                            },
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "barti", "ganard"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "ganard"
+                            }
+                        ]
+                },
+                {
+                    "name": "interlude",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": true,
+                    "feedback": true,
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "verre", "poisson", "pomme", "chat"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "chat"
+                            }
+                        ]
+                },
+                {
+                    "name": "mispronounce",
+                    "background": "mountain",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": false,
+                    "feedback": false,
+                    "on_failure": "CONTINUE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "painMP", "chien"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "painMP"
+                            }
+                        ]
+                },
+                {
+                    "name": "closure",
+                    "background": "beach",
+                    "reward": {
+                        "type": "video",
+                        "path": "..."
+                    },
+                    "introduce_objects": true,
+                    "feedback": true,
+                    "on_failure": "REPEAT_STAGE",
+                    "stages":
+                        [
+                            {
+                                "objects_family": "tous",
+                                "objects": [
+                                    "mouche", "balai", "poule", "poupee"
+                                ],
+                                "objects_positions": [
+                                    "NATURAL"
+                                ],
+                                "time_idle": 5,
+                                "ask_for": "poule"
+                            }
+                        ]
+                }
+            ]
+    }
+}

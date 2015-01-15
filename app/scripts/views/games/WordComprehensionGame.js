@@ -61,17 +61,15 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         ];
 
         // Objects
-        _.each(this.game_session.get('assets').objects, function(objects, family){
-            _.each(objects, function(object){
-                images.push(['object_' + object, LSCP.Locations.Images + "objects/" + family + "/" + object + ".png"]);
-                sounds.push(['object_' + object, {
-                    urls: ['objects/' + family + '/' + object + '-sprite.mp3'],
-                    sprite: {
-                        ask:   [0, 2000],
-                        intro: [3000, 2000]
-                    }
-                }]);
-            });
+        _.each(this.game_session.get('assets').objects, function(object){
+            images.push(['object_' + object, LSCP.Locations.Images + "objects/" + object + ".png"]);
+            sounds.push(['object_' + object, {
+                urls: ['objects/' + object + '-sprite.mp3'],
+                sprite: {
+                    ask:   [0, 2000],
+                    intro: [3000, 2000]
+                }
+            }]);
         });
 
         // Backgrounds

@@ -3,9 +3,7 @@
     "session": {
         "time_limit": 900,
         "assets": {
-            "objects": {
-                "tous": ["vache","bain","gateau","balai","mouche","poussette","crocodile","biberon","livre","bateau","pain","canard","pot","barti","chien","gasse","voiture","fleur","verre","chaussure","pull","cochon","pomme","chat","poupee","poisson","ballon","poule"]
-            },
+            "objects": ["vache","bain","gateau","balai","mouche","poussette","crocodile","biberon","livre","bateau","pain","canard","pot","barti","chien","gasse","voiture","fleur","verre","chaussure","pull","cochon","pomme","chat","poupee","poisson","ballon","poule"],
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
         "levels":
@@ -21,7 +19,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "vache", "bain", "gateau", "balai"
                                 ],
@@ -32,7 +29,6 @@
                                 "ask_for": "balai"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "mouche", "poussette", "crocodile", "biberon"
                                 ],
@@ -43,7 +39,6 @@
                                 "ask_for": "mouche"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "pomme", "chat", "poupee", "poisson"
                                 ],
@@ -54,7 +49,6 @@
                                 "ask_for": "chat"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "pot", "poule", "pull", "chat"
                                 ],
@@ -77,7 +71,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "verre", "chaussure", "pull", "cochon"
                                 ],
@@ -88,7 +81,6 @@
                                 "ask_for": "chaussure"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "gasse", "voiture", "poupee", "fleur"
                                 ],
@@ -99,7 +91,6 @@
                                 "ask_for": "poupee"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "livre", "bateau", "pain", "canard"
                                 ],
@@ -110,7 +101,6 @@
                                 "ask_for": "livre"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ballon", "barti", "chien"
                                 ],
@@ -133,7 +123,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "voiture", "chaussure", "fleur", "pomme"
                                 ],
@@ -144,7 +133,6 @@
                                 "ask_for": "fleur"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poussette", "crocodile", "biberon", "livre"
                                 ],
@@ -155,7 +143,6 @@
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "chien",  "verre"
                                 ],
@@ -166,7 +153,6 @@
                                 "ask_for": "verre"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chat", "poupee", "poisson", "pot"
                                 ],
@@ -189,7 +175,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure", "pull", "cochon", "gasse"
                                 ],
@@ -200,7 +185,6 @@
                                 "ask_for": "pull"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "bain", "gateau", "balai", "mouche"
                                 ],
@@ -211,7 +195,6 @@
                                 "ask_for": "mouche"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "bateau", "pain", "canard", "ballon"
                                 ],
@@ -222,7 +205,6 @@
                                 "ask_for": "bateau"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poule", "pull", "chat", "vache"
                                 ],
@@ -245,7 +227,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "biberon", "fleur", "pomme", "chat"
                                 ],
@@ -256,7 +237,6 @@
                                 "ask_for": "pomme"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poupee", "poisson", "pot", "poule"
                                 ],
@@ -267,7 +247,6 @@
                                 "ask_for": "poisson"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "gateau", "balai", "mouche", "poussette"
                                 ],
@@ -278,7 +257,6 @@
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "crocodile", "biberon", "livre", "bateau"
                                 ],
@@ -301,7 +279,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "pull", "cochon", "gasse", "voiture"
                                 ],
@@ -312,7 +289,6 @@
                                 "ask_for": "cochon"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "pull", "chat", "vache", "bain"
                                 ],
@@ -323,7 +299,6 @@
                                 "ask_for": "vache"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "pain", "canard", "ballon", "barti"
                                 ],
@@ -334,7 +309,6 @@
                                 "ask_for": "pain"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",  "verre", "chaussure"
                                 ],
@@ -357,7 +331,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "balai", "mouche", "poussette", "crocodile"
                                 ],
@@ -368,7 +341,6 @@
                                 "ask_for": "crocodile"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "cochon", "gasse", "voiture", "ballon"
                                 ],
@@ -379,7 +351,6 @@
                                 "ask_for": "gasse"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "fleur", "pomme", "chat", "poupee"
                                 ],
@@ -390,7 +361,6 @@
                                 "ask_for": "chat"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "biberon", "livre", "bateau", "pain"
                                 ],
@@ -413,7 +383,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "canard", "ballon", "barti", "chien"
                                 ],
@@ -424,7 +393,6 @@
                                 "ask_for": "canard"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                      "verre", "chaussure", "pull"
                                 ],
@@ -435,7 +403,6 @@
                                 "ask_for": "pull"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poisson", "pot", "poule", "pull"
                                 ],
@@ -446,7 +413,6 @@
                                 "ask_for": "pot"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chat", "vache", "bain", "gateau"
                                 ],
@@ -457,7 +423,6 @@
                                 "ask_for": "bain"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "gasse", "barti", "chat", "vache"
                                 ],

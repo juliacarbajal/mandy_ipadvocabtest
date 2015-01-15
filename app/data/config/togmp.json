@@ -3,9 +3,7 @@
     "session": {
         "time_limit": 900,
         "assets": {
-            "objects": {
-                "tous": ["barti", "ganard","chaussure","pomme","chien","pain", "banane", "fleur", "barti", "ganard", "verre", "poisson", "pomme", "chat", "mouche", "poule", "balai", "poupee", "painMP","chien","pain"]
-                },
+            "objects": ["barti", "ganard","chaussure","pomme","chien","pain", "banane", "fleur", "barti", "ganard", "verre", "poisson", "pomme", "chat", "mouche", "poule", "balai", "poupee", "painMP","chien","pain"],
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
         "levels":
@@ -21,7 +19,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien", "pain"
                                 ],
@@ -32,7 +29,6 @@
                                 "ask_for": "pain"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "chaussure"
                                 ],
@@ -43,7 +39,6 @@
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "pomme"
                                 ],
@@ -68,7 +63,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane", "fleur"
                                 ],
@@ -93,7 +87,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "ganard"
                                 ],
@@ -104,7 +97,6 @@
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "ganard"
                                 ],
@@ -129,7 +121,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "verre", "poisson", "pomme", "chat"
                                 ],
@@ -154,7 +145,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "painMP", "chien"
                                 ],
@@ -179,7 +169,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "mouche", "balai", "poule", "poupee"
                                 ],

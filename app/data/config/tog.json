@@ -3,9 +3,7 @@
     "session": {
         "time_limit": 900,
         "assets": {
-            "objects": {
-                "tous": ["vache","bain","balai","mouche","poussette","crocodile","biberon","livre","pain","pot","barti","chien","gasse","voiture","fleur","verre","chaussure","pull","pomme","chat","poupee","poisson","poule","barti", "ganard"]
-            },
+            "objects": ["vache","bain","balai","mouche","poussette","crocodile","biberon","livre","pain","pot","barti","chien","gasse","voiture","fleur","verre","chaussure","pull","pomme","chat","poupee","poisson","poule","barti", "ganard"],
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
         "levels":

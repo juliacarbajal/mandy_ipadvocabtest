@@ -3,11 +3,7 @@
     "session": {
         "time_limit": 900,
         "assets": {
-            "objects": {
-                "fruits": ["banana"],
-                "vehicles": ["stroller","car"],
-                "animals": ["fish","dog"]
-            },
+            "objects": ["banana", "stroller","car", "fish","dog"],
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
         "levels":
@@ -25,7 +21,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "animals",
                                 "objects": [
                                     "fish"
                                 ],
@@ -36,7 +31,6 @@
                                 "ask_for": "fish"
                             },
                             {
-                                "objects_family": "fruits",
                                 "objects": [
                                     "banana"
                                 ],
@@ -61,7 +55,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "animals",
                                 "objects": [
                                     "fish",
                                     "dog"
@@ -71,7 +64,6 @@
                                 "ask_for": "fish"
                             },
                             {
-                                "objects_family": "animals",
                                 "objects": [
                                     "fish",
                                     "dog"
@@ -95,7 +87,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "animals",
                                 "objects": [
                                     "fish",
                                     "dog"
@@ -105,7 +96,6 @@
                                 "ask_for": "dog"
                             },
                             {
-                                "objects_family": "animals",
                                 "objects": [
                                     "dog",
                                     "fish"
@@ -129,7 +119,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "animals",
                                 "objects": [
                                     "fish",
                                     "dog"
@@ -139,7 +128,6 @@
                                 "ask_for": "dog"
                             },
                             {
-                                "objects_family": "vehicles",
                                 "objects": [
                                     "stroller",
                                     "car"

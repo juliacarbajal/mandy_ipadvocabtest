@@ -3,9 +3,7 @@
     "session": {
         "time_limit": 900,
         "assets": {
-            "objects": {
-                "tous": ["banane","gasse","barti","voiture","chaussure","poussette","chien","poisson"]
-            },
+            "objects": ["banane","gasse","barti","voiture","chaussure","poussette","chien","poisson"],
             "backgrounds": ["countryside","beach","mountain","desert"]
         },
         "levels":
@@ -21,7 +19,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poisson"
                                 ],
@@ -32,7 +29,6 @@
                                 "ask_for": "poisson"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane"
                                 ],
@@ -55,7 +51,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poisson",
                                     "chien"
@@ -65,7 +60,6 @@
                                 "ask_for": "poisson"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poisson",
                                     "chien"
@@ -87,7 +81,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poisson",
                                     "chien"
@@ -97,7 +90,6 @@
                                 "ask_for": "chien"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson"
@@ -119,7 +111,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poisson",
                                     "chien"
@@ -129,7 +120,6 @@
                                 "ask_for": "chien"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poussette",
                                     "voiture"
@@ -151,7 +141,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse"
@@ -163,7 +152,6 @@
                                 "ask_for": "gasse"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture"
@@ -175,7 +163,6 @@
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse"
@@ -187,7 +174,6 @@
                                 "ask_for": "banane"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture"
@@ -199,7 +185,6 @@
                                 "ask_for": "voiture"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette"
@@ -211,7 +196,6 @@
                                 "ask_for": "chaussure"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson"
@@ -235,7 +219,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette",
@@ -249,7 +232,6 @@
                                 "ask_for": "chaussure"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson",
@@ -275,7 +257,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette"
@@ -287,7 +268,6 @@
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson"
@@ -311,7 +291,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse"
@@ -323,7 +302,6 @@
                                 "ask_for": "banane"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture"
@@ -335,7 +313,6 @@
                                 "ask_for": "voiture"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse"
@@ -347,7 +324,6 @@
                                 "ask_for": "gasse"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture"
@@ -359,7 +335,6 @@
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette"
@@ -371,7 +346,6 @@
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson"
@@ -395,7 +369,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse",
@@ -409,7 +382,6 @@
                                 "ask_for": "banane"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture",
@@ -423,7 +395,6 @@
                                 "ask_for": "voiture"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse",
@@ -437,7 +408,6 @@
                                 "ask_for": "gasse"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture",
@@ -451,7 +421,6 @@
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette",
@@ -465,7 +434,6 @@
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson",
@@ -491,7 +459,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette"
@@ -503,7 +470,6 @@
                                 "ask_for": "chaussure"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson"
@@ -527,7 +493,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse",
@@ -541,7 +506,6 @@
                                 "ask_for": "banane"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture",
@@ -555,7 +519,6 @@
                                 "ask_for": "voiture"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "banane",
                                     "gasse",
@@ -569,7 +532,6 @@
                                 "ask_for": "gasse"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti",
                                     "voiture",
@@ -583,7 +545,6 @@
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette",
@@ -597,7 +558,6 @@
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson",
@@ -623,7 +583,6 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure",
                                     "poussette",
@@ -637,7 +596,6 @@
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien",
                                     "poisson",

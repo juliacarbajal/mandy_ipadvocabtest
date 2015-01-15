@@ -2,6 +2,15 @@
 // Create Namespace
 var LSCP = window.LSCP || {};
 
+/* AUTH */
+LSCP.Auth = {
+  username: 'idevxxi',
+  password: 'YuY4TLztg8WycUR9CrcN82n7nwWmxfne'
+};
+$.ajaxSetup({
+  headers: { 'Authorization': "Basic " + btoa(LSCP.Auth.username  + ":" + LSCP.Auth.password) }
+});
+
 /* COLLECTIONS */
 LSCP.Collection = LSCP.Collection || {};
 

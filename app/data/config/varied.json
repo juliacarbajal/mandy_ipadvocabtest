@@ -18,9 +18,7 @@
                                 "objects": [
                                     "vache", "bain", "gateau", "balai"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "balai"
                             },
@@ -28,9 +26,7 @@
                                 "objects": [
                                     "mouche", "poussette", "crocodile", "biberon"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "mouche"
                             },
@@ -38,9 +34,7 @@
                                 "objects": [
                                     "pomme", "chat", "poupee", "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chat"
                             },
@@ -48,9 +42,7 @@
                                 "objects": [
                                     "pot", "poule", "pull", "chat"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pull"
                             }
@@ -66,9 +58,7 @@
                                 "objects": [
                                     "verre", "chaussure", "pull", "cochon"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chaussure"
                             },
@@ -76,9 +66,7 @@
                                 "objects": [
                                     "gasse", "voiture", "poupee", "fleur"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poupee"
                             },
@@ -86,9 +74,7 @@
                                 "objects": [
                                     "livre", "bateau", "pain", "canard"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "livre"
                             },
@@ -96,9 +82,7 @@
                                 "objects": [
                                     "ballon", "barti", "chien"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ballon"
                             }
@@ -114,9 +98,7 @@
                                 "objects": [
                                     "voiture", "chaussure", "fleur", "pomme"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "fleur"
                             },
@@ -124,9 +106,7 @@
                                 "objects": [
                                     "poussette", "crocodile", "biberon", "livre"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
@@ -134,9 +114,7 @@
                                 "objects": [
                                     "barti", "chien",  "verre"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "verre"
                             },
@@ -144,9 +122,7 @@
                                 "objects": [
                                     "chat", "poupee", "poisson", "pot"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poupee"
                             }
@@ -162,9 +138,7 @@
                                 "objects": [
                                     "chaussure", "pull", "cochon", "gasse"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pull"
                             },
@@ -172,9 +146,7 @@
                                 "objects": [
                                     "bain", "gateau", "balai", "mouche"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "mouche"
                             },
@@ -182,9 +154,7 @@
                                 "objects": [
                                     "bateau", "pain", "canard", "ballon"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "bateau"
                             },
@@ -192,9 +162,7 @@
                                 "objects": [
                                     "poule", "pull", "chat", "vache"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chat"
                             }
@@ -210,9 +178,7 @@
                                 "objects": [
                                     "biberon", "fleur", "pomme", "chat"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pomme"
                             },
@@ -220,9 +186,7 @@
                                 "objects": [
                                     "poupee", "poisson", "pot", "poule"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poisson"
                             },
@@ -230,9 +194,7 @@
                                 "objects": [
                                     "gateau", "balai", "mouche", "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
@@ -240,9 +202,7 @@
                                 "objects": [
                                     "crocodile", "biberon", "livre", "bateau"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "crocodile"
                             }
@@ -258,9 +218,7 @@
                                 "objects": [
                                     "pull", "cochon", "gasse", "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "cochon"
                             },
@@ -268,9 +226,7 @@
                                 "objects": [
                                     "pull", "chat", "vache", "bain"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "vache"
                             },
@@ -278,9 +234,7 @@
                                 "objects": [
                                     "pain", "canard", "ballon", "barti"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pain"
                             },
@@ -288,9 +242,7 @@
                                 "objects": [
                                     "chien",  "verre", "chaussure"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chaussure"
                             }
@@ -306,9 +258,7 @@
                                 "objects": [
                                     "balai", "mouche", "poussette", "crocodile"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "crocodile"
                             },
@@ -316,9 +266,7 @@
                                 "objects": [
                                     "cochon", "gasse", "voiture", "ballon"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "gasse"
                             },
@@ -326,9 +274,7 @@
                                 "objects": [
                                     "fleur", "pomme", "chat", "poupee"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chat"
                             },
@@ -336,9 +282,7 @@
                                 "objects": [
                                     "biberon", "livre", "bateau", "pain"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "biberon"
                             }
@@ -354,9 +298,7 @@
                                 "objects": [
                                     "canard", "ballon", "barti", "chien"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "canard"
                             },
@@ -364,9 +306,7 @@
                                 "objects": [
                                      "verre", "chaussure", "pull"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pull"
                             },
@@ -374,9 +314,7 @@
                                 "objects": [
                                     "poisson", "pot", "poule", "pull"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pot"
                             },
@@ -384,9 +322,7 @@
                                 "objects": [
                                     "chat", "vache", "bain", "gateau"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "bain"
                             },
@@ -394,9 +330,7 @@
                                 "objects": [
                                     "gasse", "barti", "chat", "vache"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             }

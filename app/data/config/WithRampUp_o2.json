@@ -130,9 +130,7 @@
                                     "banane",
                                     "gasse"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
@@ -143,9 +141,7 @@
                                     "barti",
                                     "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chien"
                             }
@@ -164,9 +160,7 @@
                                     "chaussure",
                                     "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "banane"
                             },
@@ -177,9 +171,7 @@
                                     "chien",
                                     "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "voiture"
                             },
@@ -190,9 +182,7 @@
                                     "poussette",
                                     "chaussure"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "gasse"
                             },
@@ -203,9 +193,7 @@
                                     "poisson",
                                     "chien"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
@@ -216,9 +204,7 @@
                                     "gasse",
                                     "banane"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
@@ -229,9 +215,7 @@
                                     "voiture",
                                     "barti"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chien"
                             }
@@ -248,9 +232,7 @@
                                     "chaussure",
                                     "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chaussure"
                             },
@@ -259,9 +241,7 @@
                                     "chien",
                                     "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poisson"
                             }
@@ -280,9 +260,7 @@
                                     "chaussure",
                                     "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "banane"
                             },
@@ -293,9 +271,7 @@
                                     "chien",
                                     "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "voiture"
                             },
@@ -306,9 +282,7 @@
                                     "poussette",
                                     "chaussure"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "gasse"
                             },
@@ -319,9 +293,7 @@
                                     "poisson",
                                     "chien"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
@@ -332,9 +304,7 @@
                                     "gasse",
                                     "banane"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
@@ -345,9 +315,7 @@
                                     "voiture",
                                     "barti"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chien"
                             }
@@ -364,9 +332,7 @@
                                     "banane",
                                     "gasse"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "banane"
                             },
@@ -375,9 +341,7 @@
                                     "barti",
                                     "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "voiture"
                             },
@@ -386,9 +350,7 @@
                                     "banane",
                                     "gasse"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "gasse"
                             },
@@ -397,9 +359,7 @@
                                     "barti",
                                     "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
@@ -408,9 +368,7 @@
                                     "chaussure",
                                     "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
@@ -419,9 +377,7 @@
                                     "chien",
                                     "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chien"
                             }
@@ -438,9 +394,7 @@
                                     "chaussure",
                                     "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
@@ -449,9 +403,7 @@
                                     "chien",
                                     "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chien"
                             }
@@ -470,9 +422,7 @@
                                     "gasse",
                                     "banane"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chaussure"
                             },
@@ -483,9 +433,7 @@
                                     "voiture",
                                     "barti"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poisson"
                             }
@@ -502,9 +450,7 @@
                                     "banane",
                                     "gasse"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "gasse"
                             },
@@ -513,9 +459,7 @@
                                     "barti",
                                     "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
@@ -524,9 +468,7 @@
                                     "banane",
                                     "gasse"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "banane"
                             },
@@ -535,9 +477,7 @@
                                     "barti",
                                     "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "voiture"
                             },
@@ -546,9 +486,7 @@
                                     "chaussure",
                                     "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chaussure"
                             },
@@ -557,9 +495,7 @@
                                     "chien",
                                     "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poisson"
                             }

@@ -18,9 +18,7 @@
                                 "objects": [
                                     "chien", "pain"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pain"
                             },
@@ -28,9 +26,7 @@
                                 "objects": [
                                     "barti", "chaussure"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
@@ -38,9 +34,7 @@
                                 "objects": [
                                     "ganard", "pomme"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             }
@@ -58,9 +52,7 @@
                                 "objects": [
                                     "banane", "fleur"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "banane"
                             }
@@ -78,9 +70,7 @@
                                 "objects": [
                                     "barti", "ganard"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
@@ -88,9 +78,7 @@
                                 "objects": [
                                     "barti", "ganard"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             }
@@ -108,9 +96,7 @@
                                 "objects": [
                                     "verre", "poisson", "pomme", "chat"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chat"
                             }
@@ -128,9 +114,7 @@
                                 "objects": [
                                     "painMP", "chien"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "painMP"
                             }
@@ -148,9 +132,7 @@
                                 "objects": [
                                     "mouche", "balai", "poule", "poupee"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poule"
                             }

@@ -15,46 +15,34 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "chaussure"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "biberon"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "pomme"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "pull"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             }
@@ -67,46 +55,34 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "verre"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "livre"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "poule"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             }
@@ -121,46 +97,34 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "verre", "fleur"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "fleur"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "balai"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chien", "poisson"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poisson"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "poupee"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             }
@@ -175,46 +139,34 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure", "mouche"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "chaussure"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "ganard"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poule", "verre"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poule"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "barti", "ganard"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             }
@@ -227,46 +179,34 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "verre", "fleur", "pomme", "chat"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "pomme"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "poupee", "poisson", "pot", "poule"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poule"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "chaussure", "balai", "mouche", "poussette"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "poussette"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "crocodile", "biberon", "livre", "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "crocodile"
                             }
@@ -281,46 +221,34 @@
                     "stages":
                         [
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "pull", "poule", "banane", "voiture"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "banane"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "barti"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "ganard"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "pain", "crocodile", "chat", "vache"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "vache"
                             },
                             {
-                                "objects_family": "tous",
                                 "objects": [
                                     "ganard", "barti"
                                 ],
-                                "objects_positions": [
-                                    "NATURAL"
-                                ],
+                                "objects_positions": "NATURAL",
                                 "time_idle": 5,
                                 "ask_for": "barti"
                             }

@@ -291,11 +291,10 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         }
 
         // Create slots
-        var stage_objects = stage.get("objects");
         if (stage.get("objects_positions") == 'RANDOM') {
-          stage_objects = stage_objects.shuffle();
+          stage.set("objects", stage.get("objects").shuffle());
         }
-        _.each(stage_objects, function(object, i){
+        _.each(stage.get("objects"), function(object, i){
             var slot = new collie.DisplayObject({
                 backgroundImage: "slot",
                 opacity: 0

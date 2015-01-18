@@ -7,7 +7,6 @@ LSCP.Model.GameSessionPersist = persistence.define('GameSession', {
   progress: 'INT',
   synced: 'BOOL'
 });
-//LSCP.Model.GameSessionPersist.index(['uuid'],{unique:true});
 
 LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
 

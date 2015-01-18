@@ -4,21 +4,20 @@ LSCP.View.ProgressBar = Backbone.View.extend({
     id: 'progressbar',
 
     initialize: function() {
-//        log('LSCP.View.ProgressBar initialized!');
         this.render();
-//        this.$el.hide();
-
-        this.model.bind('change', _.bind(this.render, this));
+        this.model.bind('change:progress', _.bind(this.render, this));
     },
 
     template: Handlebars.compile('<div class="bar" title="{{progress}}%"></div>'),
 
-	render: function() {
-//        log('LSCP.View.ProgressBar.render');
-        this.$el.html(this.template(this.model.attributes))
-                .find('.bar').css('width', this.model.get('progress') + '%');
-        return this;
-	},
+	  render: function() {
+      var $bar = this.$el.find('.bar');
+      if ($bar.length === 0) {
+        $bar = this.$el.html(this.template(this.model.attributes)).find('.bar');
+      }
+      $bar.css('width', this.model.get('progress') + '%');
+      return this;
+	  },
 
     show: function() {
         this.$el.show();

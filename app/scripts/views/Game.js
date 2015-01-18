@@ -14,7 +14,7 @@ LSCP.View.Game = Backbone.View.extend({
     imagesLoaded: $.Deferred(),
     soundsLoaded: $.Deferred(),
 
-	initialize: function(){
+	  initialize: function(){
         log('LSCP.View.Game initialized!');
 
         this.game_session = this.model.get("session");
@@ -44,7 +44,7 @@ LSCP.View.Game = Backbone.View.extend({
         }, this.pos);
 
         $.when(this.imagesLoaded, this.soundsLoaded).then(this.start.bind(this));
-	},
+	  },
 
     render: function(){
         log('LSCP.View.Game.render');
@@ -71,6 +71,8 @@ LSCP.View.Game = Backbone.View.extend({
         log('LSCP.View.Game ends!');
         this.stopWatchingIdle();
         this.stopCheckingTimeLimit();
+        $('body').css('backgroundColor', 'black');
+        this.progressbar.$el.remove();
         setTimeout(function(){
             this.trigger('end');
         }.bind(this), 5000 / this.speed);

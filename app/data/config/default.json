@@ -11,10 +11,6 @@
                 {
                     "name": "train the baby on the fact that there are hidden objects to touch",
                     "background": "countryside",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "introduce_objects": true,
                     "feedback": false,
                     "on_failure": "REPEAT_STAGE",
@@ -45,10 +41,6 @@
                 {
                     "name": "train the baby on the fact that there is a forced choice",
                     "background": "beach",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "introduce_objects": false,
                     "feedback": false,
                     "on_failure": "REPEAT_STAGE",
@@ -77,10 +69,6 @@
                 {
                     "name": "train the baby on the fact that there is a forced choice & he needs to remember where's what in this trial, cause it might change",
                     "background": "mountain",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "introduce_objects": true,
                     "feedback": true,
                     "on_failure": "REPEAT_STAGE",
@@ -109,10 +97,6 @@
                 {
                     "name": "train the baby on the fact that the objects might change",
                     "background": "desert",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "introduce_objects": true,
                     "feedback": true,
                     "on_failure": "REPEAT_STAGE",

@@ -13,10 +13,6 @@
    				{
                     "name": "block5 4 objects and 2 trials",
                     "background": "desert",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -51,10 +47,6 @@
                 {
                     "name": "block8 4 objects and 6 trials",
                     "background": "mountain",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -141,10 +133,6 @@
    				{
                     "name": "block2 2 objects and 2 trials",
                     "background": "beach",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -175,10 +163,6 @@
                 {
                     "name": "block7 4 objects and 6 trials",
                     "background": "countryside",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -265,10 +249,6 @@
                 {
                     "name": "block3 2 objects and 6 trials",
                     "background": "desert",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -343,10 +323,6 @@
    				{
                     "name": "block1 2 objects and 2 trials",
                     "background": "mountain",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -377,10 +353,6 @@
    				{
                     "name": "block6 4 objects and 2 trials",
                     "background": "beach",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -415,10 +387,6 @@
                 {
                     "name": "block4 2 objects and 6 trials",
                     "background": "countryside",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [

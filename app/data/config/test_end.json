@@ -1,38 +1,26 @@
 {
-  "name": "Test RANDOM param for objects_positions",
+  "name": "Very short config to test the end of a session",
   "session": {
     "time_limit": 900,
     "assets": {
-      "objects": ["canard", "chat", "chien", "vache"],
-      "backgrounds": ["countryside","beach","mountain","desert"]
+      "objects": ["canard", "chat"],
+      "backgrounds": ["countryside"]
     },
     "levels":
         [
           {
-            "name": "train the baby on the fact that there are hidden objects to touch",
+            "name": "very short",
             "background": "countryside",
-            "reward": {
-              "type": "video",
-              "path": "..."
-            },
-            "introduce_objects": true,
+            "introduce_objects": false,
             "feedback": false,
             "on_failure": "REPEAT_STAGE",
             "stages":
                 [
                   {
                     "objects": [
-                      "canard", "chat", "chien", "vache"
+                      "canard", "chat"
                     ],
-                    "objects_positions": "RANDOM",
-                    "time_idle": 15,
-                    "ask_for": "canard"
-                  },
-                  {
-                    "objects": [
-                      "canard", "chat", "chien", "vache"
-                    ],
-                    "objects_positions": "RANDOM",
+                    "objects_positions": "NATURAL",
                     "time_idle": 15,
                     "ask_for": "canard"
                   }

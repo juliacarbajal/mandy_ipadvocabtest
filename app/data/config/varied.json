@@ -11,10 +11,6 @@
    				{
                     "name": "block1",
                     "background": "beach",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -63,10 +59,6 @@
    				{
                     "name": "block2",
                     "background": "countryside",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -115,10 +107,6 @@
    				{
                     "name": "block3",
                     "background": "mountain",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -167,10 +155,6 @@
     			{
                     "name": "block4",
                     "background": "desert",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -219,10 +203,6 @@
     			{
                     "name": "block5",
                     "background": "beach",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -271,10 +251,6 @@
     			{
                     "name": "block6",
                     "background": "mountain",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -323,10 +299,6 @@
     			{
                     "name": "block7",
                     "background": "desert",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -375,10 +347,6 @@
     			{
                     "name": "block8 with extra trial",
                     "background": "countryside",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [

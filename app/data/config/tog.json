@@ -11,10 +11,6 @@
                 {
                     "name": "learning",
                     "background": "beach",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -67,10 +63,6 @@
                 {
                     "name": "learning2",
                     "background": "countryside",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -123,10 +115,6 @@
                 {
                     "name": "consolidating",
                     "background": "mountain",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "introduce_objects": false,
                     "feedback": false,
                     "on_failure": "CONTINUE",
@@ -181,10 +169,6 @@
                 {
                     "name": "test1",
                     "background": "desert",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "introduce_objects": false,
                     "feedback": false,
                     "on_failure": "CONTINUE",
@@ -239,10 +223,6 @@
                 {
                     "name": "interlude",
                     "background": "beach",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "on_failure": "REPEAT_STAGE",
                     "stages":
                         [
@@ -295,10 +275,6 @@
                 {
                     "name": "test2",
                     "background": "mountain",
-                    "reward": {
-                        "type": "video",
-                        "path": "..."
-                    },
                     "introduce_objects": false,
                     "feedback": false,
                     "on_failure": "CONTINUE",

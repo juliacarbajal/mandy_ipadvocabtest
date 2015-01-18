@@ -374,7 +374,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                       this.sound.play('plop');
                       var currentY = slot.get('y');
                       collie.Timer.transition(slot, 400 / this.speed, {
-                          to: currentY - 50,
+                          to: currentY - 40,
                           set: "y",
                           effect: collie.Effect.wave(2, 0.25)
                       });
@@ -643,7 +643,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                                 collie.Timer.queue().
 
                                     transition(slot, 400 / this.speed, {
-                                        to: currentY - 50,
+                                        to: currentY - 40,
                                         set: "y",
                                         effect: collie.Effect.wave(2, 0.25)
                                     }).

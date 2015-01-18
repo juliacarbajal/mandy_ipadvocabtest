@@ -32,10 +32,10 @@ LSCP.View.Game = Backbone.View.extend({
             CENTER_CENTER: {x: 'center', y: 'center'},
             CENTER_LEFT:   {x: 0,        y: 'center'},
             CENTER_RIGHT:  {x: 'right',  y: 'center'},
-            TOP_LEFT:      {x: 0,        y: 0},
-            TOP_RIGHT:     {x: 'right',  y: 0},
-            BOTTOM_RIGHT:  {x: 'right',  y: 'bottom'},
-            BOTTOM_LEFT:   {x: 0,        y: 'bottom'}
+            TOP_LEFT:      {x: 0,        y: 40},
+            TOP_RIGHT:     {x: 'right',  y: 40},
+            BOTTOM_RIGHT:  {x: 'right',  y: this.layersSize.height - (300 + 40 + 50)},
+            BOTTOM_LEFT:   {x: 0,        y: this.layersSize.height - (300 + 40 + 50)}
         };
         this.pos = _.extend({
             FOR_1: [this.pos.CENTER_CENTER],

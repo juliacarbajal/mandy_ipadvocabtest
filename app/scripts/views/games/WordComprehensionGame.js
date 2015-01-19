@@ -389,6 +389,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                       this.game_session.saveEvent('touch_object', stage.get('objects')[i]);
 
                       setTimeout(function(){
+                          collie.Timer.transition(this.objects.slots[i], 200 / this.speed, {
+                            from: 1,
+                            to: 0.3,
+                            set: "opacity",
+                            effect: collie.Effect.easeOutQuint
+                          })
+
                           if (i < stage.get("objects").length - 1) {
                               i++;
                               this.introduceObject(this.objects.slots[i], i);
@@ -630,6 +637,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
             delay(function(){
                 _.each(this.objects.slots, function(slot, i){
+                    slot.set({opacity: 1});
                     slot.attach({
                             mousedown: function () {
                                 this.sound.play('plop');

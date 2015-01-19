@@ -10,7 +10,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 	initialize: function(){
         LSCP.View.Game.prototype.initialize.apply(this, arguments);
 
-        log('LSCP.View.WordComprehensionGame initialized!');
+        console.log('LSCP.View.WordComprehensionGame initialized!');
 
         // Preload assets
         var images = [
@@ -101,7 +101,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     render: function(){
         LSCP.View.Game.prototype.render.apply(this, arguments);
-        log('LSCP.View.WordComprehensionGame.render');
+        console.log('LSCP.View.WordComprehensionGame.render');
 
 
         // Background
@@ -181,7 +181,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     start: function(){
         LSCP.View.Game.prototype.start.apply(this, arguments);
-        log('LSCP.View.WordComprehensionGame starts!');
+        console.log('LSCP.View.WordComprehensionGame starts!');
 
         this.current_level = 0;
         this.current_stage = 0;
@@ -220,13 +220,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     retryStage: function(){
 
-        log("RETRY STAGE: level ", this.current_level, "stage", this.current_stage);
+        console.log("RETRY STAGE: level ", this.current_level, "stage", this.current_stage);
 
         this.onIteration();
     },
 
     end: function(){
-      log('LSCP.View.WordComprehensionGame ends!');
+        console.log('LSCP.View.WordComprehensionGame ends!');
         LSCP.View.Game.prototype.end.apply(this, arguments);
         collie.Renderer.removeAllLayer();
         collie.Renderer.unload();
@@ -241,7 +241,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     onIteration: function(){
         LSCP.View.Game.prototype.onIteration.apply(this, arguments);
 
-        log('onIteration', this.current_level, this.current_stage);
+        console.log('onIteration', this.current_level, this.current_stage);
 
         var level = this.getCurrentLevel();
         var stage = this.getCurrentStage();

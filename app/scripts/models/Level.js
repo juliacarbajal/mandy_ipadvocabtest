@@ -19,7 +19,15 @@ LSCP.Model.Level = Backbone.AssociatedModel.extend({
     ],
 	
 	initialize: function(){
-//        log('LSCP.Model.Level.initialize');
-    }
+//        console.log('LSCP.Model.Level.initialize');
+    },
+
+  persistable_attributes: function(){
+    var attr = _.pick(this.attributes, ['name', 'background', 'introduce_objects', 'feedback', 'on_failure']);
+    attr.stages = this.get('stages').dump();
+    return attr;
+  }
+
+
 
 });

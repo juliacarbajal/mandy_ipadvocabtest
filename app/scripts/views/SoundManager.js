@@ -12,7 +12,7 @@ LSCP.SoundManager = new Object({
     },
 
     log: function() {
-        if (this.debug) log(arguments);
+        if (this.debug) console.log(arguments);
     },
 
     addSounds: function(sounds) {

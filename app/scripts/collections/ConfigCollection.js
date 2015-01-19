@@ -44,7 +44,7 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
         this.reset();
 
-        _.each(data.files, _.bind(function(file){
+        _.each(data.files, function(file){
 
           var model = this.add({
             path: 'data/' + file,
@@ -53,7 +53,7 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
           localFiles.push(model.loadDataFromFile());
 
-        }, this));
+        }, this);
 
         $.when.apply($, localFiles).then(function(){
           console.log('All config files loaded!');

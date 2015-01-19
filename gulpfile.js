@@ -89,10 +89,10 @@ gulp.task('html', ['styles', 'scriptlibs', 'scripts'], function () {
   return gulp.src('app/*.html')
       .pipe($.useref.assets({searchPath: '{.tmp,app}'})) // parse build blocks in HTML
       .pipe(jsFilter)               // only JS files
-        .pipe($.uglify())             // > uglify
+//        .pipe($.uglify())             // > uglify
         .pipe(jsFilter.restore())     // > cancel filter
       .pipe(cssFilter)              // only CSS files
-        .pipe($.csso())               // > minify
+//        .pipe($.csso())               // > minify
         .pipe(cssFilter.restore())    // > cancel filter
       .pipe($.useref.restore())
       .pipe($.useref())
@@ -144,8 +144,29 @@ gulp.task('build', ['html', 'images', 'fonts', 'extras'], function () {
       .pipe(gulp.dest('.'));
 });
 
+// phonegap-build
+// run all the tasks and sends the app to PhoneGap Build for packaging
+gulp.task('phonegap-build', ['build'], function () {
+  return gulp.src(paths.archive, { base: "." })
+      .pipe($.phonegapBuild({
+        appId: '879592',
+        user: {
+          email: 'hans@etaminstudio.com',
+          password: 'oh4redtw'
+        },
+        keys: {
+          ios: {password: 'fd'}
+        },
+        download: {
+          ios: 'idevxxi.ipa'
+        }
+      }));
+});
+
+// default
+// clean and build the app on PhoneGap Build
 gulp.task('default', ['clean'], function () {
-    gulp.start('build');
+    gulp.start('phonegap-build');
 });
 
 gulp.task('connect', function () {

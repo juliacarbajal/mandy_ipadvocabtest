@@ -6,7 +6,8 @@
     "backbone": "~1.1.2",
     "reset-css": "~2.0.20110126",
     "backbone.websql.deferred": "~0.2.0",
-    "persistence": "~0.3.0"
+    "persistence": "~0.3.0",
+    "backbone-associations": "~0.6.2"
   },
   "devDependencies": {}
 }

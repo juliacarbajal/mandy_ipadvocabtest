@@ -1,19 +1,20 @@
 LSCP.Collection.GameSessionCollection = Backbone.Collection.extend({
 
-  model : LSCP.Model.GameSession,
+  model: LSCP.Model.GameSession,
+  url: LSCP.Locations.Backend + '/sync/update',
 
   initialize : function() {
   },
 
   create: function(data){
-    console.log('Creating GameSession...', data);
     var deferred = $.Deferred();
-    var model = this.add(data);
+    var game_session = this.add(data);
+    console.log('Creating GameSession...', data, game_session);
 
-    this.sync('create', model).then(function(ids){
+    this.sync('create', game_session).then(function(ids){
       console.log('GameSession created!');
-      model.set('id', _.first(ids));
-      deferred.resolve(model);
+      game_session.set('id', _.first(ids));
+      deferred.resolve(game_session);
     });
 
     return deferred;
@@ -46,6 +47,38 @@ LSCP.Collection.GameSessionCollection = Backbone.Collection.extend({
       return {uuid: m.get('id'), data: m.syncable_attributes()};
     });
     return models;
+  },
+
+  sendToBackend: function(subject_anonymous_id){
+    console.log('sendToBackend');
+    var device = window.device;
+    var data = {
+      device: {
+        uuid: device.uuid,
+        os_version: device.version,
+        model: device.model
+      },
+      subject: subject_anonymous_id,
+      sessions: this.dump({synced: false})
+    };
+    $.ajax({
+      type: 'POST',
+      url: this.url,
+      dataType: 'json',
+      contentType: "application/json",
+      data: JSON.stringify(data),
+      processData: false,
+      success: _.bind(function(data){
+        console.log('sendToBackend response', data);
+        _.each(data.synced, function(uuid){
+          var gs = this.get(uuid);
+          gs.setAsSynced();
+        }, this);
+      }, this),
+      error: function(jqXHT, textStatus, errorThrown){
+        console.log('sendToBackend error!', errorThrown);
+      }
+    });
   }
 
 //  count: function(){

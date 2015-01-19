@@ -11,7 +11,7 @@ LSCP.View.Home = Backbone.View.extend({
     },
 
     dashboardClicked: function () {
-        log('Open Dashboard');
+        console.log('Open Dashboard');
         return false;
     }
 	

@@ -47,7 +47,7 @@ LSCP.Mandy = new Object({
     currentAnimation: null,
 
     initialize: function() {
-        log('LSCP.Mandy initialized!');
+        console.log('LSCP.Mandy initialized!');
 
         _.each(this.animations, function(animation, id){
             var name = (id == 'normal') ? 'character' : 'character-' + id;

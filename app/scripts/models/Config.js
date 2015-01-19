@@ -33,7 +33,6 @@ LSCP.Model.Config = Backbone.Model.extend({
     return $.getJSON(this.get('path')).then(addData.bind(this));
   },
 
-  // TODO move this as a mixin?
   persistable: function(){
     return new this.persistableEntity(this.attributes);
   }

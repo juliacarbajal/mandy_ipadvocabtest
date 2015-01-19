@@ -5,7 +5,8 @@ var LSCP = window.LSCP || {};
 /* AUTH */
 LSCP.Auth = {
   username: 'idevxxi',
-  password: 'YuY4TLztg8WycUR9CrcN82n7nwWmxfne'
+  password: 'YuY4TLztg8WycUR9CrcN82n7nwWmxfne',
+  dashboard_password: 'abc123'
 };
 $.ajaxSetup({
   headers: { 'Authorization': "Basic " + btoa(LSCP.Auth.username  + ":" + LSCP.Auth.password) }
@@ -25,6 +26,7 @@ LSCP.Data = LSCP.Data || {};
 
 /* LOCATIONS */
 LSCP.Locations = LSCP.Locations || {};
+LSCP.Locations.Backend = 'http://idevxxi.acristia.org';
 LSCP.Locations.Templates = '/templates/';
 LSCP.Locations.JSON = '/data/';
 LSCP.Locations.Images = 'images/';
@@ -59,40 +61,37 @@ $.when(jqReady, pgReady).then(function () {
   persistence.schemaSync();
 
   /* SYNC */
-  Backbone.sync = function (method, model, options) {
+  Backbone.sync = function (method, models, options) {
     var dao = new DAO();
     switch (method) {
       case 'read':
-        console.log("sync read");
-        if (model.id) {
-          console.log("sync read one");
-          return dao.findById(model.id, function(data) {
-            options.success(data);
-          });
+        console.log('sync read');
+        if (models.id) {
+          console.log('sync read one [TODO] [NOT IMPLEMENTED]');
+//          return dao.findById(models.id, function(data) {
+//            options.success(data);
+//          });
         } else {
-          console.log("sync read all");
-          return dao.findAll(model);
+          console.log('sync read all');
+          return dao.findAll(models);
         }
         return;
 
       case 'count':
         console.log('sync count');
-        return dao.count(model);
+        return dao.count(models);
 
-      case "create":
-        console.log("sync create");
-        return dao.create(model);
+      case 'create':
+        console.log('sync create');
+        return dao.create(models);
 
-      case "update":
-        console.log("sync update");
-        return dao.update(model);
+      case 'update':
+        console.log('sync update');
+        return dao.update(models, options);
 
-//      case "delete":
-//        console.log("sync delete");
-//        dao.delete(model, function () {
-//          options.success();
-//        });
-//        break;
+      case 'delete':
+        console.log('sync delete');
+        return dao.delete(models);
     }
   };
 

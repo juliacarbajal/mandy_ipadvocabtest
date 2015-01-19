@@ -14,7 +14,7 @@ LSCP.Model.Device = Backbone.Model.extend({
         this.os_version = 'v7.0';
         this.device_name = 'iPad de Etamin Studio';
 
-        log('LSCP.Model.Device initialized!', JSON.stringify(this));
+        console.log('LSCP.Model.Device initialized!', JSON.stringify(this));
 
         this.on('change', function(){
             console.log('LSCP.Model.Device changed');

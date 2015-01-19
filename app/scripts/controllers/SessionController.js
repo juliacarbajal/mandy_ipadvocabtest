@@ -5,7 +5,7 @@ LSCP.SessionController = LSCP.SessionController || {
     current_game_view: null,
 
     init: function(){
-        log('LSCP.SessionController initialized!');
+        console.log('LSCP.SessionController initialized!');
     },
 
     startSession: function(){
@@ -14,7 +14,7 @@ LSCP.SessionController = LSCP.SessionController || {
 //            duration: 15 * 60
 //        });
 //
-//        log('startSession', this.current_session.attributes);
+//        console.log(''startSession', this.current_session.attributes);
 //
 //        this.current_game = this.current_session.games.shift();
 //

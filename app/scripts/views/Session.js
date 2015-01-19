@@ -10,12 +10,13 @@ LSCP.View.Session = Backbone.View.extend({
     current_game_view: null,
 
     initialize: function(){
-      log('LSCP.View.Session initialized!');
+      console.log('LSCP.View.Session initialized!');
 
       this.subject = new LSCP.Model.Subject();
       this.game_sessions = new LSCP.Collection.GameSessionCollection();
 
-      new LSCP.Collection.ConfigCollection().loadCurrentConfig(this.onConfigLoaded.bind(this));
+      this.configs = new LSCP.Collection.ConfigCollection();
+      this.configs.loadCurrentConfig(this.onConfigLoaded.bind(this));
     },
 
     render: function(){
@@ -31,9 +32,12 @@ LSCP.View.Session = Backbone.View.extend({
 
     this.current_game = this.config.games.shift();
 
-    this.game_sessions.create(_.extend(this.config.get("session"), {
-          game: this.current_game
-        })).then(_.bind(function(gs){
+    var game_session_data = _.extend(this.config.get("session"), {
+      game: this.current_game,
+      config: this.configs.getCurrent()
+    });
+    console.log(game_session_data);
+    this.game_sessions.create(game_session_data).then(_.bind(function(gs){
           this.current_game_session = gs;
 
           this.current_game.set('session', this.current_game_session);
@@ -42,22 +46,11 @@ LSCP.View.Session = Backbone.View.extend({
             model: this.current_game
           });
 
-//        switch (this.current_game.get('type')) {
-//
-//            case 'WordComprehensionGame':
-//                this.current_game_view = new LSCP.View.WordComprehensionGame({
-//                    model: this.current_game
-//                });
-//
-//        }
-
           this.$el.append(this.current_game_view.render().el);
 
           this.listenToOnce(this.current_game_view, 'end', this.endSession);
 
         }, this));
-
-//        this.current_game_view.start();
 
     },
 

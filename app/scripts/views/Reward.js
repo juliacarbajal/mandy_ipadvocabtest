@@ -6,7 +6,7 @@ LSCP.View.Reward = Backbone.View.extend({
     previous_image_id: null,
 
     initialize: function() {
-        log('LSCP.View.Reward initialized!');
+        console.log('LSCP.View.Reward initialized!');
 
         for (var i = 0; i < 9; i++) {
             this.images.push(LSCP.Locations.Images + "rewards/" + i + ".jpg");
@@ -18,7 +18,7 @@ LSCP.View.Reward = Backbone.View.extend({
     template: Handlebars.compile('<img src="{{image}}" />'),
 
 	render: function() {
-        log('LSCP.View.Reward.render');
+        console.log('LSCP.View.Reward.render');
 
         var available_images = this.images.slice();
 

@@ -4,7 +4,7 @@ LSCP.View.Base = Backbone.View.extend({
 	el: "#app",
 
     initialize: function() {
-        log('LSCP.View.Base initialized!');
+      console.log('LSCP.View.Base initialized!');
 //        LSCP.View.Session.init();
     },
 
@@ -24,8 +24,10 @@ LSCP.View.Base = Backbone.View.extend({
     },
 
     openDashboard: function(e){
-      log('openDashboard');
+      console.log('openDashboard');
       e.stopPropagation(); e.preventDefault();
+      var password = window.prompt('Tapez le mot de passe administrateur.');
+      if (password !== LSCP.Auth.dashboard_password) {return;}
       $('#home').hide();
       this.dashboard = new LSCP.View.Dashboard();
     },

@@ -49,15 +49,15 @@ _.extend(DAO.prototype, {
 //  },
 
   // Gets a record based on a field, returns the results to the callback function
-  findBy: function(property, value, callback) {
-    console.log("getting a model information by the property '"+property+"' with value "+value);
-    if (typeof property === 'undefined') return;
-    if (typeof value === 'undefined') return;
-
-    this.db.findBy(property, value, callback(results));
-
-    // TODO
-  },
+//  findBy: function(property, value, callback) {
+//    console.log("getting a model information by the property '"+property+"' with value "+value);
+//    if (typeof property === 'undefined') return;
+//    if (typeof value === 'undefined') return;
+//
+//    this.db.findBy(property, value, callback(results));
+//
+//    // TODO
+//  },
 
   // Creates a new record in the table based on the passed Model
   create: function(models) {
@@ -70,7 +70,7 @@ _.extend(DAO.prototype, {
       models = [models];
     }
 
-    _.each(models, _.bind(function(model){
+    _.each(models, function(model){
 
       var deferred = $.Deferred();
 
@@ -84,7 +84,7 @@ _.extend(DAO.prototype, {
 
       deferreds.push(deferred);
 
-    }, this));
+    }, this);
 
     $.when.apply($, deferreds).then(function(){
       globalDeferred.resolve(ids);
@@ -94,8 +94,8 @@ _.extend(DAO.prototype, {
   },
 
   // Update a record in the table identified by the model's id
-  update: function (models) {
-    console.log("DAO update models");
+  update: function (models, attributes_to_update) {
+    console.log("DAO update models", models, attributes_to_update);
     var globalDeferred = $.Deferred();
     var deferreds = [];
 
@@ -104,13 +104,12 @@ _.extend(DAO.prototype, {
     }
 
     _.each(models, function(model){
-
       var deferred = $.Deferred();
 
       var id = model.id;
       model.persistableEntity.load(id, _.bind(function(persisted_model) {
-        _.each(model.persistable_attributes(), function(e, i){
-          persisted_model[i] = model.get(i);
+        _.each(attributes_to_update, function(attr){
+          persisted_model[attr] = model.get(attr);
         });
       }, this));
 
@@ -127,22 +126,33 @@ _.extend(DAO.prototype, {
     });
 
     return globalDeferred;
-  }
+  },
 
   //Removes a record from the table identified by the model's id
-//  delete: function (model, callback)
-//  {
-//    console.log("dao delete model");
-//    var id = model.id;
-//    this.db.load(id, function(results)
-//    {
-//      this.db.remove(results);
-//      this.db.flush();
-//    });
-//    callback();
-//
-//    // TODO
-//
-//  }
+  delete: function (models) {
+    console.log("DAO delete model");
+    var globalDeferred = $.Deferred();
+    var deferreds = [];
+
+    if (!(models instanceof Array)) {
+      models = [models];
+    }
+
+    _.each(models, function(model){
+      var deferred = $.Deferred();
+
+      var id = model.id;
+      model.persistableEntity.load(id, _.bind(function(persisted_model) {
+        this.db.remove(persisted_model);
+        this.db.flush(function(){
+          deferred.resolve();
+        });
+      }, this));
+
+      deferreds.push(deferred);
+
+    }, this);
+
+  }
 
 });

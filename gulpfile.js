@@ -165,7 +165,7 @@ gulp.task('phonegap-build', ['build'], function () {
 
 // default
 // clean and build the app on PhoneGap Build
-gulp.task('default', ['clean'], function () {
+gulp.task('default', function () {
     gulp.start('phonegap-build');
 });
 

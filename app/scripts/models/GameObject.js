@@ -25,19 +25,18 @@ LSCP.Model.GameObject = Backbone.Model.extend({
 
   downloadAssets: function(){
     var deferred = $.Deferred();
-    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, _.bind(function(fileSystem){
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, _.bind(function(){
 
       var fileTransfer = new window.FileTransfer();
-      var store = fileSystem.nativeURL;
       var assets = {
         image: {
           url: this.get('image'),
-          local_path: store + 'images/'+this.get('name')+'.png',
+          local_path: LSCP.Locations.GameObjectImages + this.get('name') + '.png',
           downloaded: $.Deferred()
         },
         sound_sprite: {
           url: this.get('sound_sprite'),
-          local_path: store + 'sound_sprites/'+this.get('name')+'.mp3',
+          local_path: LSCP.Locations.GameObjectSoundSprites + this.get('name') + '.mp3',
           downloaded: $.Deferred()
         }
       };

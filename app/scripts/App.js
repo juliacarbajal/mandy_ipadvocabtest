@@ -1,3 +1,4 @@
+/*global cordova:false */
 
 // Create Namespace
 var LSCP = window.LSCP || {};
@@ -95,4 +96,9 @@ $.when(jqReady, pgReady).then(function () {
     }
   };
 
+  window.resolveLocalFileSystemURL(cordova.file.dataDirectory, _.bind(function(fileSystem){
+    var store = fileSystem.nativeURL;
+    LSCP.Locations.GameObjectImages = store + 'game_objects/images/';
+    LSCP.Locations.GameObjectSoundSprites = store + 'game_objects/sound_sprites/';
+  }, this));
 });

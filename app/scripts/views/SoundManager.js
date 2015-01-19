@@ -23,9 +23,6 @@ LSCP.SoundManager = new Object({
     addSound: function(sound, name) {
         this.log('LSCP.SoundManager.addSound', sound, name);
 
-        // Add prefix to URLs
-        sound.urls = _.map(sound.urls, function(u){ return LSCP.Locations.Sounds + u; });
-
         this.sounds[name] = new Howl(sound);
 
         // Manage random sprites

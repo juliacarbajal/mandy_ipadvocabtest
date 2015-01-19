@@ -2,7 +2,7 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
 
     model: LSCP.Model.Config,
     url: '/temp',
-    default_config_file: 'config/default.json',
+    default_config_file: 'data/config/default.json',
 
     initialize : function() {
       this.populateFromDatabase();

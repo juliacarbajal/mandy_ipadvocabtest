@@ -21,7 +21,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         ];
         var sounds = [
             ['mandy', {
-                urls: ['mandy/sprite.mp3'],
+                urls: [LSCP.Locations.Sounds + 'mandy/sprite.mp3'],
                 sprite: {
                     intro:    [0, 3700],
                     hello1:   [4000, 800],
@@ -57,14 +57,14 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                     bye4:     [76000, 1200]
                 }
             }],
-            ['plop', {urls: ['plop.mp3']}]
+            ['plop', {urls: [LSCP.Locations.Sounds + 'plop.mp3']}]
         ];
 
         // Objects
         _.each(this.game_session.get('assets').objects, function(object){
-            images.push(['object_' + object, LSCP.Locations.Images + "objects/" + object + ".png"]);
+            images.push(['object_' + object, LSCP.Locations.GameObjectImages + object + '.png']);
             sounds.push(['object_' + object, {
-                urls: ['objects/' + object + '-sprite.mp3'],
+                urls: [LSCP.Locations.GameObjectSoundSprites + object + '.mp3'],
                 sprite: {
                     ask:   [0, 2000],
                     intro: [3000, 2000]
@@ -394,7 +394,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                             to: 0.3,
                             set: "opacity",
                             effect: collie.Effect.easeOutQuint
-                          })
+                          });
 
                           if (i < stage.get("objects").length - 1) {
                               i++;

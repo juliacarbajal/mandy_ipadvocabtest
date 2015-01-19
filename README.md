@@ -28,8 +28,10 @@ This app communicates with a back-office that receives and safely stores the exp
 
 Run `gulp watch` for in-browser development and test with livereload.
 
-## Deploy
+## Package and distribute
 
-We do not package the app locally, but use [Phonegap Build](http://build.phonegap.com) instead.
+We do not package the app locally, but use [PhoneGap Build](http://build.phonegap.com) instead.
 
-Run `gulp` to prepare the app for release and create a zip archive, then upload it to Phonegap Build to package the app.
+Run `gulp build`, which prepares the app for release and creates a zip archive (`app.zip`, in the project directory), then upload this archive to PhoneGap Build to package the app.
+
+See [PhoneGap Build documentation](http://docs.build.phonegap.com) for more information.

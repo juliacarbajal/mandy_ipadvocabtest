@@ -32,9 +32,12 @@ LSCP.View.Session = Backbone.View.extend({
 
     this.current_game = this.config.games.shift();
 
+    var subject = new LSCP.Model.Subject();
+
     var game_session_data = _.extend(this.config.get("session"), {
       game: this.current_game,
-      config: this.configs.getCurrent()
+      config: this.configs.getCurrent(),
+      subject: subject.get('anonymous_id')
     });
     console.log(game_session_data);
     this.game_sessions.create(game_session_data).then(_.bind(function(gs){

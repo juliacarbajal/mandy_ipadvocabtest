@@ -49,7 +49,7 @@ LSCP.Collection.GameSessionCollection = Backbone.Collection.extend({
     return models;
   },
 
-  sendToBackend: function(subject_anonymous_id){
+  sendToBackend: function(){
     console.log('sendToBackend');
     var device = window.device;
     var data = {
@@ -58,7 +58,6 @@ LSCP.Collection.GameSessionCollection = Backbone.Collection.extend({
         os_version: device.version,
         model: device.model
       },
-      subject: subject_anonymous_id,
       sessions: this.dump({synced: false})
     };
     $.ajax({

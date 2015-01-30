@@ -6,6 +6,7 @@ LSCP.Model.GameSessionPersist = persistence.define('GameSession', {
   levels: 'JSON',
   events: 'JSON',
   config: 'TEXT',
+  subject: 'TEXT',
   progress: 'INT',
   synced: 'BOOL'
 });
@@ -23,6 +24,7 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
 //    levels: [],
     events: [],
     config: null,
+    subject: null,
     progress: 0,
     synced: false
   },
@@ -92,7 +94,7 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
   },
 
   persistable_attributes: function(){
-    var attr = _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'events', 'config', 'progress', 'synced']);
+    var attr = _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'events', 'config', 'subject', 'progress', 'synced']);
     attr.levels = this.get('levels').dump();
     return attr;
   },
@@ -103,7 +105,7 @@ LSCP.Model.GameSession = Backbone.AssociatedModel.extend({
   },
 
   syncable_attributes: function(){
-    return _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'events']);
+    return _.pick(this.attributes, ['started_at', 'ended_at', 'time_limit', 'subject', 'events']);
   }
 
 });

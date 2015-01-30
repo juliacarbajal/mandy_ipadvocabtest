@@ -89,7 +89,7 @@ LSCP.View.Dashboard = Backbone.View.extend({
 
     syncNow: function(e){
       e.stopPropagation(); e.preventDefault();
-      this.game_sessions.sendToBackend(this.subject.get('anonymous_id'));
+      this.game_sessions.sendToBackend();
     },
 
     downloadObjects: function(e){

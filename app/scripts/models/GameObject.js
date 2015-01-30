@@ -42,6 +42,7 @@ LSCP.Model.GameObject = Backbone.Model.extend({
       };
       $.each(assets, _.bind(function(id, asset){
         fileTransfer.download(asset.url, asset.local_path, _.bind(function(){
+          console.log('DOWNLOADED: ', asset.local_path, 'FROM', asset.url);
           this.set(id, asset.local_path);
           this.set('downloaded', true);
           asset.downloaded.resolve();

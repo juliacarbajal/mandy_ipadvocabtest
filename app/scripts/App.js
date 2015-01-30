@@ -57,6 +57,9 @@ $(document).bind('ready', jqReady.resolve);
 
 $.when(jqReady, pgReady).then(function () {
 
+  // Disable AJAX cache
+  $.ajaxSetup({ cache: false });
+
   LSCP.App = new LSCP.View.Base();
   persistence.store.websql.config(persistence, 'idevxxi', 'Local database for iDevXXI', 25 * 1024 * 1024);
   persistence.schemaSync();
@@ -64,16 +67,15 @@ $.when(jqReady, pgReady).then(function () {
   /* SYNC */
   Backbone.sync = function (method, models, options) {
     var dao = new DAO();
+    options = options || {};
     switch (method) {
-      case 'read':
-        console.log('sync read');
-        if (models.id) {
-          console.log('sync read one [TODO] [NOT IMPLEMENTED]');
-//          return dao.findById(models.id, function(data) {
-//            options.success(data);
-//          });
+      case 'find':
+        console.log('sync find');
+        if ('id' in options) {
+          console.log('sync find one');
+          return dao.findById(models, options.id);
         } else {
-          console.log('sync read all');
+          console.log('sync find all');
           return dao.findAll(models);
         }
         return;

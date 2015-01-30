@@ -2,10 +2,8 @@
 LSCP.Model.ConfigPersist = persistence.define('Config', {
   name: 'TEXT',
   path: 'TEXT',
-  current: 'BOOL',
-  data: 'JSON'
+  content: 'JSON'
 });
-LSCP.Model.ConfigPersist.index(['path'],{unique:true});
 
 
 LSCP.Model.Config = Backbone.Model.extend({
@@ -15,22 +13,10 @@ LSCP.Model.Config = Backbone.Model.extend({
   defaults: {
     name: "",
     path: "",
-    current: false,
-    data: null
+    content: null
   },
 
   initialize: function(){
-  },
-
-  loadDataFromFile: function(){
-    var addData = function(e){
-      this.set({
-        name: e.name,
-        data: e.session
-      });
-    };
-
-    return $.getJSON(this.get('path')).then(addData.bind(this));
   },
 
   persistable: function(){

@@ -36,17 +36,17 @@ _.extend(DAO.prototype, {
   },
 
   //Gets a record based on the id, returns the results to the callback function
-//  findById: function(id, callback) {
-//    console.log("getting a model information by the id passed");
-//    if (id != 0)
-//    {
-//      this.db.load(id, callback(results));
-//    } else {
-//      alert("Transaction Error: " + error);
-//    }
-//
-//    // TODO
-//  },
+  findById: function(model, id) {
+    console.log("DAO findById", id);
+    var deferred = $.Deferred();
+
+    model.persistableEntity.load(id, _.bind(function(persisted_model) {
+      console.log(persisted_model);
+      deferred.resolve(persisted_model);
+    }, this));
+
+    return deferred;
+  },
 
   // Gets a record based on a field, returns the results to the callback function
 //  findBy: function(property, value, callback) {
@@ -153,6 +153,7 @@ _.extend(DAO.prototype, {
 
     }, this);
 
+    return globalDeferred;
   }
 
 });

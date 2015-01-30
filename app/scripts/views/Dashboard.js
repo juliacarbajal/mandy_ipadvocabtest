@@ -29,14 +29,14 @@ LSCP.View.Dashboard = Backbone.View.extend({
     events: {
       "touchstart .close": "close",
       "touchstart #changeConfig": "changeConfig",
-      "touchstart #syncConfig": "syncConfig",
+      "touchstart #downloadConfig": "downloadConfig",
       "touchstart .sync button": "syncNow",
       "touchstart .download_objects button": "downloadObjects",
       "touchstart .subject button": "changeSubjectId",
 
       "mousedown .close": "close",
       "mousedown #changeConfig": "changeConfig",
-      "mousedown #syncConfig": "syncConfig",
+      "mousedown #downloadConfig": "downloadConfig",
       "mousedown .sync button": "syncNow",
       "mousedown .download_objects button": "downloadObjects",
       "mousedown .subject button": "changeSubjectId"
@@ -45,7 +45,7 @@ LSCP.View.Dashboard = Backbone.View.extend({
     render: function(){
       var data = {
         current_config_file: this.config_files.getCurrent(),
-        config_files: this.config_files.models,
+        config_files: this.config_files,
         current_subject_id: this.subject.get('anonymous_id'),
         total_game_sessions: this.game_sessions.count(),
         game_sessions_to_sync: this.game_sessions.count({synced: false}),
@@ -69,14 +69,12 @@ LSCP.View.Dashboard = Backbone.View.extend({
       var new_config = $('.config select[name=config-local]').val();
       console.log("changeConfig", new_config);
       // TODO: this.checkObjectsAvailable();
-      this.config_files.use(new_config);
+      this.config_files.setCurrent(new_config);
     },
 
-    syncConfig: function(e){
+    downloadConfig: function(e){
       e.stopPropagation(); e.preventDefault();
-
-      // Load local files in DB
-      this.config_files.populateFromLocalFiles();
+      this.config_files.downloadFromBackend();
     },
 
     changeSubjectId: function(e){

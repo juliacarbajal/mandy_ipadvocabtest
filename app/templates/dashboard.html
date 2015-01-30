@@ -3,19 +3,16 @@
   <div class="col">
     <fieldset class="config">
       <h2><strong>Fichier de configuration</strong><br />
-        Actuellement : <em class="config-current"><%= current_config_file %></em></h2>
+        Actuellement : <em class="config-current"><%= current_config_file.get('name') %></em></h2>
       <label>Choisir un fichier local :
         <select name="config-local">
-          <% _.each(config_files, function(f) { %>
-          <option<% if (f.get('path') == current_config_file) { %> selected="selected"<% } %>><%= f.get('path') %></option>
+          <% config_files.each(function(f) { %>
+          <option value="<%= f.get('id') %>"<% if (f.get('id') == current_config_file.get('id')) { %> selected="selected"<% } %>><%= f.get('name') %></option>
           <% }); %>
         </select>
-        <button id="syncConfig">Recharger les fichiers locaux</button>
+        <button id="changeConfig">Changer la configuration</button>
       </label>
-      <!--<label>ou entrer l'URL d'un fichier distant :
-          <input type="url" name="config-url" style="width: 300px" />
-      </label>-->
-      <button id="changeConfig">Changer la configuration</button>
+      <button id="downloadConfig">Télécharger maintenant</button>
     </fieldset>
     <fieldset class="sync">
       <h2><strong>Synchronisation</strong></h2>

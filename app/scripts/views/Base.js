@@ -23,8 +23,11 @@ LSCP.View.Base = Backbone.View.extend({
 
     openDashboard: function(e){
       e.stopPropagation(); e.preventDefault();
-//      var password = window.prompt('Tapez le mot de passe administrateur.');
-//      if (password !== LSCP.Auth.dashboard_password) {return;}
+      var password = window.prompt('Tapez le mot de passe administrateur.');
+      if (password !== LSCP.Auth.dashboard_password) {
+        window.alert('Mot de passe erroné.');
+        return;
+      }
       $('#home').hide();
       this.dashboard = new LSCP.View.Dashboard();
     },

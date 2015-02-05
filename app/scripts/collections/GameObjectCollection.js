@@ -13,25 +13,6 @@ LSCP.Collection.GameObjectCollection = Backbone.Collection.extend({
     } else {
       return _.size(this.where(filter));
     }
-  },
-
-  downloadAssets: function() {
-    var dowloadedAssets = [];
-    var self = this;
-    var deferred = $.Deferred();
-
-    console.log('downloadAssets', self.size(), self.models);
-
-    self.each(function(model){
-      dowloadedAssets.push(model.downloadAssets());
-    });
-
-    $.when.apply($, dowloadedAssets).then(function(){
-      console.log('All assets files downloaded!', self.size(), self.count(), self.models);
-      deferred.resolve();
-    });
-
-    return deferred;
   }
 
 });

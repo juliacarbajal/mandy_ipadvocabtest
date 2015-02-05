@@ -7,16 +7,15 @@ LSCP.Model.Subject = Backbone.AssociatedModel.extend({
   initialize: function(){
 
     if (!('lscp.idevxxi.current_subject_id' in localStorage)) {
-      localStorage['lscp.idevxxi.current_subject_id'] = this.get('anonymous_id');
+      this.setAnonymousId(this.defaults.anonymous_id);
+    } else {
+      this.set('anonymous_id', localStorage['lscp.idevxxi.current_subject_id']);
     }
-
-    this.set('anonymous_id', localStorage['lscp.idevxxi.current_subject_id'] || this.defaults.anonymous_id);
-
-    this.on('change:anonymous_id', this.onChangeAnonymousId);
 
   },
 
-  onChangeAnonymousId: function(subject, id){
+  setAnonymousId: function(id){
+    this.set('anonymous_id', id);
     localStorage['lscp.idevxxi.current_subject_id'] = id;
   }
 

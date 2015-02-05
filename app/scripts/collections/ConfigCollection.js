@@ -27,20 +27,6 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
         throw "Please select a config profile.";
       }
       return JSON.parse(this.getCurrent().get('content'));
-    },
-
-    downloadFromBackend: function() {
-      var self = this;
-      console.log('downloadFromBackend', self.size(), self.models);
-      self.emptyDatabase()
-          .done(self.populateFromBackend()
-              .done(function(){
-                console.log('downloadFromBackend', self.size(), self.models);
-                self.sync('create', self.models).then(function(ids){
-                  console.log('All config profiles saved to DB!', self.size(), ids);
-                });
-      }));
     }
-
 
 });

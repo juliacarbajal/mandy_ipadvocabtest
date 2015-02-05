@@ -4,6 +4,7 @@ LSCP.Collection.GameSessionCollection = Backbone.Collection.extend({
   url: LSCP.Locations.Backend + '/sync/update',
 
   initialize : function() {
+    this.populateFromDatabase();
   },
 
   create: function(data){

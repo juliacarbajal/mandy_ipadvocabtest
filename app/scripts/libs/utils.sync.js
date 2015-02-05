@@ -3,15 +3,10 @@ var SyncService = function(){};
 _.extend(SyncService.prototype, Backbone.Events);
 _.extend(SyncService.prototype, {
 
-  updates: {},
-  syncing: {
-    value: 0,
-    total: 0
-  },
-
   loadLocalConfig: function(){
+    console.log('loadLocalConfig', this.getLocalConfigPath());
     return $.getJSON(this.getLocalConfigPath()).then(function(data){
-      console.log(data);
+      console.log('Local config file: ', data);
       LSCP.Config = data;
     }, function(err){
       console.info('loadLocalConfig error: no config');
@@ -27,7 +22,11 @@ _.extend(SyncService.prototype, {
     }
 
     if (typeof version === 'undefined') {
-      version = localStorage['lscp.idevxxi.config_version'];
+      if ('lscp.idevxxi.current_subject_id' in localStorage) {
+        version = localStorage['lscp.idevxxi.config_version'];
+      } else {
+        return false;
+      }
     }
     return LSCP.Locations.Root + 'config_' + version + '.json';
   },
@@ -36,8 +35,6 @@ _.extend(SyncService.prototype, {
     var self = this;
     var deferred = $.Deferred();
     var fileSaved = $.Deferred();
-
-    var fileTransfer = new window.FileTransfer();
 
     var previousVersion = localStorage['lscp.idevxxi.config_version'];
     var url = LSCP.Locations.Backend + '/sync/download';
@@ -53,7 +50,6 @@ _.extend(SyncService.prototype, {
           var json_data = JSON.stringify(data);
 
           // Save config file
-          console.log(self.getLocalConfigPath(data.version));
           window.resolveLocalFileSystemURL(LSCP.Locations.Root, function(directoryEntry){
             directoryEntry.getFile('config_' + data.version + '.json', {create: true}, function(fileEntry){
               fileEntry.createWriter(function(fileWriter){
@@ -99,21 +95,24 @@ _.extend(SyncService.prototype, {
   },
 
   downloadAllObjectsAssets: function(objects){
+    var self = this;
     var totalObjects = objects.length;
     var downloadedObjects = [];
     var deferred = $.Deferred();
 
     console.log('downloadAllObjectsAssets', totalObjects);
+    self.trigger('syncing', {max: totalObjects});
 
     _.each(objects, function(object){
-      this.downloadSingleObjectAssets(object).done(function(downloadedObject){
+      self.downloadSingleObjectAssets(object).done(function(downloadedObject){
         downloadedObjects.push(downloadedObject);
+        self.trigger('syncing', {value: downloadedObjects.length});
         if (downloadedObjects.length === totalObjects) {
           console.log('All assets files downloaded!', downloadedObjects.length);
           deferred.resolve(downloadedObjects);
         }
       });
-    }, this);
+    });
 
     return deferred;
   },
@@ -159,71 +158,19 @@ _.extend(SyncService.prototype, {
     return $.getJSON(LSCP.Locations.Backend + '/sync/download');
   },
 
-  checkUpdates: function(){
+  checkVersion: function(){
     var self = this;
     var deferred = $.Deferred();
-    var updates;
 
     self.getJSON().then(function(data){
-      updates = {
-        game_objects: !self.isUpToDate('game_objects_updated_at', data),
-        config_scenarios: !self.isUpToDate('config_scenarios_updated_at', data),
-        config_profiles: !self.isUpToDate('config_profiles_updated_at', data)
-      };
-      self.updates = updates;
-      deferred.resolve(updates);
+      deferred.resolve({
+        version: data.version,
+        game_objects: data.game_objects.length,
+        config_scenarios: data.config_scenarios.length,
+        config_profiles: data.config_profiles.length
+      });
     });
 
-    return deferred;
-  },
-
-  downloadAll: function(){
-    var self = this;
-    var deferred = $.Deferred();
-    self.syncing = {
-      value: 0,
-      total: 0
-    };
-    self.trigger('syncing');
-    self.getJSON().then(function(data){
-      console.log('DOWNLOADED', data);
-
-      // Save game objects
-      console.log('Save game objects'); // TODO
-      var game_objects = new LSCP.Collection.GameObjectCollection();
-      console.log(game_objects.count());
-      self.syncing.total = game_objects.count();
-      if (self.isUpToDate('game_objects_updated_at', data)) {
-        console.log('game objects are already up-to-date');
-      } else {
-        console.log('there are ' + data.game_objects.length + ' game objects');
-        game_objects.emptyDatabase()
-            .done(function(){
-              console.log('database emptied');
-              game_objects.add(data.game_objects);
-              self.syncing.value = game_objects.count();
-
-              game_objects.on('change', function(){
-                self.syncing.value = 50;
-                self.trigger('syncing', self.syncing);
-              });
-
-              game_objects.downloadAssets().done(function(){
-                console.log(game_objects.count() + ' added to the collection');
-                // self.saveUpdatedAt('game_objects_updated_at', data.game_objects_updated_at);
-              });
-            });
-      }
-
-      console.log('TODO: save config_scenarios'); // TODO
-      console.log('TODO: save config_profiles'); // TODO
-
-      // Save date of last update
-//      self.saveUpdatedAt('config_scenarios_updated_at', data.config_scenarios_updated_at);
-//      self.saveUpdatedAt('config_profiles_updated_at', data.config_profiles_updated_at);
-
-      deferred.resolve();
-    });
     return deferred;
   },
 
@@ -233,10 +180,6 @@ _.extend(SyncService.prototype, {
 
   isUpToDate: function (key, data){
     return (this.getUpdatedAt(key) === data[key]);
-  },
-
-  saveUpdatedAt: function (key, last_updated_at){
-    localStorage['lscp.idevxxi.' + key] = last_updated_at;
   }
 
 });

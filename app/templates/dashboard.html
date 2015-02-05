@@ -1,31 +1,24 @@
 <a href="#" class="close">&times;</a>
 <h1>Dashboard</h1>
   <div class="col">
-    <fieldset class="config">
-      <h2><strong>Profil de configuration</strong><br />
-        Actuellement : <em class="config-current"><%= current_config_file.get('name') %></em></h2>
-      <label><select name="config-local">
-          <% config_files.each(function(f) { %>
-          <option value="<%= f.get('id') %>"<% if (f.get('id') == current_config_file.get('id')) { %> selected="selected"<% } %>><%= f.get('name') %></option>
-          <% }); %>
-        </select>
-        <button id="changeConfig">Changer la configuration</button>
-      </label>
-    </fieldset>
     <fieldset class="sync">
       <h2><strong>Synchronisation</strong></h2>
-      <p><em class="total-sessions"><%= total_game_sessions %></em> sessions enregistrées<br />
-        <em class="sessions-to-sync"><%= game_sessions_to_sync %></em> sessions à synchroniser</p>
-      <% if (game_sessions_to_sync > 0) { %><button id="syncUpload">Synchroniser maintenant</button><% } %>
-      <% if (updates) { %>
-      <h2><strong>Objets de jeu</strong></h2>
-      <p><em class="local-objects"><%= local_game_objects %></em> objets téléchargés localement</p>
-      <p><% if (updates.game_objects) { %>available objects!<br /><% } %>
-        <% if (updates.config_scenarios) { %>available scenarios!<br /><% } %>
-        <% if (updates.config_profiles) { %>available profiles!<% } %></p>
-      <button id="syncDownload">Sync</button>
-      <% } %>
+      <p><em class="total-sessions"><%= game_sessions.count() %></em> sessions enregistrées<br />
+        <em class="sessions-to-sync"><%= game_sessions.count({synced: false}) %></em> sessions à synchroniser</p>
+      <% if (game_sessions.count() > 0) { %><button id="syncUpload">Synchroniser maintenant</button><% } %>
     </fieldset>
+    <% if (new_config) { %>
+    <fieldset class="sync">
+      <h2><strong><em>Données de configuration à mettre à jour !</em></strong></h2>
+      <p>
+        Version <%= new_config.version %><br />
+        <em><%= new_config.game_objects %></em> objets de jeu<br />
+        <em><%= new_config.config_scenarios %></em> scenarios de configuration<br />
+        <em><%= new_config.config_profiles %></em> profils de configuration
+      </p>
+      <button id="syncDownload">Mettre à jour</button>
+    </fieldset>
+    <% } %>
   </div>
   <div class="col">
     <fieldset class="subject">
@@ -34,12 +27,31 @@
       <label>Saisir un nouvel identifiant : <input type="number" name="subject-id" style="width: 70px" /></label>
       <button id="changeSubjectId">Changer l'identifiant</button>
     </fieldset>
+    <% if (config_profiles) { %>
+    <fieldset class="config">
+      <h2><strong>Objets de jeu</strong></h2>
+      <p><em class="local-objects"><%= game_objects.count() %></em> objets disponibles localement</p>
+    </fieldset>
+    <fieldset class="config">
+      <h2><strong>Profil de configuration</strong></h2>
+        <p><em class="local-config-profiles"><%= config_profiles.length %></em> profils disponibles localement</p>
+      <p>Actuellement : <em class="config-current"><%= current_config_profile.get('name') %></em></p>
+      <p>
+        <select name="config-local">
+          <% config_profiles.each(function(p) { %>
+          <option value="<%= p.get('id') %>"<% if (p.get('id') == current_config_profile.get('id')) { %> selected="selected"<% } %>><%= p.get('name') %></option>
+          <% }); %>
+        </select>
+      </p>
+      <p>
+        <button id="changeConfig">Changer la configuration</button>
+      </p>
+    </fieldset>
+    <% } %>
   </div>
-<% if (syncing) { %>
 <div class="modal-layer">
   <div class="modal">
     <h1>Synchronisation...</h1>
-    <progress id="syncProgress" value="<%= syncing.value %>" max="<%= syncing.total %>"></progress>
+    <progress id="syncProgress" value="0" max="100"></progress>
   </div>
 </div>
-<% } %>

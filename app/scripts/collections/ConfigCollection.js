@@ -5,7 +5,7 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
     comparator: 'name',
 
     initialize : function() {
-      this.populateFromDatabase();
+      this.add(LSCP.Config.config_profiles);
     },
 
     hasCurrent: function() {
@@ -29,45 +29,17 @@ LSCP.Collection.ConfigCollection = Backbone.Collection.extend({
       return JSON.parse(this.getCurrent().get('content'));
     },
 
-    populateFromDatabase: function() {
-      console.log('ConfigCollection.populateFromDatabase');
-      this.sync('find', new this.model()).then(_.bind(function(e){
-        console.log('populateFromDatabase DONE');
-        this.add(e);
-        this.trigger('change');
-        this.trigger('populatedFromDatabase');
-      }, this));
-    },
-
-    emptyDatabase: function() {
-      var deferred = $.Deferred();
-      this.sync('delete', this.models).then(_.bind(function(){
-        console.log('emptyDatabase DONE');
-        deferred.resolve();
-      }, this));
-      return deferred;
-    },
-
-    populateFromBackend: function() {
-      var deferred = $.Deferred();
-      $.getJSON(this.url).then(_.bind(function(data){
-        this.reset();
-        this.add(data);
-        this.trigger('change');
-        deferred.resolve();
-      }, this));
-      return deferred;
-    },
-
     downloadFromBackend: function() {
-      console.log('downloadFromBackend', this.size());
-      this.emptyDatabase()
-          .done(this.populateFromBackend()
-              .done(_.bind(function(){
-                this.sync('create', this.models).then(function(){
-                  console.log('All config profiles saved to DB!');
+      var self = this;
+      console.log('downloadFromBackend', self.size(), self.models);
+      self.emptyDatabase()
+          .done(self.populateFromBackend()
+              .done(function(){
+                console.log('downloadFromBackend', self.size(), self.models);
+                self.sync('create', self.models).then(function(ids){
+                  console.log('All config profiles saved to DB!', self.size(), ids);
                 });
-      }, this)));
+      }));
     }
 
 

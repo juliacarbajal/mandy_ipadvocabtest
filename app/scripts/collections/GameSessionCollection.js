@@ -21,9 +21,12 @@ LSCP.Collection.GameSessionCollection = Backbone.Collection.extend({
   },
 
   populateFromDatabase: function(){
-    this.sync('find', new this.model()).then(_.bind(function(e){
-      this.add(e);
+    console.log('GameSessionCollection.populateFromDatabase');
+    this.sync('find', new this.model()).then(_.bind(function(data){
+      console.log('GameSessionCollection.populateFromDatabase DONE');
+      this.add(data);
       this.trigger('change');
+      this.trigger('populatedFromDatabase');
     }, this));
     return this;
   },

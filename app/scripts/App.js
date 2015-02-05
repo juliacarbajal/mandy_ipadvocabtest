@@ -1,4 +1,5 @@
 /*global cordova:false */
+/*global SyncService:false */
 
 // Create Namespace
 var LSCP = window.LSCP || {};
@@ -9,8 +10,11 @@ LSCP.Auth = {
   password: 'YuY4TLztg8WycUR9CrcN82n7nwWmxfne',
   dashboard_password: 'abc123'
 };
+LSCP.Auth.headers = {
+  'Authorization': "Basic " + btoa(LSCP.Auth.username + ":" + LSCP.Auth.password)
+};
 $.ajaxSetup({
-  headers: { 'Authorization': "Basic " + btoa(LSCP.Auth.username  + ":" + LSCP.Auth.password) }
+  headers: LSCP.Auth.headers
 });
 
 /* COLLECTIONS */
@@ -22,8 +26,8 @@ LSCP.Model = LSCP.Model || {};
 /* VIEWS */
 LSCP.View = LSCP.View || {};
 
-/* DATA */
-LSCP.Data = LSCP.Data || {};
+/* CONFIG */
+LSCP.Config = LSCP.Config || {};
 
 /* LOCATIONS */
 LSCP.Locations = LSCP.Locations || {};
@@ -58,11 +62,25 @@ $(document).bind('ready', jqReady.resolve);
 $.when(jqReady, pgReady).then(function () {
 
   // Disable AJAX cache
-  $.ajaxSetup({ cache: false });
+//  $.ajaxSetup({ cache: false });
 
   LSCP.App = new LSCP.View.Base();
   persistence.store.websql.config(persistence, 'idevxxi', 'Local database for iDevXXI', 25 * 1024 * 1024);
   persistence.schemaSync();
+
+  /* SYNC */
+  LSCP.Sync = new SyncService();
+
+  /* LOCATIONS */
+  window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem){
+    var base = fileSystem.nativeURL;
+
+    LSCP.Locations.Root = base;
+    LSCP.Locations.GameObjectImages = base + 'game_objects/images/';
+    LSCP.Locations.GameObjectSoundSprites = base + 'game_objects/sound_sprites/';
+
+    LSCP.Sync.loadLocalConfig();
+  });
 
   /* SYNC */
   Backbone.sync = function (method, models, options) {
@@ -97,10 +115,4 @@ $.when(jqReady, pgReady).then(function () {
         return dao.delete(models);
     }
   };
-
-  window.resolveLocalFileSystemURL(cordova.file.dataDirectory, _.bind(function(fileSystem){
-    var store = fileSystem.nativeURL;
-    LSCP.Locations.GameObjectImages = store + 'game_objects/images/';
-    LSCP.Locations.GameObjectSoundSprites = store + 'game_objects/sound_sprites/';
-  }, this));
 });

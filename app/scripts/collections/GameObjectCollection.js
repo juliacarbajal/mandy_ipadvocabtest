@@ -4,51 +4,34 @@ LSCP.Collection.GameObjectCollection = Backbone.Collection.extend({
   url: LSCP.Locations.Backend + '/sync/game_objects',
 
   initialize: function() {
-
-  },
-
-  populateFromDatabase: function() {
-    this.sync('find', new this.model()).then(_.bind(function(e){
-      this.add(e);
-      this.trigger('change');
-    }, this));
-    return this;
-  },
-
-  populateFromBackend: function() {
-    var deferred = $.Deferred();
-    $.getJSON(this.url).then(_.bind(function(data){
-      this.reset();
-      this.add(data);
-      this.trigger('change');
-      deferred.resolve();
-    }, this));
-    return deferred;
+    this.add(LSCP.Config.game_objects);
   },
 
   count: function(filter){
     if (typeof filter === 'undefined') {
-      return this.length;
+      return this.size();
     } else {
-      return this.where(filter).length;
+      return _.size(this.where(filter));
     }
   },
 
   downloadAssets: function() {
     var dowloadedAssets = [];
-    this.populateFromBackend().done(_.bind(function(){
-      this.each(function(model){
-        dowloadedAssets.push(model.downloadAssets());
-      });
+    var self = this;
+    var deferred = $.Deferred();
 
-      $.when.apply($, dowloadedAssets).then(_.bind(function(){
-        console.log('All assets files downloaded!');
+    console.log('downloadAssets', self.size(), self.models);
 
-        this.sync('create', this.models).then(function(){
-          console.log('All objects saved to DB!');
-        });
-      }, this));
-    }, this));
+    self.each(function(model){
+      dowloadedAssets.push(model.downloadAssets());
+    });
+
+    $.when.apply($, dowloadedAssets).then(function(){
+      console.log('All assets files downloaded!', self.size(), self.count(), self.models);
+      deferred.resolve();
+    });
+
+    return deferred;
   }
 
 });

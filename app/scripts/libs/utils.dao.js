@@ -61,7 +61,7 @@ _.extend(DAO.prototype, {
 
   // Creates a new record in the table based on the passed Model
   create: function(models) {
-    console.log("DAO create models");
+    console.log("DAO create models", models);
     var globalDeferred = $.Deferred();
     var deferreds = [];
     var ids = [];
@@ -73,6 +73,7 @@ _.extend(DAO.prototype, {
     _.each(models, function(model){
 
       var deferred = $.Deferred();
+      deferreds.push(deferred);
 
       var persisted_model = model.persistable();
       this.db.add(persisted_model);
@@ -81,8 +82,6 @@ _.extend(DAO.prototype, {
         ids.push(persisted_model.id);
         deferred.resolve();
       });
-
-      deferreds.push(deferred);
 
     }, this);
 
@@ -105,6 +104,7 @@ _.extend(DAO.prototype, {
 
     _.each(models, function(model){
       var deferred = $.Deferred();
+      deferreds.push(deferred);
 
       var id = model.id;
       model.persistableEntity.load(id, _.bind(function(persisted_model) {
@@ -116,8 +116,6 @@ _.extend(DAO.prototype, {
       this.db.flush(function(){
         deferred.resolve();
       });
-
-      deferreds.push(deferred);
 
     }, this);
 
@@ -140,6 +138,7 @@ _.extend(DAO.prototype, {
 
     _.each(models, function(model){
       var deferred = $.Deferred();
+      deferreds.push(deferred);
 
       var id = model.id;
       model.persistableEntity.load(id, _.bind(function(persisted_model) {
@@ -148,8 +147,6 @@ _.extend(DAO.prototype, {
           deferred.resolve();
         });
       }, this));
-
-      deferreds.push(deferred);
 
     }, this);
 

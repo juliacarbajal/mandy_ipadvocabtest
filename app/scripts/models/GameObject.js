@@ -1,17 +1,5 @@
 
-LSCP.Model.GameObjectPersist = persistence.define('GameObject', {
-  name: 'TEXT',
-  image: 'TEXT',
-  sound_sprite: 'TEXT',
-  downloaded: 'BOOL'
-});
-LSCP.Model.GameObjectPersist.index(['name'],{unique:true});
-
-
 LSCP.Model.GameObject = Backbone.Model.extend({
-  /*global cordova:false */
-
-  persistableEntity: LSCP.Model.GameObjectPersist,
 
   defaults: {
     name: null,
@@ -25,42 +13,40 @@ LSCP.Model.GameObject = Backbone.Model.extend({
 
   downloadAssets: function(){
     var deferred = $.Deferred();
-    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, _.bind(function(){
+    var self = this;
 
-      var fileTransfer = new window.FileTransfer();
-      var assets = {
-        image: {
-          url: this.get('image'),
-          local_path: LSCP.Locations.GameObjectImages + this.get('name') + '.png',
-          downloaded: $.Deferred()
-        },
-        sound_sprite: {
-          url: this.get('sound_sprite'),
-          local_path: LSCP.Locations.GameObjectSoundSprites + this.get('name') + '.mp3',
-          downloaded: $.Deferred()
-        }
-      };
-      $.each(assets, _.bind(function(id, asset){
-        fileTransfer.download(asset.url, asset.local_path, _.bind(function(){
-          console.log('DOWNLOADED: ', asset.local_path, 'FROM', asset.url);
-          this.set(id, asset.local_path);
-          this.set('downloaded', true);
-          asset.downloaded.resolve();
-        }, this), function(error){
-          console.log('ERROR: ', error);
-        });
-      }, this));
+    var fileTransfer = new window.FileTransfer();
+    var assets = {
+      image: {
+        url: self.get('image'),
+        local_path: LSCP.Locations.GameObjectImages + self.get('name') + '.png',
+        downloaded: $.Deferred()
+      },
+      sound_sprite: {
+        url: self.get('sound_sprite'),
+        local_path: LSCP.Locations.GameObjectSoundSprites + self.get('name') + '.mp3',
+        downloaded: $.Deferred()
+      }
+    };
 
-      $.when(assets.image.downloaded, assets.sound_sprite.downloaded).then(function(){
-        deferred.resolve();
+    $.each(assets, function(asset_type, asset){
+      fileTransfer.download(asset.url, asset.local_path, function(){
+//        console.log('DOWNLOADED: ', asset.local_path, 'FROM', asset.url);
+        console.log(asset_type + ' DOWNLOADED for ' + self.get('name'));
+        self.set(asset_type, asset.local_path);
+        asset.downloaded.resolve();
+      }, function(error){
+        console.log('ERROR: ', error);
       });
+    });
 
-    }, this));
+    $.when(assets.image.downloaded, assets.sound_sprite.downloaded).then(function(){
+      console.log('ALL DOWNLOADED for ' + self.get('name'));
+      self.set('downloaded', true);
+      deferred.resolve();
+    });
+
     return deferred;
-  },
-
-  persistable: function(){
-    return new this.persistableEntity(this.attributes);
   }
 
 });

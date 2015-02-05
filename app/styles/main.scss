@@ -172,11 +172,18 @@ footer .btn {
         padding: 5px 15px;
     }
 
-    #eraseLog {float: right}
-    #log {
-        background-color: #eee;
-        clear: both;
-        overflow: auto;
-        height: 180px;
+    .modal-layer {
+      background-color: rgba(0,0,0,0.8);
+      border-radius: 20px;
+      padding: 100px 20px 20px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      top: 0;
+
+      h1 {color: $light-gray; margin-bottom: 40px;}
+      progress {width: 400px;}
     }
 }

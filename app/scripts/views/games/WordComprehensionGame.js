@@ -280,7 +280,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         if (stage.get("objects_positions") == 'NATURAL') {
           objects_positions = this.pos['FOR_' + stage.get("objects").length];
         } else if (stage.get("objects_positions") == 'RANDOM') {
-          objects_positions = this.pos['FOR_' + stage.get("objects").length].shuffle();
+          objects_positions = window.shuffleArray(this.pos['FOR_' + stage.get("objects").length]);
         } else if (_.isArray(stage.get("objects_positions"))) {
             objects_positions = _.map(stage.get("objects_positions"), function(pos) {
                 if (typeof this.pos[pos] == 'undefined') throw 'Wrong value "'+pos+'" for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;
@@ -292,7 +292,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         // Create slots
         if (stage.get("objects_positions") == 'RANDOM') {
-          stage.set("objects", stage.get("objects").shuffle());
+          stage.set("objects", window.shuffleArray(stage.get("objects")));
         }
         _.each(stage.get("objects"), function(object, i){
             var slot = new collie.DisplayObject({

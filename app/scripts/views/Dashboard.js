@@ -4,41 +4,53 @@ LSCP.View.Dashboard = Backbone.View.extend({
 	template_path: "templates/dashboard.html",
 
     initialize: function() {
-      this.config_files = new LSCP.Collection.ConfigCollection();
+      var self = this;
 
-      this.game_sessions = new LSCP.Collection.GameSessionCollection().populateFromDatabase();
+      self.game_objects = new LSCP.Collection.GameObjectCollection();
+      self.config_files = new LSCP.Collection.ConfigCollection();
+      self.game_sessions = new LSCP.Collection.GameSessionCollection();
+      self.subject = new LSCP.Model.Subject();
 
-      this.game_objects = new LSCP.Collection.GameObjectCollection().populateFromDatabase();
+      $.get(self.template_path, function(template) {
+        self.template = _.template(template);
 
-      this.subject = new LSCP.Model.Subject();
+        LSCP.Sync.checkUpdates().done(function(updates){
+          self.updates = updates;
+          self.render();
+        });
+        self.syncing = false;
 
-      $.get(this.template_path, function(template) {
-        this.template = _.template(template);
-        $(document).on("online", this.onOnline);
-        $(document).on("offline", this.onOffline);
+        self.listenTo(self.game_objects, "change", _.throttle(self.render, 250));
+        self.listenTo(self.config_files, "change", _.throttle(self.render, 250));
+        self.listenTo(self.game_sessions, "change", _.throttle(self.render, 250));
+        self.listenTo(self.subject, "change", self.render);
 
-        this.listenTo(this.config_files, "change", _.throttle(this.render, 250));
-        this.listenTo(this.game_sessions, "change", _.throttle(this.render, 250));
-        this.listenTo(this.game_objects, "change", _.throttle(this.render, 250));
-        this.listenTo(this.subject, "change", this.render);
+        LSCP.Sync.on("syncing", function(e, data){
+          console.log('syncing', data);
+          self.syncing = data;
+          self.render();
+        });
+        LSCP.Sync.on("synced", function(){
+          console.log('synced');
+          self.syncing = false;
+          self.render();
+        });
 
-        this.render();
-      }.bind(this));
+        self.render();
+      });
     },
 
     events: {
       "touchstart .close": "close",
       "touchstart #changeConfig": "changeConfig",
-      "touchstart #downloadConfig": "downloadConfig",
-      "touchstart .sync button": "syncNow",
-      "touchstart .download_objects button": "downloadObjects",
+      "touchstart #syncUpload": "syncUpload",
+      "touchstart #syncDownload": "syncDownload",
       "touchstart .subject button": "changeSubjectId",
 
       "mousedown .close": "close",
       "mousedown #changeConfig": "changeConfig",
-      "mousedown #downloadConfig": "downloadConfig",
-      "mousedown .sync button": "syncNow",
-      "mousedown .download_objects button": "downloadObjects",
+      "mousedown #syncUpload": "syncUpload",
+      "mousedown #syncDownload": "syncDownload",
       "mousedown .subject button": "changeSubjectId"
     },
 
@@ -49,12 +61,14 @@ LSCP.View.Dashboard = Backbone.View.extend({
         current_subject_id: this.subject.get('anonymous_id'),
         total_game_sessions: this.game_sessions.count(),
         game_sessions_to_sync: this.game_sessions.count({synced: false}),
-        local_game_objects: this.game_objects.count({downloaded: true})
+        local_game_objects: this.game_objects.count(),
+        updates: this.updates,
+        syncing: this.syncing
       };
       console.log('render', data);
       var html = this.template(data);
       this.$el.html(html);
-      if ($('#'+this.id).length === 0) $('#app').append(this.$el);
+      if ($('#'+this.id).length === 0) {$('#app').append(this.$el);}
     },
 
     close: function(e) {
@@ -72,11 +86,6 @@ LSCP.View.Dashboard = Backbone.View.extend({
       this.config_files.setCurrent(new_config);
     },
 
-    downloadConfig: function(e){
-      e.stopPropagation(); e.preventDefault();
-      this.config_files.downloadFromBackend();
-    },
-
     changeSubjectId: function(e){
       e.stopPropagation(); e.preventDefault();
       var new_subject_id = $('.subject input[name=subject-id]').val();
@@ -85,22 +94,19 @@ LSCP.View.Dashboard = Backbone.View.extend({
       this.subject.set('anonymous_id', new_subject_id);
     },
 
-    syncNow: function(e){
+    syncUpload: function(e){
       e.stopPropagation(); e.preventDefault();
       this.game_sessions.sendToBackend();
     },
 
-    downloadObjects: function(e){
+    syncDownload: function(e){
       e.stopPropagation(); e.preventDefault();
-      this.game_objects.downloadAssets();
-    },
-
-    onOnline: function(){
-      $('#syncNow').show();
-    },
-
-    onOffline: function(){
-      $('#syncNow').hide();
+      var self = this;
+      LSCP.Sync.downloadConfig().done(function(){
+        self.render();
+        // Reload, so the new config is taken into account
+//        window.location.reload(false);
+      });
     }
 
 });

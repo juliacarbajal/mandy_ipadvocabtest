@@ -146,7 +146,7 @@ gulp.task('build', ['html', 'images', 'fonts', 'extras'], function () {
 
 // phonegap-build
 // run all the tasks and sends the app to PhoneGap Build for packaging
-gulp.task('phonegap-build', ['build'], function () {
+gulp.task('phonegap-build', ['html', 'images', 'fonts', 'extras'], function () {
   return gulp.src(paths.archive, { base: "." })
       .pipe($.phonegapBuild({
         appId: '879592',
@@ -165,7 +165,7 @@ gulp.task('phonegap-build', ['build'], function () {
 
 // default
 // clean and build the app on PhoneGap Build
-gulp.task('default', function () {
+gulp.task('default', ['clean'], function () {
     gulp.start('phonegap-build');
 });
 

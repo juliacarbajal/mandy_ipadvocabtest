@@ -14,15 +14,8 @@ LSCP.View.Session = Backbone.View.extend({
     this.subject = new LSCP.Model.Subject();
     this.game_sessions = new LSCP.Collection.GameSessionCollection();
 
-    this.configs = new LSCP.Collection.ConfigCollection()
-        .once('populatedFromDatabase', _.bind(this.onConfigsLoaded, this));
-  },
+    this.configs = new LSCP.Collection.ConfigCollection();
 
-  render: function(){
-      return this;
-  },
-
-  onConfigsLoaded: function(){
     console.log(this.configs.hasCurrent());
     if (!this.configs.hasCurrent()) {
       window.alert("Vous devez d'abord sélectionner un fichier de configuration dans le dashboard.");
@@ -31,6 +24,10 @@ LSCP.View.Session = Backbone.View.extend({
     }
     this.config = new LSCP.Model.Session(this.configs.getCurrentConfigContent().session);
     this.startSession();
+  },
+
+  render: function(){
+      return this;
   },
 
   startSession: function(){

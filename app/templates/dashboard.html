@@ -2,28 +2,29 @@
 <h1>Dashboard</h1>
   <div class="col">
     <fieldset class="config">
-      <h2><strong>Fichier de configuration</strong><br />
+      <h2><strong>Profil de configuration</strong><br />
         Actuellement : <em class="config-current"><%= current_config_file.get('name') %></em></h2>
-      <label>Choisir un fichier local :
-        <select name="config-local">
+      <label><select name="config-local">
           <% config_files.each(function(f) { %>
           <option value="<%= f.get('id') %>"<% if (f.get('id') == current_config_file.get('id')) { %> selected="selected"<% } %>><%= f.get('name') %></option>
           <% }); %>
         </select>
         <button id="changeConfig">Changer la configuration</button>
       </label>
-      <button id="downloadConfig">Télécharger maintenant</button>
     </fieldset>
     <fieldset class="sync">
       <h2><strong>Synchronisation</strong></h2>
       <p><em class="total-sessions"><%= total_game_sessions %></em> sessions enregistrées<br />
         <em class="sessions-to-sync"><%= game_sessions_to_sync %></em> sessions à synchroniser</p>
-      <% if (game_sessions_to_sync > 0) { %><button id="syncNow">Synchroniser maintenant</button><% } %>
-    </fieldset>
-    <fieldset class="download_objects">
+      <% if (game_sessions_to_sync > 0) { %><button id="syncUpload">Synchroniser maintenant</button><% } %>
+      <% if (updates) { %>
       <h2><strong>Objets de jeu</strong></h2>
       <p><em class="local-objects"><%= local_game_objects %></em> objets téléchargés localement</p>
-      <button id="downloadObjects">Télécharger maintenant</button>
+      <p><% if (updates.game_objects) { %>available objects!<br /><% } %>
+        <% if (updates.config_scenarios) { %>available scenarios!<br /><% } %>
+        <% if (updates.config_profiles) { %>available profiles!<% } %></p>
+      <button id="syncDownload">Sync</button>
+      <% } %>
     </fieldset>
   </div>
   <div class="col">
@@ -34,3 +35,11 @@
       <button id="changeSubjectId">Changer l'identifiant</button>
     </fieldset>
   </div>
+<% if (syncing) { %>
+<div class="modal-layer">
+  <div class="modal">
+    <h1>Synchronisation...</h1>
+    <progress id="syncProgress" value="<%= syncing.value %>" max="<%= syncing.total %>"></progress>
+  </div>
+</div>
+<% } %>

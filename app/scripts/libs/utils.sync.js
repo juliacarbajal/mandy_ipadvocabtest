@@ -40,9 +40,9 @@ _.extend(SyncService.prototype, {
     var url = LSCP.Locations.Backend + '/sync/download';
 
     $.getJSON(url).then(function(data){
-      console.log('Distant version: ', data.version);
-      console.log('Local version: ', localStorage['lscp.idevxxi.config_version']);
-      if (data.version !== localStorage['lscp.idevxxi.config_version']) {
+      console.log('Distant version: ', parseInt(data.version));
+      console.log('Local version: ', parseInt(localStorage['lscp.idevxxi.config_version']));
+      if (parseInt(data.version) !== parseInt(localStorage['lscp.idevxxi.config_version'])) {
 
         self.downloadAllObjectsAssets(data.game_objects).done(function(game_objects){
           console.log('downloadAllObjectsAssets', game_objects);
@@ -161,25 +161,26 @@ _.extend(SyncService.prototype, {
   checkVersion: function(){
     var self = this;
     var deferred = $.Deferred();
+    var new_config;
 
     self.getJSON().then(function(data){
-      deferred.resolve({
-        version: data.version,
-        game_objects: data.game_objects.length,
-        config_scenarios: data.config_scenarios.length,
-        config_profiles: data.config_profiles.length
-      });
+      console.log('Distant version: ', parseInt(data.version));
+      console.log('Local version: ', parseInt(localStorage['lscp.idevxxi.config_version']));
+      if (parseInt(data.version) !== parseInt(localStorage['lscp.idevxxi.config_version'])) {
+        new_config = {
+          version: data.version,
+          game_objects: data.game_objects.length,
+          config_scenarios: data.config_scenarios.length,
+          config_profiles: data.config_profiles.length
+        };
+      } else {
+        console.info('Distant and local version are the same!');
+        new_config = false;
+      }
+      deferred.resolve(new_config);
     });
 
     return deferred;
-  },
-
-  getUpdatedAt: function (key){
-    return localStorage['lscp.idevxxi.' + key] || false;
-  },
-
-  isUpToDate: function (key, data){
-    return (this.getUpdatedAt(key) === data[key]);
   }
 
 });

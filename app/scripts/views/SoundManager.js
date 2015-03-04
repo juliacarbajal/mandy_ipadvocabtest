@@ -2,6 +2,7 @@
 LSCP.SoundManager = new Object({
 
     sounds: {},
+    playing: {},
     debug: false,
     randomSpriteRegex: /(\D+)\d+$/,
 
@@ -51,7 +52,16 @@ LSCP.SoundManager = new Object({
             sprite = sprite.replace('*', this.randomFromInterval(1, this.sounds[sound].randomSprites[sprite]));
         }
 
-        this.sounds[sound].play(sprite);
+        // If the sound to play is not a plop, stop currently playing mandy sounds
+        if (sound !== 'plop' && _.has(this.playing, 'mandy')) {
+          this.playing.mandy.stop();
+        }
+
+        // Play the sound
+        this.playing[sound] = this.sounds[sound].play(sprite).on('end', _.bind(function(){
+          // After the sound played, remove it from this.playing
+          delete this.playing[sound];
+        }, this));
         return this;
     },
 

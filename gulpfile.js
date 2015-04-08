@@ -155,7 +155,7 @@ gulp.task('phonegap-build', ['html', 'images', 'fonts', 'extras'], function () {
           password: 'oh4redtw'
         },
         keys: {
-          ios: {password: 'fd'}
+          ios: {password: 'lscp'}
         },
         download: {
           ios: 'idevxxi.ipa'

@@ -34,12 +34,15 @@ LSCP.View.Session = Backbone.View.extend({
 
     this.current_game = this.config.games.shift();
 
+    var now = new Date();
     var subject = new LSCP.Model.Subject();
 
     var game_session_data = _.extend(this.config.attributes, {
       game: this.current_game,
       config: this.configs.getCurrent(),
-      subject: subject.get('anonymous_id')
+      subject: subject.get('anonymous_id'),
+      started_at: now,
+      should_end_at: new Date(now.getTime() + this.config.time_limit*1000)
     });
 
     this.game_sessions.create(game_session_data).then(_.bind(function(game_session){

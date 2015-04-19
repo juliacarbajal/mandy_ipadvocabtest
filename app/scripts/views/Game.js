@@ -29,19 +29,17 @@ LSCP.View.Game = Backbone.View.extend({
         };
 
         this.pos = {
-            CENTER_CENTER: {x: 'center', y: 'center'},
-            CENTER_LEFT:   {x: 0,        y: 'center'},
-            CENTER_RIGHT:  {x: 'right',  y: 'center'},
-            TOP_LEFT:      {x: 0,        y: 40},
-            TOP_RIGHT:     {x: 'right',  y: 40},
-            BOTTOM_RIGHT:  {x: 'right',  y: this.layersSize.height - (300 + 40 + 50)},
-            BOTTOM_LEFT:   {x: 0,        y: this.layersSize.height - (300 + 40 + 50)}
+          CENTER_CENTER: {x: 'center', y: 'center'},
+          CENTER_LEFT:   {x: 0,        y: 'center'},
+          CENTER_RIGHT:  {x: 'right',  y: 'center'},
+          TOP_LEFT:      {x: 0,        y: 40},
+          TOP_RIGHT:     {x: 'right',  y: 40},
+          BOTTOM_RIGHT:  {x: 'right',  y: this.layersSize.height - (300 + 40 + 50)},
+          BOTTOM_LEFT:   {x: 0,        y: this.layersSize.height - (300 + 40 + 50)},
+          FOR_1: ['CENTER_CENTER'],
+          FOR_2: ['CENTER_LEFT', 'CENTER_RIGHT'],
+          FOR_4: ['TOP_LEFT', 'TOP_RIGHT', 'BOTTOM_RIGHT', 'BOTTOM_LEFT']
         };
-        this.pos = _.extend({
-            FOR_1: [this.pos.CENTER_CENTER],
-            FOR_2: [this.pos.CENTER_LEFT, this.pos.CENTER_RIGHT],
-            FOR_4: [this.pos.TOP_LEFT, this.pos.TOP_RIGHT, this.pos.BOTTOM_RIGHT, this.pos.BOTTOM_LEFT]
-        }, this.pos);
 
         $.when(this.imagesLoaded, this.soundsLoaded).then(this.start.bind(this));
 	  },
@@ -69,6 +67,8 @@ LSCP.View.Game = Backbone.View.extend({
 
     end: function(){
         console.log('LSCP.View.Game ends!');
+        this.game_session.set({ended_at: new Date()});
+        this.game_session.sync('update', this.game_session, ['ended_at']);
         this.stopWatchingIdle();
         this.stopCheckingTimeLimit();
         $('body').css('backgroundColor', 'black');
@@ -148,6 +148,19 @@ LSCP.View.Game = Backbone.View.extend({
         this.reward.hide().off('end');
         this.end();
       }.bind(this));
+    },
+
+
+    // Helpers to count time diff
+
+    startMeasuringDiff: function(){
+      this.diffStart = +new Date(); // get unix-timestamp in milliseconds
+    },
+    stopMeasuringDiff: function(){
+      var diffStop = +new Date();
+      var diff = diffStop - this.diffStart;
+      this.diffStart = null;
+      return diff;
     },
 
 

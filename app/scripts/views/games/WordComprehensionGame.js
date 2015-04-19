@@ -213,11 +213,17 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     console.log("RETRY STAGE: level ", this.current_level, "stage", this.current_stage);
 
+    this.game_session.addTrialValue('repetition', 1);
+
     this.onIteration();
   },
 
   end: function(){
     console.log('LSCP.View.WordComprehensionGame ends!');
+
+    // Trial management
+    this.game_session.saveTrial();
+
     LSCP.View.Game.prototype.end.apply(this, arguments);
     collie.Renderer.removeAllLayer();
     collie.Renderer.unload();
@@ -233,6 +239,17 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     var level = this.getCurrentLevel();
     var stage = this.getCurrentStage();
+
+    // Trial management
+    this.game_session.saveTrial();
+    this.game_session.initTrial();
+    this.game_session.addTrialData({
+      level_number: this.current_level + 1,
+      level_name: level.get('name'),
+      level_background: level.get('background'),
+      stage_number: this.current_stage + 1,
+      objects_count: stage.get("objects").length
+    });
 
     // Progress
     if (this.current_stage === 0) this.game_session.set({progress: 0});
@@ -264,33 +281,40 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 //        }
 
     // Override objects positions
-    var objects_positions = [];
-    if (stage.get("objects_positions") == 'NATURAL') {
-      objects_positions = this.pos['FOR_' + stage.get("objects").length];
-    } else if (stage.get("objects_positions") == 'RANDOM') {
-      objects_positions = window.shuffleArray(this.pos['FOR_' + stage.get("objects").length]);
+    this.objects_positions = [];
+    if (stage.get("objects_positions") === 'NATURAL') {
+      this.objects_positions = this.pos['FOR_' + stage.get("objects").length];
+    } else if (stage.get("objects_positions") === 'RANDOM') {
+      this.objects_positions = window.shuffleArray(this.pos['FOR_' + stage.get("objects").length]);
     } else if (_.isArray(stage.get("objects_positions"))) {
-      objects_positions = _.map(stage.get("objects_positions"), function(pos) {
-        if (typeof this.pos[pos] == 'undefined') throw 'Wrong value "'+pos+'" for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;
-        return this.pos[pos];
-      }, this);
+      this.objects_positions = stage.get("objects_positions");
     } else {
       throw 'Wrong value for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;
     }
 
     // Create slots
-    if (stage.get("objects_positions") == 'RANDOM') {
+    if (stage.get("objects_positions") === 'RANDOM') {
       stage.set("objects", window.shuffleArray(stage.get("objects")));
     }
     _.each(stage.get("objects"), function(object, i){
+      var position = this.objects_positions[i];
+      if (typeof this.pos[position] === 'undefined') throw 'Wrong value "'+position+'" for "objects_positions" on level '+this.current_level+' stage '+this.current_stage;
       var slot = new collie.DisplayObject({
         backgroundImage: "slot",
         opacity: 0
-      }).set(objects_positions[i]).addTo(this.layers.slots);
+      }).set(this.pos[position]).addTo(this.layers.slots);
       new collie.DisplayObject({
         backgroundImage: 'object_' + object
       }).addTo(slot).align('center', 'center', slot);
       this.objects.slots.push(slot);
+      this.game_session.addTrialValue("object"+(i+1)+"_name", object);
+
+      if (stage.get("ask_for") === object) {
+        this.game_session.addTrialData({
+          object_asked: stage.get('ask_for'),
+          object_asked_position: position
+        });
+      }
     }, this);
 
 
@@ -340,6 +364,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
   introduceObject: function(slot, i){
     var stage = this.getCurrentStage();
+    this.startMeasuringDiff();
 
     this.sound.play('object_' + stage.get('objects')[i], 'intro');
 
@@ -359,6 +384,8 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
         slot.attach({
           mousedown: function () {
+            var diff_time = this.stopMeasuringDiff();
+
             this.sound.play('plop');
             var currentY = slot.get('y');
             collie.Timer.transition(slot, 400 / this.speed, {
@@ -374,6 +401,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             _.invoke(this.objects.slots, 'set', {backgroundColor: 'rgba(255,255,255,0)'});
             _.invoke(this.objects.slots, 'detachAll');
 
+            this.game_session.addTrialValue("object"+(i+1)+"_touch_diff_time", diff_time);
             this.game_session.saveEvent('touch_object', stage.get('objects')[i]);
 
             setTimeout(function(){
@@ -403,6 +431,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     LSCP.View.Game.prototype.onCorrectAnswer.apply(this, arguments);
 
     var level = this.getCurrentLevel();
+    this.game_session.addTrialValue('correct', 1);
 
     // Idle
     this.stopWatchingIdle();
@@ -414,6 +443,10 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       // Sound
       this.sound.play('mandy', 'right*');
       if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ BRAVO!");
+
+      this.game_session.addTrialValue('feedback', 1);
+    } else {
+      this.game_session.addTrialValue('feedback', 0);
     }
 
     // Progress
@@ -466,6 +499,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     LSCP.View.Game.prototype.onWrongAnswer.apply(this, arguments);
 
     var level = this.getCurrentLevel();
+    this.game_session.addTrialValue('correct', 0);
 
     // Idle
     this.stopWatchingIdle();
@@ -480,8 +514,12 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
       // Slot
       slot.set('backgroundImage', 'slot-wrong');
+
+      this.game_session.addTrialValue('feedback', 1);
     } else {
       slot.set('backgroundImage', 'slot-correct');
+
+      this.game_session.addTrialValue('feedback', 0);
     }
 
     // Display queue
@@ -578,6 +616,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       }).
 
       delay(function(){
+        this.startMeasuringDiff();
         this.startWatchingIdle();
         LSCP.Mandy.visible = true;
         this.timers.characters.hello.start();
@@ -589,6 +628,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
               this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
               this.objects.character.detachAll();
 
+              this.game_session.addTrialValue("mandy_touch_diff_time", this.stopMeasuringDiff());
               this.stopWatchingIdle();
               this.onTouchCharacter();
             }.bind(this)
@@ -619,6 +659,13 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             mousedown: function () {
               this.sound.play('plop');
               this.game_session.saveEvent('touch_object', stage.get("objects")[i]);
+              var object_touched_at = +new Date() - (+this.game_session.get('started_at'));
+              this.game_session.addTrialData({
+                object_touched: stage.get("objects")[i],
+                object_touched_position: this.objects_positions[i],
+                object_touched_at: object_touched_at,
+                stage_end: 'touch_object'
+              });
 
               _.invoke(this.objects.slots, 'detachAll');
 

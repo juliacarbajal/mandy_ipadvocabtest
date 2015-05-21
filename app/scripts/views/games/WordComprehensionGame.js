@@ -641,6 +641,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
   onTouchCharacter: function(){
     this.sound.play('plop');
     var stage = this.getCurrentStage();
+    var started_asking_at;
 
     this.game_session.saveEvent('touch_mandy');
 
@@ -649,6 +650,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       delay(function(){
         this.timers.characters.ask.start();
         this.sound.delayedPlay(500, 'object_' + stage.get('ask_for'), 'ask');
+        started_asking_at = +new Date() + 500;
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
       }.bind(this), 500 / this.speed).
 
@@ -659,7 +661,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             mousedown: function () {
               this.sound.play('plop');
               this.game_session.saveEvent('touch_object', stage.get("objects")[i]);
-              var object_touched_at = +new Date() - (+this.game_session.get('started_at'));
+              var object_touched_at = +new Date() - started_asking_at;
               this.game_session.addTrialData({
                 object_touched: stage.get("objects")[i],
                 object_touched_position: this.objects_positions[i],

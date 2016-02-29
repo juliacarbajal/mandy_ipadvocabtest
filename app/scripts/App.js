@@ -1,15 +1,32 @@
 /*global cordova:false */
 /*global SyncService:false */
 
-// Create Namespace
 var LSCP = window.LSCP || {};
+LSCP.Locations = LSCP.Locations || {};
+
+/* ---------------------------------------------------------
+* CONFIGURATION
+* Please adapt the following settings to your project.
+* */
+
+LSCP.Auth = {
+
+  // The credentials below are used to authenticate requests to the backend.
+  username: '', // define a username here
+  password: '', // define a password here
+
+  // The password below is used to protect access to the app settings.
+  dashboard_password: 'abc123' // you can customize it
+
+};
+
+// Your backend base URL (for instance: http://mybackend.com)
+LSCP.Locations.Backend = '';
+
+/* End of CONFIGURATION, please do not change anything below this line.
+ * --------------------------------------------------------- */
 
 /* AUTH */
-LSCP.Auth = {
-  username: 'idevxxi',
-  password: 'YuY4TLztg8WycUR9CrcN82n7nwWmxfne',
-  dashboard_password: 'abc123'
-};
 LSCP.Auth.headers = {
   'Authorization': "Basic " + btoa(LSCP.Auth.username + ":" + LSCP.Auth.password)
 };
@@ -30,8 +47,6 @@ LSCP.View = LSCP.View || {};
 LSCP.Config = LSCP.Config || {};
 
 /* LOCATIONS */
-LSCP.Locations = LSCP.Locations || {};
-LSCP.Locations.Backend = 'http://idevxxi.acristia.org';
 LSCP.Locations.Templates = '/templates/';
 LSCP.Locations.JSON = '/data/';
 LSCP.Locations.Images = 'images/';
@@ -39,7 +54,7 @@ LSCP.Locations.Sounds = 'audio/';
 
 /* EVENTS */
 LSCP.Events = {
-	APP_LOADING : "APP_LOADING"
+  APP_LOADING : "APP_LOADING"
 };
 
 
@@ -62,7 +77,7 @@ $(document).bind('ready', jqReady.resolve);
 $.when(jqReady, pgReady).then(function () {
 
   // Disable AJAX cache
-//  $.ajaxSetup({ cache: false });
+  //$.ajaxSetup({ cache: false });
 
   LSCP.App = new LSCP.View.Base();
   persistence.store.websql.config(persistence, 'idevxxi', 'Local database for iDevXXI', 25 * 1024 * 1024);

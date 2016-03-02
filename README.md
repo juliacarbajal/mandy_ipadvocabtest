@@ -32,12 +32,18 @@ You don't need to install them manually if you use Phonegap Build.
 * `bower install`
 * define your configuration settings in `app/scripts/App.js`
 
-Run `gulp watch` for in-browser development and test with livereload.
-
 ## Package and distribute
 
 We do not package the app locally, but use [PhoneGap Build](http://build.phonegap.com) instead.
 
-Run `gulp build`, which prepares the app for release and creates a zip archive (`app.zip`, in the project directory), then upload this archive to PhoneGap Build to package the app.
+### Using command line
+
+Define your configuration settings in `gulpfile.js`.
+
+Run `gulp phonegap-build`, to compile the app, upload it to PhoneGap Build, package it and download the packaged app file (by default `idevxxi.ipa`, in the project directory).
+
+### Manually
+
+Run `gulp build`, which prepares the app for release and creates a zip archive (`app.zip`, in the project directory), then manually upload this archive to PhoneGap Build to package the app.
 
 See [PhoneGap Build documentation](http://docs.build.phonegap.com) for more information.

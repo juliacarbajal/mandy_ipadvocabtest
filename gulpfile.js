@@ -2,7 +2,37 @@
 
 var gulp = require('gulp');
 
-// paths
+/* ---------------------------------------------------------
+ * CONFIGURATION
+ * Please adapt the following settings to your project.
+ * */
+
+// PhoneGap Build config
+// documentation here: https://github.com/marcbuils/gulp-phonegap-build
+var pgbConfig = {
+  // your App ID on PhoneGap Build
+  appId: '879592',
+
+  user: {
+    // set your PhoneGap Build (Adobe) credentials below
+    email: '',
+    password: ''
+  },
+
+  keys: {
+    // the password to unlock your Apple Developer certificate
+    ios: {password: ''}
+  },
+
+  download: {
+    // name you want to give to the packaged app file when downloading it from PhoneGap Build
+    ios: 'idevxxi.ipa'
+  }
+};
+
+/* End of CONFIGURATION, please do not change anything below this line.
+ * --------------------------------------------------------- */
+
 var paths = {
   styles: 'app/styles/main.scss',
   scripts: [
@@ -148,19 +178,7 @@ gulp.task('build', ['html', 'images', 'fonts', 'extras'], function () {
 // run all the tasks and sends the app to PhoneGap Build for packaging
 gulp.task('phonegap-build', ['html', 'images', 'fonts', 'extras'], function () {
   return gulp.src(paths.archive, { base: "." })
-      .pipe($.phonegapBuild({
-        appId: '879592',
-        user: {
-          email: 'hans@etaminstudio.com',
-          password: 'oh4redtw'
-        },
-        keys: {
-          ios: {password: 'lscp'}
-        },
-        download: {
-          ios: 'idevxxi.ipa'
-        }
-      }));
+      .pipe($.phonegapBuild(pgbConfig));
 });
 
 // default

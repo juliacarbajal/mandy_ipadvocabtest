@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
-<widget id="com.etaminstudio.lscp.idevxxi" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.etaminstudio.lscp.idevxxi" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 
     <name>LSCP iDevXXI</name>
 
@@ -27,7 +27,7 @@
     <preference name="permissions" value="none" />
 
     <!-- Customize your app and platform with the preference element. -->
-    <preference name="phonegap-version" value="3.7.0" />            <!-- all: current version of PhoneGap -->
+    <preference name="phonegap-version" value="cli-5.2.0" />        <!-- all: current version of PhoneGap -->
     <preference name="orientation" value="landscape" />             <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device" value="tablet" />              <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen" value="true" />                   <!-- all: hides the status bar at the top of the screen -->

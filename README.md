@@ -15,7 +15,10 @@ This app communicates with a back-office that receives and safely stores the exp
 * Git
 * Node and npm ([download](http://nodejs.org/download/))
 * Bower `npm install -g bower`
-* Gulp (will be installed by npm)
+* Gulp `sudo npm install gulp -g` 
+* Ruby `sudo npm install ruby -g`
+* sass `gem install sass`
+
 
 ### Phonegap plugins used
 
@@ -27,9 +30,8 @@ You don't need to install them manually if you use Phonegap Build.
 
 ## Local development setup
 
-* clone the repository
-* `npm install`
-* `bower install`
+* clone the repository (see instructions in CONTRIBUTE.md)
+* install all of the dependencies noted above
 * define your configuration settings in `app/scripts/App.js`
 
 ## Package and distribute

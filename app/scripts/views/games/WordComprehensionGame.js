@@ -603,7 +603,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         effect: collie.Effect.easeOutQuint
       }).
 
-      transition(this.objects.character, 10 / this.speed, {//IMPORTANT -- TIME REDUCED 1000 TO 10 TO SPEED UP
+      transition(this.objects.character, 1000 / this.speed, {
         to: 200,
         set: "y",
         effect: collie.Effect.easeOutQuint

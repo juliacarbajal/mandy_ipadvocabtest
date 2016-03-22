@@ -2,7 +2,7 @@ LSCP.View.Game = Backbone.View.extend({
 
     id : "game",
     game_session: null,
-    speed: 1, // CHANGE THIS TO SPEED UP???
+    speed: 2, // CHANGED SPEED TO SPEED UP
     subtitles: false,
     progressbar: null,
     reward: null,

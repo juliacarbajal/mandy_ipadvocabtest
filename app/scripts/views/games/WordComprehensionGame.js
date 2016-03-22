@@ -321,9 +321,9 @@ idle3: [40659, 656]
 //IMPORTANT!!! MODIFY TIMING OF IMAGE APPEARANCE HERE???
       delay(function(){
         this.objects.hud_text.set({visible: true});
-      }.bind(this), 1000 / this.speed).
+      }.bind(this), 10 / this.speed). //IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
 
-      transition(this.objects.overlay, 1000 / this.speed, {
+      transition(this.objects.overlay, 10 / this.speed, {//IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
         from: 1,
         to: 0,
         set: "opacity",
@@ -337,16 +337,16 @@ idle3: [40659, 656]
         else {
           _.each(this.objects.slots, function(slot, i){
             setTimeout(function(){
-              collie.Timer.transition(this.objects.slots[i], 1000 / this.speed, {
+              collie.Timer.transition(this.objects.slots[i], 10 / this.speed, {//IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
                 from: 0,
                 to: 1,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
               });
               if (i === stage.get("objects").length - 1) {
-                setTimeout(this.onObjectsIntroduced.bind(this), 2000 / this.speed);
+                setTimeout(this.onObjectsIntroduced.bind(this), 20 / this.speed);//IMPORTANT TIME CHANGED FROM 2000 TO 20 TO SPEED UP
               }
-            }.bind(this), 1500 * i / this.speed);
+            }.bind(this), 0 * i / this.speed);//IMPORTANT TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP
           }.bind(this));
         }
       }.bind(this), 0)

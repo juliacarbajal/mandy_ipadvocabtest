@@ -25,7 +25,7 @@ LSCP.Mandy = new Object({
         },
         hello: {
             sprite: 'hello.png',
-            values: [0,1,2,3,0],
+            values: [0],
 //ORIGINAL            values: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,10,11,14,15,16,17,18,19,16,17,20,21,22,23,0],
             loop: 0 //IMPORTANT!!! CHANGED FROM 1 TO 0 TO SPEED UP -- SEE ALSO ORIGINAL LINE PRECEDING
         },

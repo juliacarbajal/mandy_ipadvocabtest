@@ -12,8 +12,8 @@ LSCP.Locations = LSCP.Locations || {};
 LSCP.Auth = {
 
   // The credentials below are used to authenticate requests to the backend.
-  username: '', // define a username here
-  password: '', // define a password here
+  username: 'idevxxi', // define a username here
+  password: 'HotCYO5l8qOKY6HNztWg', // define a password here
 
   // The password below is used to protect access to the app settings.
   dashboard_password: 'abc123' // you can customize it
@@ -21,7 +21,7 @@ LSCP.Auth = {
 };
 
 // Your backend base URL (for instance: http://mybackend.com)
-LSCP.Locations.Backend = '';
+LSCP.Locations.Backend = 'http://idevxxi.acristia.org';
 
 /* End of CONFIGURATION, please do not change anything below this line.
  * --------------------------------------------------------- */

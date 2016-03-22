@@ -24,25 +24,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       ['mandy', {
         urls: [LSCP.Locations.Sounds + 'mandy/sprite.mp3'],
         sprite: {
-          hello1:   [900, 1600],
-          hello2:   [3100, 1600],
-          hello3:   [5300, 1600],
-          hello4:   [7500, 1600],
-          hello5:   [9700, 1600],
-          right1:   [11900, 1600],
-          right2:   [14100, 1600],
-          right3:   [16300, 1600],
-          right4:   [18500, 1600],
-          right5:   [20700, 1600],
-          right6:   [22900, 1600],
-          wrong1:   [25100, 1600],
-          wrong2:   [27300, 1600],
-          wrong3:   [29500, 1600],
-          wrong4:   [31700, 1600],
-          wrong5:   [33900, 1600],
-          idle1:    [36100, 1600],
-          idle2:    [38300, 1600],
-          idle3:    [40500, 1600]
+hello1: [1083, 831],hello2: [3268, 640],hello3: [5386, 1144],hello4: [7612, 662],hello5: [9800, 600],right1: [12040, 782],right2: [14235, 792],right3: [16435, 792],right4: [18581, 902],right5: [20555, 1152],right6: [23041, 968],wrong1: [25235, 1104],wrong2: [27435, 1592],wrong3: [29627, 768],wrong4: [31835, 1136],wrong5: [34035, 1104],idle1: [36195, 1157],idle2: [38467, 360],idle3: [40659, 656]
+
+
        }
       }],
       ['plop', {urls: [LSCP.Locations.Sounds + 'plop.mp3']}]

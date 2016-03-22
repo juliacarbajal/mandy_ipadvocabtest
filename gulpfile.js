@@ -11,17 +11,17 @@ var gulp = require('gulp');
 // documentation here: https://github.com/marcbuils/gulp-phonegap-build
 var pgbConfig = {
   // your App ID on PhoneGap Build
-  appId: '879592',
+  appId: '1969803',
 
   user: {
     // set your PhoneGap Build (Adobe) credentials below
-    email: '',
-    password: ''
+    email: 'alecristia@gmail.com',
+    password: '10feb1980A'
   },
 
   keys: {
     // the password to unlock your Apple Developer certificate
-    ios: {password: ''}
+    ios: {password: 'temp'}
   },
 
   download: {

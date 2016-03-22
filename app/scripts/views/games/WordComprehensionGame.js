@@ -619,27 +619,27 @@ idle3: [40659, 656]
 
         this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
 // ORIGINAL CODE
-//          .attach({
-//            mousedown: function () {//IMPORTANT
-//              this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
-//              this.objects.character.detachAll();
+         .attach({
+           mousedown: function () {//IMPORTANT
+             this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
+             this.objects.character.detachAll();
 
-//              this.game_session.addTrialValue("mandy_touch_diff_time", this.stopMeasuringDiff());
-//              this.stopWatchingIdle();
-//              this.onTouchCharacter();
-//            }.bind(this)
-//          });
+             this.game_session.addTrialValue("mandy_touch_diff_time", this.stopMeasuringDiff());
+             this.stopWatchingIdle();
+             this.onTouchCharacter();
+           }.bind(this)
+         });
 
         
 //IMPORTANT!! CHANGED ORIGINAL CODE TO BELOW IN ORDER TO PLAY THE QUESTION DIRECTLY!!        
 //          .attach({
 //            mousedown: function () {//IMPORTANT
-              this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
-              this.objects.character.detachAll();
-
-              this.game_session.addTrialValue("mandy_touch_diff_time", this.stopMeasuringDiff());
-              this.stopWatchingIdle();
-              this.onTouchCharacter();
+//               this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
+//               this.objects.character.detachAll();
+// 
+//               this.game_session.addTrialValue("mandy_touch_diff_time", this.stopMeasuringDiff());
+//               this.stopWatchingIdle();
+//               this.onTouchCharacter();
 //            }.bind(this)
           });
       }.bind(this), 0)

@@ -343,7 +343,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 effect: collie.Effect.easeOutQuint
               });
               if (i === stage.get("objects").length - 1) {
-                setTimeout(this.onObjectsIntroduced.bind(this), 3000 / this.speed); //IMPORTANT -- TIME CHANGED FROM 2K TO 3K TO ALLOW MORE INSPECTION TIME
+                setTimeout(this.onObjectsIntroduced.bind(this), 4000 / this.speed); //IMPORTANT -- TIME CHANGED FROM 2K TO 3K TO ALLOW MORE INSPECTION TIME
               }
             }.bind(this), 0 * i / this.speed);//IMPORTANT TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP
           }.bind(this));

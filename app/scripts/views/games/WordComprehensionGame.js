@@ -317,7 +317,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     collie.Timer.queue().
 
-//IMPORTANT!!! MODIFY TIMING OF IMAGE APPEARANCE HERE???
+//IMPORTANT!!! MODIFY TIMING OF IMAGE APPEARANCE HERE
       delay(function(){
         this.objects.hud_text.set({visible: true});
       }.bind(this), 10 / this.speed). //IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
@@ -343,7 +343,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
                 effect: collie.Effect.easeOutQuint
               });
               if (i === stage.get("objects").length - 1) {
-                setTimeout(this.onObjectsIntroduced.bind(this), 2000 / this.speed);
+                setTimeout(this.onObjectsIntroduced.bind(this), 3000 / this.speed); //IMPORTANT -- TIME CHANGED FROM 2K TO 3K TO ALLOW MORE INSPECTION TIME
               }
             }.bind(this), 0 * i / this.speed);//IMPORTANT TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP
           }.bind(this));
@@ -446,7 +446,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     //this.game_session.set({progress: Math.floor(progress)});
 
     // Display queue
-
     collie.Timer.queue().
 
       delay(function(){
@@ -517,7 +516,6 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     }
 
     // Display queue
-
     collie.Timer.queue().
 
       delay(function(){
@@ -596,6 +594,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     collie.Timer.queue().
 
+	  //cover things up
       transition(this.objects.overlay, 1000 / this.speed, {
         from: 0,
         to: 0.9,

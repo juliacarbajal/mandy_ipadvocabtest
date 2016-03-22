@@ -318,6 +318,7 @@ idle3: [40659, 656]
 
     collie.Timer.queue().
 
+//IMPORTANT!!! MODIFY TIMING OF IMAGE APPEARANCE HERE???
       delay(function(){
         this.objects.hud_text.set({visible: true});
       }.bind(this), 1000 / this.speed).
@@ -614,7 +615,7 @@ idle3: [40659, 656]
         this.startWatchingIdle();
         LSCP.Mandy.visible = true;
         this.timers.characters.hello.start();
-        this.sound.delayedPlay(600, 'mandy', 'hello*');
+//        this.sound.delayedPlay(600, 'mandy', 'hello*');//IMPORTANT!!! COMMENTED OUT TO SPEED UP GAME BY HAVING NO HELLO!
 
         this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
           .attach({
@@ -643,7 +644,8 @@ idle3: [40659, 656]
 
       delay(function(){
         this.timers.characters.ask.start();
-        this.sound.delayedPlay(500, 'object_' + stage.get('ask_for'), 'ask');
+        this.sound.delayedPlay(0, 'object_' + stage.get('ask_for'), 'ask');
+//        this.sound.delayedPlay(500, 'object_' + stage.get('ask_for'), 'ask');//IMPORTANT!!! CHANGED DELAY TIME
         started_asking_at = +new Date() + 500;
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ Where is the " + stage.get('ask_for') + "?");
       }.bind(this), 500 / this.speed).

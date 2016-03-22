@@ -596,7 +596,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
     collie.Timer.queue().
 
-      transition(this.objects.overlay, 10 / this.speed, {//IMPORTANT -- TIME REDUCED 1000 TO 10 TO SPEED UP
+      transition(this.objects.overlay, 1000 / this.speed, {
         from: 0,
         to: 0.9,
         set: "opacity",

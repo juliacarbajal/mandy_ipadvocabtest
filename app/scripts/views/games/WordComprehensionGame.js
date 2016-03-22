@@ -24,26 +24,25 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       ['mandy', {
         urls: [LSCP.Locations.Sounds + 'mandy/sprite.mp3'],
         sprite: {
-hello1: [1083, 831],
-hello2: [3268, 640],
-hello3: [5386, 1144],
-hello4: [7612, 662],
-hello5: [9800, 600],
-right1: [12040, 782],
-right2: [14235, 792],
-right3: [16435, 792],
-right4: [18581, 902],
-right5: [20555, 1152],
-right6: [23041, 968],
-wrong1: [25235, 1104],
-wrong2: [27435, 1592],
-wrong3: [29627, 768],
-wrong4: [31835, 1136],
-wrong5: [34035, 1104],
-idle1: [36195, 1157],
-idle2: [38467, 360],
-idle3: [40659, 656]
-
+		hello1: [1083, 831],
+		hello2: [3268, 640],
+		hello3: [5386, 1144],
+		hello4: [7612, 662],
+		hello5: [9800, 600],
+		right1: [12040, 782],
+		right2: [14235, 792],
+		right3: [16435, 792],
+		right4: [18581, 902],
+		right5: [20555, 1152],
+		right6: [23041, 968],
+		wrong1: [25235, 1104],
+		wrong2: [27435, 1592],
+		wrong3: [29627, 768],
+		wrong4: [31835, 1136],
+		wrong5: [34035, 1104],
+		idle1: [36195, 1157],
+		idle2: [38467, 360],
+		idle3: [40659, 656]
 
        }
       }],
@@ -337,14 +336,14 @@ idle3: [40659, 656]
         else {
           _.each(this.objects.slots, function(slot, i){
             setTimeout(function(){
-              collie.Timer.transition(this.objects.slots[i], 10 / this.speed, {//IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
+              collie.Timer.transition(this.objects.slots[i], 1000 / this.speed, {
                 from: 0,
                 to: 1,
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
               });
               if (i === stage.get("objects").length - 1) {
-                setTimeout(this.onObjectsIntroduced.bind(this), 20 / this.speed);//IMPORTANT TIME CHANGED FROM 2000 TO 20 TO SPEED UP
+                setTimeout(this.onObjectsIntroduced.bind(this), 2000 / this.speed);
               }
             }.bind(this), 0 * i / this.speed);//IMPORTANT TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP
           }.bind(this));

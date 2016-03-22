@@ -24,7 +24,25 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       ['mandy', {
         urls: [LSCP.Locations.Sounds + 'mandy/sprite.mp3'],
         sprite: {
-hello1: [1083, 831],hello2: [3268, 640],hello3: [5386, 1144],hello4: [7612, 662],hello5: [9800, 600],right1: [12040, 782],right2: [14235, 792],right3: [16435, 792],right4: [18581, 902],right5: [20555, 1152],right6: [23041, 968],wrong1: [25235, 1104],wrong2: [27435, 1592],wrong3: [29627, 768],wrong4: [31835, 1136],wrong5: [34035, 1104],idle1: [36195, 1157],idle2: [38467, 360],idle3: [40659, 656]
+hello1: [1083, 831],
+hello2: [3268, 640],
+hello3: [5386, 1144],
+hello4: [7612, 662],
+hello5: [9800, 600],
+right1: [12040, 782],
+right2: [14235, 792],
+right3: [16435, 792],
+right4: [18581, 902],
+right5: [20555, 1152],
+right6: [23041, 968],
+wrong1: [25235, 1104],
+wrong2: [27435, 1592],
+wrong3: [29627, 768],
+wrong4: [31835, 1136],
+wrong5: [34035, 1104],
+idle1: [36195, 1157],
+idle2: [38467, 360],
+idle3: [40659, 656]
 
 
        }
@@ -480,14 +498,16 @@ hello1: [1083, 831],hello2: [3268, 640],hello3: [5386, 1144],hello4: [7612, 6
 
     if (level.get('feedback') === true) {
       // Animation
-      this.timers.characters.sad.start();
+//      this.timers.characters.sad.start();//IMPORTANT!!! COMMENTED OUT SO AS TO MAKE THE GAME FASTER!!! NO NEGATIVE FEEDBACK!!!
+
 
       // Sound
-      this.sound.play('mandy', 'wrong*');
+//      this.sound.play('mandy', 'wrong*');//IMPORTANT!!! COMMENTED OUT SO AS TO MAKE THE GAME FASTER!!! NO NEGATIVE FEEDBACK!!!
+
       if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ NO, YOU'RE WRONG");
 
       // Slot
-      slot.set('backgroundImage', 'slot-wrong');
+//      slot.set('backgroundImage', 'slot-wrong'); //IMPORTANT!!! COMMENTED OUT SO AS TO MAKE THE GAME FASTER!!! NO NEGATIVE FEEDBACK!!!
 
       this.game_session.addTrialValue('feedback', 1);
     } else {

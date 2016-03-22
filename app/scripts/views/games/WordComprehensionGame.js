@@ -244,7 +244,7 @@ idle3: [40659, 656]
     });
 
     // Progress
-    if (this.current_stage === 0) this.game_session.set({progress: 0});
+    //if (this.current_stage === 0) this.game_session.set({progress: 0});//IMPORTANT!! PROGRESS BAR REMOVED TO SPEED UP
 
     // Set idle time for the current stage
     this.idleTime = stage.get('time_idle');
@@ -442,9 +442,9 @@ idle3: [40659, 656]
       this.game_session.addTrialValue('feedback', 0);
     }
 
-    // Progress
-    var progress = 100 / level.get('stages').length * (this.current_stage+1);
-    this.game_session.set({progress: Math.floor(progress)});
+    // Progress //IMPORTANT!! PROGRESS BAR REMOVED TO SPEED UP
+    //var progress = 100 / level.get('stages').length * (this.current_stage+1);
+    //this.game_session.set({progress: Math.floor(progress)});
 
     // Display queue
 
@@ -558,9 +558,9 @@ idle3: [40659, 656]
             break;
 
           case 'CONTINUE':
-            // Progress
-            var progress = 100 / level.get('stages').length * (this.current_stage+1);
-            this.game_session.set({progress: Math.floor(progress)});
+            // Progress//IMPORTANT!! PROGRESS BAR REMOVED TO SPEED UP
+            //var progress = 100 / level.get('stages').length * (this.current_stage+1);
+            //this.game_session.set({progress: Math.floor(progress)});
 
             this.nextStage();
             break;

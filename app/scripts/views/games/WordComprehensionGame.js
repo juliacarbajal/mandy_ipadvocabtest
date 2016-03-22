@@ -641,8 +641,8 @@ idle3: [40659, 656]
 //               this.stopWatchingIdle();
 //               this.onTouchCharacter();
 //            }.bind(this)
-          });
-      }.bind(this), 0)
+//          });
+//      }.bind(this), 0)
 
     ;
   },

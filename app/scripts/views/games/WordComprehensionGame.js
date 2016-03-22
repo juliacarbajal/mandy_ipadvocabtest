@@ -597,14 +597,14 @@ idle3: [40659, 656]
 
     collie.Timer.queue().
 
-      transition(this.objects.overlay, 1000 / this.speed, {
+      transition(this.objects.overlay, 10 / this.speed, {//IMPORTANT -- TIME REDUCED 1000 TO 10 TO SPEED UP
         from: 0,
         to: 0.9,
         set: "opacity",
         effect: collie.Effect.easeOutQuint
       }).
 
-      transition(this.objects.character, 1000 / this.speed, {
+      transition(this.objects.character, 10 / this.speed, {//IMPORTANT -- TIME REDUCED 1000 TO 10 TO SPEED UP
         to: 200,
         set: "y",
         effect: collie.Effect.easeOutQuint
@@ -629,20 +629,7 @@ idle3: [40659, 656]
              this.onTouchCharacter();
            }.bind(this)
          });
-
-        
-//IMPORTANT!! CHANGED ORIGINAL CODE TO BELOW IN ORDER TO PLAY THE QUESTION DIRECTLY!!        
-//          .attach({
-//            mousedown: function () {//IMPORTANT
-//               this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'});
-//               this.objects.character.detachAll();
-// 
-//               this.game_session.addTrialValue("mandy_touch_diff_time", this.stopMeasuringDiff());
-//               this.stopWatchingIdle();
-//               this.onTouchCharacter();
-//            }.bind(this)
-//          });
-//      }.bind(this), 0)
+      }.bind(this), 0)
 
     ;
   },

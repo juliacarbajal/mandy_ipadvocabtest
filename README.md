@@ -32,7 +32,7 @@ You don't need to install them manually if you use Phonegap Build.
 
 * clone the repository (see instructions in CONTRIBUTE.md)
 * install all of the dependencies noted above
-* define your configuration settings in `app/scripts/App.js`
+* define your configuration settings in `app/scripts/App.js` (see app/scripts/App_sample.js) 
 
 ## Package and distribute
 
@@ -40,7 +40,7 @@ We do not package the app locally, but use [PhoneGap Build](http://build.phonega
 
 ### Using command line
 
-Define your configuration settings in `gulpfile.js`.
+Define your configuration settings in `gulpfile.js` (see gulpfile_sample.js).
 
 Run `gulp phonegap-build`, to compile the app, upload it to PhoneGap Build, package it and download the packaged app file (by default `idevxxi.ipa`, in the project directory).
 

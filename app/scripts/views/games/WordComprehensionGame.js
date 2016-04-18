@@ -24,10 +24,10 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       ['mandy', {
         urls: [LSCP.Locations.Sounds + 'mandy/sprite-nonverbal.mp3'],
         sprite: {
-		hello1: [0, 1],
-		right1: [0, 615],
-		wrong1: [0, 1],
-		idle1: [1591, 1242]
+		hello1: [0, 140],
+		right1: [1682, 665],
+		wrong1: [1, 140],
+		idle1: [140, 500]
        }
       }],
       ['plop', {urls: [LSCP.Locations.Sounds + 'plop.mp3']}]

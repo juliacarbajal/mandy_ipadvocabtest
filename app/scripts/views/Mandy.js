@@ -14,8 +14,8 @@ LSCP.Mandy = new Object({
         },
         ask: {
             sprite: 'ask.png',
-            values: [0,0,0,0,1,0,2,5,6,6,7,6,6,7,6,6,7,13,14,0,0,0], // ORIGINAL [0,0,0,0,1,0,2,3,4,5,6,6,7,8,8,9,10,10,6,6,8,8,8,11,12,13,14,0,0,0],
-            loop: 0 //IMPORTANT!!! CHANGED FROM 1 TO 0 TO SPEED UP -- SEE ALSO ORIGINAL LINE PRECEDING
+            values: [0,0,2,5,6,6,7,13,14,0,0,0], // ORIGINAL [0,0,0,0,1,0,2,3,4,5,6,6,7,8,8,9,10,10,6,6,8,8,8,11,12,13,14,0,0,0],
+            loop: 1 //IMPORTANT!!! CHANGED FROM 1 TO 0 TO SPEED UP -- SEE ALSO ORIGINAL LINE PRECEDING
         },
         happy: {
             sprite: 'happy.png',
@@ -27,7 +27,7 @@ LSCP.Mandy = new Object({
             sprite: 'hello.png',
             values: [0],
 //ORIGINAL            values: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,10,11,14,15,16,17,18,19,16,17,20,21,22,23,0],
-            loop: 0 //IMPORTANT!!! CHANGED FROM 1 TO 0 TO SPEED UP -- SEE ALSO ORIGINAL LINE PRECEDING
+            loop: 1 
         },
         sad: {
             sprite: 'sad.png',
@@ -37,7 +37,7 @@ LSCP.Mandy = new Object({
         bored: {
             sprite: 'bored.png',
             values: [0,1,2,3,4,5,6,7,8,7,6,7,9,10,11,12], // ORIGINAL [0,1,2,3,4,5,6,7,8,7,6,7,9,10,11,12,13,12,11,12,13,12,11,14,15,16,17,18,19,20,21,20,22,23,24,23,25,26,27]
-            loop: 0 //IMPORTANT!!! CHANGED FROM 1 TO 0 TO SPEED UP -- SEE ALSO ORIGINAL LINE PRECEDING
+            loop: 1 
         },
         idle: {
             sprite: 'idle.png',

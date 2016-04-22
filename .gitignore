@@ -6,9 +6,4 @@ www
 .tmp
 .sass-cache
 app/bower_components
-test/bower_components
-
-.idea
-*.zip
 *.ipa
-*.apk

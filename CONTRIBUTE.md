@@ -2,13 +2,13 @@
 
 ## Maintainer
 
-Hans Lemuet <hans@etaminstudio.com>
+Alex Cristia <alecristia@gmail.com>
 
 ## Git workflow
 
-We follow the workflow described here: https://gist.github.com/Spone/f4e7f915df96069b5923
+We should aim to follow the workflow described here: https://gist.github.com/Spone/f4e7f915df96069b5923
 
-## Fix a bug or improve existing code
+## Fix a bug, improve existing code, or generate a version of your app
 
 First, clone the repository:
 
@@ -50,7 +50,7 @@ You can now get back to the `master` branch.
     $ git checkout master
 
 We want the maintainer of the repository to merge our changes, so we'll now create a "merge request".
-Login to http://git.etaminstud.io/lscp/app/merge_requests
+Login to http://git.etaminstud.io/lscp/app/merge_requests  ##NEEDS UPDATE
 
 Click on "+ New Merge Request".
 

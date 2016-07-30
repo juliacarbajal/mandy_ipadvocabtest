@@ -12,7 +12,7 @@ We should aim to follow the workflow described here: https://gist.github.com/Spo
 
 First, clone the repository:
 
-    $ git clone git@git.etaminstud.io:lscp/app.git
+    $ git clone https://github.com/alecristia/mandy_ipadvocabtest.git
 
 If this command fails, you probably have to add your SSH key here: https://git.etaminstud.io/profile/keys and try again.
 

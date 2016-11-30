@@ -581,7 +581,7 @@
 	  //cover things up
       transition(this.objects.overlay, 1000 / this.speed, {
         from: 0,
-        to: 0.9,
+        to: 0.3, //IMPORTANT!! JULIA CHANGED THIS FROM 0.9 to 0.3 TO DECREASE OPACITY
         set: "opacity",
         effect: collie.Effect.easeOutQuint
       }).
@@ -682,7 +682,7 @@
       }.bind(this), 2000 / this.speed).
 
       transition(this.objects.overlay, 1000 / this.speed, {
-        from: 0.9,
+        from: 0.3, //IMPORTANT!! JULIA CHANGED THIS FROM 0.9 to 0.3 TO DECREASE OPACITY
         to: 0,
         set: "opacity",
         effect: collie.Effect.easeOutQuint

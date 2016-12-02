@@ -304,7 +304,7 @@
 //IMPORTANT!!! MODIFY TIMING OF IMAGE APPEARANCE HERE
       delay(function(){
         this.objects.hud_text.set({visible: true});
-      }.bind(this), 10 / this.speed). //IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
+      }.bind(this), 1000 / this.speed). //IMPORTANT - REDEFINED AS 1000 (OLD: TIME CHANGED FROM 1000 TO 10 TO SPEED UP)
 
       transition(this.objects.overlay, 10 / this.speed, {//IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
         from: 1,
@@ -383,7 +383,7 @@
             setTimeout(function(){
               collie.Timer.transition(this.objects.slots[i], 200 / this.speed, {
                 from: 1,
-                to: 0.3,
+                to: 0, //IMPORTANT CHANGED FROM 0.3 TO 0 TO COMPLETELY DISAPPEAR THE FIRST OBJECT DURING SECOND OBJECT INTRODUCTION
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
               });

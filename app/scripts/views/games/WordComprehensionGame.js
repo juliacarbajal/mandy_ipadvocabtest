@@ -117,6 +117,7 @@
       textAlign: 'center',
       width: this.layersSize.width,
       height: 100,
+	  opacity: 0, //IMPORTANT CHANGED OPACITY TO MAKE THIS TEXT DISAPPEAR
       visible: false
     }).addTo(this.layers.hud);
     if (this.subtitles) this.objects.subtitles = new collie.Text({
@@ -304,7 +305,7 @@
 //IMPORTANT!!! MODIFY TIMING OF IMAGE APPEARANCE HERE
       delay(function(){
         this.objects.hud_text.set({visible: true});
-      }.bind(this), 1000 / this.speed). //IMPORTANT - REDEFINED AS 1000 (OLD: TIME CHANGED FROM 1000 TO 10 TO SPEED UP)
+      }.bind(this), 10 / this.speed). //IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
 
       transition(this.objects.overlay, 10 / this.speed, {//IMPORTANT TIME CHANGED FROM 1000 TO 10 TO SPEED UP
         from: 1,
@@ -329,7 +330,7 @@
               if (i === stage.get("objects").length - 1) {
                 setTimeout(this.onObjectsIntroduced.bind(this), 4000 / this.speed); //IMPORTANT -- TIME CHANGED FROM 2K TO 4K TO ALLOW MORE INSPECTION TIME
               }
-            }.bind(this), 0 * i / this.speed);//IMPORTANT TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP
+            }.bind(this), 1000 * i / this.speed);//IMPORTANT (OLD: TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP)
           }.bind(this));
         }
       }.bind(this), 0)
@@ -393,6 +394,19 @@
                 this.introduceObject(this.objects.slots[i], i);
               } else {
                 this.onObjectsIntroduced();
+				//IMPORTANT ADD THE OBJECTS BACK
+				collie.Timer.transition(this.objects.slots[i], 200 / this.speed, {
+				  from: 0,
+				  to: 1,
+				  set: "opacity",
+				  effect: collie.Effect.easeOutQuint
+				});
+				collie.Timer.transition(this.objects.slots[i-1], 200 / this.speed, {
+				  from: 0,
+				  to: 1,
+				  set: "opacity",
+				  effect: collie.Effect.easeOutQuint
+				});
               }
             }.bind(this), 2000 / this.speed);
           }.bind(this)

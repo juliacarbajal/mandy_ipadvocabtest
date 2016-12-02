@@ -391,7 +391,9 @@
 
               if (i < stage.get("objects").length - 1) {
                 i++;
-                this.introduceObject(this.objects.slots[i], i);
+				setTimeout(function(){
+					this.introduceObject(this.objects.slots[i], i)
+				}, 1500);
               } else {
                 this.onObjectsIntroduced();
 				//IMPORTANT HERE I ADD THE OBJECTS BACK

@@ -333,7 +333,7 @@
             }.bind(this), 1000 * i / this.speed);//IMPORTANT (OLD: TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP)
           }.bind(this));
         }
-      }.bind(this), 2000 / this.speed) //0) //IMPORTANT WE CHANGED THIS TO GIVE MORE TIME BEFORE SHOWING THE OBJECTS
+      }.bind(this), 2000 / this.speed) //IMPORTANT WE CHANGED THIS FROM 0 TO 2000 TO GIVE MORE TIME BEFORE SHOWING THE OBJECTS
 
     ;
 
@@ -411,7 +411,7 @@
             }.bind(this), 2000 / this.speed);
           }.bind(this)
         });
-      }.bind(this), 0)
+      }.bind(this), 2000 / this.speed) //IMPORTANT WE MODIFIED THIS FROM 0 TO 2000 TO GIVE MORE TIME BETWEEN INTRO OF ITEMS
 
     ;
 

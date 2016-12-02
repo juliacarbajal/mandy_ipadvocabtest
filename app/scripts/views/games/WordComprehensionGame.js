@@ -342,9 +342,9 @@
   introduceObject: function(slot, i){
     var stage = this.getCurrentStage();
     this.startMeasuringDiff();
-
-    this.sound.play('object_' + stage.get('objects')[i], 'intro');
-
+	
+    this.sound.delayedPlay(1000,'object_' + stage.get('objects')[i], 'intro'); //IMPORTANT ADDED DELAY
+	
     collie.Timer.queue().
 
       transition(slot, 1000 / this.speed, {
@@ -391,9 +391,7 @@
 
               if (i < stage.get("objects").length - 1) {
                 i++;
-				setTimeout(function(){
-					this.introduceObject(this.objects.slots[i], i)
-				}, 1500);
+				this.introduceObject(this.objects.slots[i], i);
               } else {
                 this.onObjectsIntroduced();
 				//IMPORTANT HERE I ADD THE OBJECTS BACK

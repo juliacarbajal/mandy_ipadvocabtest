@@ -394,14 +394,14 @@
                 this.introduceObject(this.objects.slots[i], i);
               } else {
                 this.onObjectsIntroduced();
-				//IMPORTANT ADD THE OBJECTS BACK
-				collie.Timer.transition(this.objects.slots[i], 200 / this.speed, {
+				//IMPORTANT HERE I ADD THE OBJECTS BACK BEFORE TEST
+				collie.Timer.transition(this.objects.slots[i], 20 / this.speed, {
 				  from: 0,
 				  to: 1,
 				  set: "opacity",
 				  effect: collie.Effect.easeOutQuint
 				});
-				collie.Timer.transition(this.objects.slots[i-1], 200 / this.speed, {
+				collie.Timer.transition(this.objects.slots[i-1], 20 / this.speed, {
 				  from: 0,
 				  to: 1,
 				  set: "opacity",
@@ -411,7 +411,7 @@
             }.bind(this), 2000 / this.speed);
           }.bind(this)
         });
-      }.bind(this), 0)
+      }.bind(this), 2000 / this.speed); //0)
 
     ;
 

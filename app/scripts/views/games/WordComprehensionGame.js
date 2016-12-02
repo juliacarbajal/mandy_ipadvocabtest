@@ -599,7 +599,7 @@
         this.timers.characters.hello.start();
 //        this.sound.delayedPlay(600, 'mandy', 'hello*');//IMPORTANT!!! COMMENTED OUT TO SPEED UP GAME BY HAVING NO HELLO!
 
-        this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
+        this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'}) //IMPORTANT!! JULIA CHANGED THE ALPHA TO ZERO TO GET RID OF WHITE BACKGROUND
 // ORIGINAL CODE
          .attach({
            mousedown: function () {//IMPORTANT

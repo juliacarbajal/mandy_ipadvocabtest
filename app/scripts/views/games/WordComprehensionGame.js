@@ -1,4 +1,4 @@
-LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
+﻿LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
   current_level: null,
   current_stage: null,
@@ -117,6 +117,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       textAlign: 'center',
       width: this.layersSize.width,
       height: 100,
+	  opacity: 0, //IMPORTANT CHANGED OPACITY TO MAKE THIS TEXT DISAPPEAR
       visible: false
     }).addTo(this.layers.hud);
     if (this.subtitles) this.objects.subtitles = new collie.Text({
@@ -227,7 +228,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
     });
 
     // Progress
-    //if (this.current_stage === 0) this.game_session.set({progress: 0});//IMPORTANT!! PROGRESS BAR REMOVED TO SPEED UP
+    if (this.current_stage === 0) this.game_session.set({progress: 0});//IMPORTANT!! PROGRESS BAR REINTRODUCED
 
     // Set idle time for the current stage
     this.idleTime = stage.get('time_idle');
@@ -329,7 +330,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
               if (i === stage.get("objects").length - 1) {
                 setTimeout(this.onObjectsIntroduced.bind(this), 4000 / this.speed); //IMPORTANT -- TIME CHANGED FROM 2K TO 4K TO ALLOW MORE INSPECTION TIME
               }
-            }.bind(this), 0 * i / this.speed);//IMPORTANT TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP
+            }.bind(this), 500 * i / this.speed);//IMPORTANT (OLD: TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP)
           }.bind(this));
         }
       }.bind(this), 0)
@@ -340,18 +341,29 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 
   introduceObject: function(slot, i){
     var stage = this.getCurrentStage();
-    this.startMeasuringDiff();
-
-    this.sound.play('object_' + stage.get('objects')[i], 'intro');
-
+	this.startMeasuringDiff();
+	
+    //IMPORTANT: MOVED THE SOUND TO THE QUEUE AND ADDED A DELAY BEFORE SHOWING OBJECT
+	
     collie.Timer.queue().
 
-      transition(slot, 1000 / this.speed, {
+	  delay(function(){
+		  this.sound.delayedPlay(900,'object_' + stage.get('objects')[i], 'intro'); //IMPORTANT ADDED DELAY
+		  collie.Timer.transition(this.objects.slots[i], 1000 / this.speed, {
+			  from: 0,
+			  to: 1,
+			  set: "opacity",
+			  effect: collie.Effect.easeOutQuint
+			});
+	  }.bind(this), 1000). //IMPORTANT ADDED 1s DELAY BEFORE SHOWING OBJECT
+	  
+//ORIGINAL VERSION
+/*       transition(slot, 1000 / this.speed, {
         from: 0,
         to: 1,
         set: "opacity",
         effect: collie.Effect.easeOutQuint
-      }).
+      }). */
 
       delay(function(){
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
@@ -383,21 +395,34 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             setTimeout(function(){
               collie.Timer.transition(this.objects.slots[i], 200 / this.speed, {
                 from: 1,
-                to: 0.3,
+                to: 0, //IMPORTANT CHANGED FROM 0.3 TO 0 TO COMPLETELY DISAPPEAR THE FIRST OBJECT DURING SECOND OBJECT INTRODUCTION
                 set: "opacity",
                 effect: collie.Effect.easeOutQuint
               });
 
               if (i < stage.get("objects").length - 1) {
                 i++;
-                this.introduceObject(this.objects.slots[i], i);
+				this.introduceObject(this.objects.slots[i], i);
               } else {
                 this.onObjectsIntroduced();
+				//IMPORTANT HERE I ADD THE OBJECTS BACK
+				collie.Timer.transition(this.objects.slots[i], 200 / this.speed, {
+				  from: 0,
+				  to: 1,
+				  set: "opacity",
+				  effect: collie.Effect.easeOutQuint
+				});
+				collie.Timer.transition(this.objects.slots[i-1], 200 / this.speed, {
+				  from: 0,
+				  to: 1,
+				  set: "opacity",
+				  effect: collie.Effect.easeOutQuint
+				});
               }
             }.bind(this), 2000 / this.speed);
           }.bind(this)
         });
-      }.bind(this), 0)
+      }.bind(this), 0) //IMPORTANT SET BACK TO 0(OLD:WE MODIFIED THIS FROM 0 TO 2000 TO GIVE MORE TIME BETWEEN INTRO OF ITEMS)
 
     ;
 
@@ -425,9 +450,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       this.game_session.addTrialValue('feedback', 0);
     }
 
-    // Progress //IMPORTANT!! PROGRESS BAR REMOVED TO SPEED UP
-    //var progress = 100 / level.get('stages').length * (this.current_stage+1);
-    //this.game_session.set({progress: Math.floor(progress)});
+    // Progress //IMPORTANT!! PROGRESS BAR REINTRODUCED
+    var progress = 100 / level.get('stages').length * (this.current_stage+1);
+    this.game_session.set({progress: Math.floor(progress)});
 
     // Display queue
     collie.Timer.queue().
@@ -539,9 +564,9 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
             break;
 
           case 'CONTINUE':
-            // Progress//IMPORTANT!! PROGRESS BAR REMOVED TO SPEED UP
-            //var progress = 100 / level.get('stages').length * (this.current_stage+1);
-            //this.game_session.set({progress: Math.floor(progress)});
+            // Progress//IMPORTANT!! PROGRESS BAR REINTRODUCED
+            var progress = 100 / level.get('stages').length * (this.current_stage+1);
+            this.game_session.set({progress: Math.floor(progress)});
 
             this.nextStage();
             break;
@@ -581,7 +606,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
 	  //cover things up
       transition(this.objects.overlay, 1000 / this.speed, {
         from: 0,
-        to: 0.9,
+        to: 0.2, //IMPORTANT!! JULIA CHANGED THIS FROM 0.9 to 0.2 TO DECREASE OPACITY
         set: "opacity",
         effect: collie.Effect.easeOutQuint
       }).
@@ -599,7 +624,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
         this.timers.characters.hello.start();
 //        this.sound.delayedPlay(600, 'mandy', 'hello*');//IMPORTANT!!! COMMENTED OUT TO SPEED UP GAME BY HAVING NO HELLO!
 
-        this.objects.character.set({backgroundColor: 'rgba(255,255,255,0.1)'})
+        this.objects.character.set({backgroundColor: 'rgba(255,255,255,0)'}) //IMPORTANT!! JULIA CHANGED THE ALPHA TO ZERO TO GET RID OF WHITE BACKGROUND
 // ORIGINAL CODE
          .attach({
            mousedown: function () {//IMPORTANT
@@ -682,7 +707,7 @@ LSCP.View.WordComprehensionGame = LSCP.View.Game.extend({
       }.bind(this), 2000 / this.speed).
 
       transition(this.objects.overlay, 1000 / this.speed, {
-        from: 0.9,
+        from: 0.2, //IMPORTANT!! JULIA CHANGED THIS FROM 0.9 to 0.2 TO DECREASE OPACITY
         to: 0,
         set: "opacity",
         effect: collie.Effect.easeOutQuint

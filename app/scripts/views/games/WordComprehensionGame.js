@@ -333,7 +333,7 @@
             }.bind(this), 500 * i / this.speed);//IMPORTANT (OLD: TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP)
           }.bind(this));
         }
-      }.bind(this), 500) //IMPORTANT
+      }.bind(this), 0)
 
     ;
 
@@ -355,7 +355,7 @@
 			  set: "opacity",
 			  effect: collie.Effect.easeOutQuint
 			});
-	  }.bind(this), 900). //IMPORTANT ADDED 900ms DELAY BEFORE SHOWING OBJECT
+	  }.bind(this), 1000). //IMPORTANT ADDED 1s DELAY BEFORE SHOWING OBJECT
 	  
 //ORIGINAL VERSION
 /*       transition(slot, 1000 / this.speed, {

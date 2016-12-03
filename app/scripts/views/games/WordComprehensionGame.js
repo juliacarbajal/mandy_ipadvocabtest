@@ -330,10 +330,10 @@
               if (i === stage.get("objects").length - 1) {
                 setTimeout(this.onObjectsIntroduced.bind(this), 4000 / this.speed); //IMPORTANT -- TIME CHANGED FROM 2K TO 4K TO ALLOW MORE INSPECTION TIME
               }
-            }.bind(this), 1000 * i / this.speed);//IMPORTANT (OLD: TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP)
+            }.bind(this), 500 * i / this.speed);//IMPORTANT (OLD: TIME CHANGED FROM !!1500!! TO !!ZERO!! TO SPEED UP)
           }.bind(this));
         }
-      }.bind(this), 2000 / this.speed) //IMPORTANT WE CHANGED THIS FROM 0 TO 2000 TO GIVE MORE TIME BEFORE SHOWING THE OBJECTS
+      }.bind(this), 500) //IMPORTANT
 
     ;
 
@@ -341,18 +341,29 @@
 
   introduceObject: function(slot, i){
     var stage = this.getCurrentStage();
-    this.startMeasuringDiff();
+	this.startMeasuringDiff();
 	
-    this.sound.delayedPlay(1000,'object_' + stage.get('objects')[i], 'intro'); //IMPORTANT ADDED DELAY
+    //IMPORTANT: MOVED THE SOUND TO THE QUEUE AND ADDED A DELAY BEFORE SHOWING OBJECT
 	
     collie.Timer.queue().
 
-      transition(slot, 1000 / this.speed, {
+	  delay(function(){
+		  this.sound.delayedPlay(900,'object_' + stage.get('objects')[i], 'intro'); //IMPORTANT ADDED DELAY
+		  collie.Timer.transition(this.objects.slots[i], 1000 / this.speed, {
+			  from: 0,
+			  to: 1,
+			  set: "opacity",
+			  effect: collie.Effect.easeOutQuint
+			});
+	  }.bind(this), 900). //IMPORTANT ADDED 900ms DELAY BEFORE SHOWING OBJECT
+	  
+//ORIGINAL VERSION
+/*       transition(slot, 1000 / this.speed, {
         from: 0,
         to: 1,
         set: "opacity",
         effect: collie.Effect.easeOutQuint
-      }).
+      }). */
 
       delay(function(){
         if (this.subtitles) this.objects.subtitles.set({visible: true}).text("♫ This is " + stage.get('objects')[i]);
@@ -411,7 +422,7 @@
             }.bind(this), 2000 / this.speed);
           }.bind(this)
         });
-      }.bind(this), 2000 / this.speed) //IMPORTANT WE MODIFIED THIS FROM 0 TO 2000 TO GIVE MORE TIME BETWEEN INTRO OF ITEMS
+      }.bind(this), 0) //IMPORTANT SET BACK TO 0(OLD:WE MODIFIED THIS FROM 0 TO 2000 TO GIVE MORE TIME BETWEEN INTRO OF ITEMS)
 
     ;
 

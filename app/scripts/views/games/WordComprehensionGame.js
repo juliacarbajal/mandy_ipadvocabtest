@@ -355,7 +355,7 @@
 			  set: "opacity",
 			  effect: collie.Effect.easeOutQuint
 			});
-	  }.bind(this), 1000). //IMPORTANT ADDED 1s DELAY BEFORE SHOWING OBJECT
+	  }.bind(this), 900). //IMPORTANT ADDED 900Ms DELAY BEFORE SHOWING OBJECT
 	  
 //ORIGINAL VERSION
 /*       transition(slot, 1000 / this.speed, {
@@ -610,12 +610,15 @@
         set: "opacity",
         effect: collie.Effect.easeOutQuint
       }).
-
-      transition(this.objects.character, 1000 / this.speed, {
-        to: 200,
-        set: "y",
-        effect: collie.Effect.easeOutQuint
-      }).
+	  
+	  //IMPORTANT ADDED A DELAY BEFORE MANDY APPEARS
+      delay(function(){
+		  collie.Timer.transition(this.objects.character, 1000 / this.speed, {
+			to: 200,
+			set: "y",
+			effect: collie.Effect.easeOutQuint
+		  });
+      }.bind(this), 800).
 
       delay(function(){
         this.startMeasuringDiff();

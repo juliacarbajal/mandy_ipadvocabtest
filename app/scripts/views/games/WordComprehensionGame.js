@@ -447,6 +447,7 @@
 
       this.game_session.addTrialValue('feedback', 1);
     } else {
+      this.sound.play('mandy', 'right*'); //IMPORTANT added sound also when there's no feedback
       this.game_session.addTrialValue('feedback', 0);
     }
 
@@ -519,6 +520,7 @@
 
       this.game_session.addTrialValue('feedback', 1);
     } else {
+	  this.sound.play('mandy', 'right*'); //IMPORTANT added sound also when there's no feedback
       slot.set('backgroundImage', 'slot-correct');
 
       this.game_session.addTrialValue('feedback', 0);
